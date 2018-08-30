@@ -1,0 +1,462 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Nov 6, 2017, 11:49:21 AM
+    Author     : mutemi
+*/
+
+html,body
+{
+   -webkit-font-smoothing: antialiased;
+   -moz-osx-font-smoothing: grayscale;
+   font-family: 'Open Sans', sans-serif;
+   font-style: normal;
+   font-weight: 500;
+   letter-spacing: 0.4px;
+   line-height: 1.2em;
+}
+
+body{
+    padding-top: 70px;
+}
+
+
+font-family: 'Open Sans', sans-serif;
+
+@font-face {
+   font-family:'dejaVuSans';
+   src: url(fonts/DejaVuSans.ttf);
+}
+
+@font-face {
+   font-family:'dejaVuSans';
+   src: url(fonts/DejaVuSans-Bold.ttf);
+   font-weight: bold;
+}
+
+@font-face {
+   font-family:'dejaVuSans';
+   src: url(fonts/DejaVuSans-ExtraLight.ttf);
+   font-weight: lighter;
+}
+
+
+/*---------------------------------------
+    Navigation               
+-----------------------------------------*/
+
+.navbar .navbar-nav {
+  display: inline-block;
+  float: none;
+  background: transparent;
+  border: #ffffff;
+}
+
+.navbar .navbar-collapse {
+  text-align: center;
+}
+
+.navbar-default {
+   background-color:#ffffff;
+   border-color: #ffffff;
+   padding-top: 5px;
+   border-radius: 0;
+   padding-bottom: 20px;
+   box-shadow: 0 2px 15px rgba(0,0,0,0.25);
+   -moz-box-shadow: 0 2px 15px rgba(0,0,0,0.25);
+   -webkit-box-shadow: 0 2px 15px rgba(0,0,0,0.25);
+}
+
+
+.navbar-nav .navbar-right{
+    background: transparent;
+    border: transparent;
+}
+
+/* Title */
+
+.img-responsive{
+        max-width: 100%;
+        height: auto;
+    }
+
+
+/* Link */
+
+.navbar-default .navbar-nav > li > a 
+{
+    color: #4E4F50;
+    font-size: 10px;
+    font-weight: 300;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    transition: all 0.4s ease-in-out;
+    background: transparent;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+    border: 2px solid #4E4F50;
+    border-radius: 2px;
+    padding: 1em 3.5em;
+}
+
+.navbar-default .navbar-nav > li > a:hover,
+.navbar-default .navbar-nav > li > a:focus {
+    color: #ffffff;
+    text-decoration: none;
+    background: orange;
+    border-color: orange;
+}
+.navbar-default .navbar-nav > .active > a,
+.navbar-default .navbar-nav > .active > a:hover,
+.navbar-default .navbar-nav > .active > a:focus {
+    color: #191A1E;
+    background-color: orange;
+    border-color: orange;
+}
+.navbar-default .navbar-nav > .open > a,
+.navbar-default .navbar-nav > .open > a:hover,
+.navbar-default .navbar-nav > .open > a:focus {
+    color: #191A1E;
+    background-color: orange;
+    border-color: orange;
+}
+
+
+
+
+/* Mobile version */
+
+
+.navbar-default .navbar-toggle 
+{
+    border-color: #DDD;
+}
+.navbar-default .navbar-toggle:hover,
+.navbar-default .navbar-toggle:focus 
+{
+    background-color: #DDD;
+}
+.navbar-default .navbar-toggle .icon-bar 
+{
+    background-color: #CCC;
+}
+
+@media (max-width: 767px) 
+{
+    .navbar-default .navbar-nav .open .dropdown-menu > li > a 
+    {
+        color: #777;
+    }
+    .navbar-default .navbar-nav .open .dropdown-menu > li > a:hover,
+    .navbar-default .navbar-nav .open .dropdown-menu > li > a:focus 
+    {
+          color: #333;
+    }
+}
+
+
+
+
+
+
+
+.edge
+{
+    border:2px solid #ffffff;
+    border-radius: 4px;
+    background:orange;
+    color: #ffffff;
+    padding: 40px;
+    margin-top: 4em;
+}
+
+.edge img
+{
+    padding-bottom: 2em;
+    padding-top: 2em;
+}
+
+.edge a
+{
+    text-align: right;
+    color: #ffffff;
+    margin: 0 auto;
+    padding-top: 40px;
+}
+
+.edge:hover
+{
+    border: 2px solid #ffffff;
+    color: #E3AE57;
+    box-shadow: -1px 1px 10px #343434;
+}
+
+.edge p
+{
+    padding-top: 30px;
+    color: #3B3733;
+    text-align: center;
+    font-size: 12px;
+}
+
+.img-responsive
+{
+    margin: 0 auto;
+}
+
+#welcome h1
+{
+    margin-top: 2.2em;
+    margin-bottom: 2em;
+    color: #ffffff;
+    font-size: 3.0em;
+    font-weight: lighter;
+}
+
+#back
+{
+ margin-bottom: 70px;
+}
+
+#back a
+{
+   
+    text-align: center;
+}
+
+
+
+footer
+{
+    padding-top:6em;
+    padding-bottom: 3em;
+    margin-bottom: 0;
+}
+
+
+.f_head
+{
+    font-weight: bold; 
+    color: white; font-size: 18px; 
+    letter-spacing: 6px;
+    text-transform: uppercase;
+    padding-bottom: 10px;
+}
+
+footer p
+{
+    padding-top: 10px;
+    font-size: 12px;
+    letter-spacing: 1.4px;
+    color: #AFAFAF;
+    line-height: 1.8em;
+    text-align: center;
+}
+
+
+
+
+
+
+
+#props
+{
+    background: #101217;
+    color: #818389;
+    
+}
+
+#props p
+{
+    text-transform: uppercase; 
+    padding-top: 4em;
+    text-align: center;
+    font-size: 12px;
+}
+
+
+.log
+{
+    padding-top: 2em;
+    text-align: right;
+}
+
+
+
+.logo
+{
+    padding-top: 0;
+    padding-bottom: 1em;
+}
+
+.logo p
+{
+    text-align: center; 
+    font-size: 36px; 
+    font-weight: bolder; 
+    color: #393939; 
+    line-height: 1.8em;
+    padding-top: 2em;
+}
+
+
+#available
+{
+    margin-top: 6em;
+    margin-bottom: 8em;
+
+}
+
+.avail
+{
+    background: transparent;
+    text-align: left;
+    padding-top: 3em;
+    padding-bottom: 3em;
+    border: 1px solid #79797A;
+    border-radius: 4px;
+}
+
+
+.avail h4
+{
+    text-align: left;
+    font-weight: lighter;
+    font-size: 16px;
+    padding-left: 2em;
+}
+
+
+.avail h5
+{
+    padding-top: 4em;
+    padding-bottom: 3em;
+    font-weight: bold;
+    font-size: 18px;
+    padding-left: 2em;
+    border-bottom: 2px solid #000000;
+}
+
+.avail h6
+{
+    font-weight: bold;
+    font-size: 18px;
+    padding-left: 2em;
+}
+
+.too
+{
+    padding-bottom: 1em;
+    border-bottom: 2px solid #000000;
+}
+
+.avail p
+{
+   padding-top: 20px;
+   padding-left: 3em;
+}
+
+
+
+.avail a
+{
+    margin-top: 4em;
+    margin-bottom: 4em;
+    padding-right: 20px;
+    padding-left: 20px;
+    padding-top: 20px;
+    font-size: 12px;
+    text-transform: uppercase;
+}
+
+.avail a:hover
+{
+    margin-top: 4em;
+    margin-bottom: 4em;
+    padding-right: 20px;
+    padding-top: 20px;
+    padding-left: 20px;
+    font-size: 12px;
+}
+
+.avail hr
+{
+    margin-top: 4em;
+    margin-bottom: 4em;
+    border-color: #000000;
+}
+
+.bt
+{
+    padding-top: 4em;
+    padding-bottom: 4em;
+}
+
+.raa
+{
+    border-top: 2px solid #000000;
+}
+
+
+.fa-star
+{
+    width: 0 auto; 
+}
+
+.checked {
+    color: orange;
+}
+
+
+
+.bt-2
+{
+    border-top: 2px solid #000000;
+}
+
+
+
+
+a
+{
+   padding: 5px;
+   color: #235a81;
+   text-decoration: none;
+}
+
+a:hover
+{
+   padding: 5px;
+   text-decoration: underline;
+}
+
+
+
+ul
+{
+    font-weight: bold;
+    list-style-type: none;
+    display: inline-block;
+    padding-right: 1em;
+    background: -webkit-linear-gradient(top, #ffffff, #dcdcdc);
+    border-top: 1px solid #aaa;
+    background-size: 100% 100%;
+}
+
+ul li
+{
+    border-right: 1px solid #fff;
+    border-left: 1px solid #ccc;
+    display: inline;
+    margin: 0;
+    vertical-align: middle;
+    text-align: -webkit-match-parent;
+    font-weight: bold;
+    list-style-type: none;
+}
+

@@ -1,0 +1,343 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Nov 6, 2017, 11:49:21 AM
+    Author     : mutemi
+*/
+
+html, body
+{
+	
+    font-size: 100%;
+    overflow-x: hidden;
+}
+
+
+
+#login_div input
+{
+    padding: 5px;
+    margin-bottom: 20px;
+    margin-top: 20px;
+    display:block;
+}
+
+#login_div
+{
+    
+    
+    margin-top: 1em;
+    border-radius: 4px 4px 0 0;
+    -moz-border-radius: 4px 4px 0 0;
+    -webkit-border-radius: 4px 4px 0 0;
+    border: #aaa solid 1px;
+    padding: 1.5em;
+    background: #eee;
+    text-shadow: 1px 1px 2px #fff inset;
+    -moz-box-shadow: 1px 1px 2px #fff inset;
+    -webkit-box-shadow: 1px 1px 2px #fff inset;
+    box-shadow: 1px 1px 2px #fff inset;
+    position: absolute;
+    display: table;
+  margin: 0 auto;
+   
+}
+
+#tables_content_div
+{
+    
+    margin-top: 500px;
+    position: relative;
+   
+   
+}
+
+a
+{
+  
+   color: #235a81;
+    text-decoration: none;
+}
+
+
+
+#logout_link
+{
+   padding: 5px;
+   color: red;
+    text-decoration: none;
+}
+
+#logout_link:hover
+{
+   padding: 5px;
+   color: red;
+    text-decoration: underline;
+}
+
+
+
+
+
+.odd
+{
+        
+    background: #fff;
+    display: table-row;
+    vertical-align: inherit;
+    border-color: black;
+    border-collapse: collapse;
+    color: #444;
+    font-size: 100%;
+}
+
+.even
+{
+        
+    background: #ffcba1;
+    display: table-row;
+    vertical-align: inherit;
+    border-color: black;
+    border-collapse: collapse;
+    color: #444;
+    font-size: 100%;
+}
+
+#row_data:hover
+{
+background-color: #ffcba1;
+}
+
+#browse_form
+{
+        display: table-row-group;
+    vertical-align: middle;
+    border-color: inherit;
+    border-collapse: collapse;
+        color: #444;
+        text-shadow: 0 1px 0 #fff;
+        display: table-cell;
+            border-collapse: collapse;
+            
+           
+            padding: 5px;
+			font-size:12px;
+}
+
+#browse_form input[type="number"]
+{
+   width: 10%;   
+   padding-right:20px;
+}
+
+#browse_form input[type="number"]:hover
+
+{
+	  -webkit-transition: border-color 0.3s ease-in-out;
+  -moz-transition: border-color 0.3s ease-in-out;
+  transition: border-color 0.3s ease-in-out;
+  border: 1px solid #f49242;
+	
+}
+
+#bad_upload_message
+{
+  background-color: #fb483a;
+  color: #fff !important;
+  padding:10px;
+  margin-bottom:10px;
+ }
+ 
+
+#good_upload_message
+{
+  background-color: #2b982b;
+  color: #fff !important; 
+  padding:10px;
+  margin-bottom:10px;
+  
+}
+
+#red_text_span
+{
+    color: red;
+}
+
+#green_text_span
+{
+    color: green;
+}
+
+#red_text_span a
+{
+    color: red;
+}
+
+#green_text_span a
+{
+    color: green;
+}
+
+textarea{width:100%;}
+
+
+custom_clicky_thingy 
+{
+    color: #f47f3c;
+    text-decoration: underline;
+}
+
+
+custom_clicky_thingy:hover 
+{
+    color: blue;
+    text-decoration: underline ;
+    cursor: pointer;
+}
+
+input[type="text"]
+
+{
+	width: 100%;
+  border: 1px solid #ccc;
+  background: #FFF;
+  margin: 0 0 5px;
+  padding: 10px;
+	
+}
+input[type="text"]:hover
+
+{
+	  -webkit-transition: border-color 0.3s ease-in-out;
+  -moz-transition: border-color 0.3s ease-in-out;
+  transition: border-color 0.3s ease-in-out;
+  border: 1px solid #f49242;
+	
+}
+input[type="checkout"]
+
+{
+	
+  border: 1px solid #ccc;
+  background: #FFF;
+  margin: 0 0 5px;
+  padding: 10px;
+	
+}
+input[type="checkout"]:hover
+
+{
+	  -webkit-transition: border-color 0.3s ease-in-out;
+  -moz-transition: border-color 0.3s ease-in-out;
+  transition: border-color 0.3s ease-in-out;
+  border: 1px solid #f49242;
+	
+}
+
+input[type="number"]:hover
+
+{
+	  -webkit-transition: border-color 0.3s ease-in-out;
+  -moz-transition: border-color 0.3s ease-in-out;
+  transition: border-color 0.3s ease-in-out;
+  border: 1px solid #f49242;
+	
+}
+
+input[type="email"]:hover
+
+{
+	  -webkit-transition: border-color 0.3s ease-in-out;
+  -moz-transition: border-color 0.3s ease-in-out;
+  transition: border-color 0.3s ease-in-out;
+  border: 1px solid #f49242;
+	
+}
+
+input[type="password"]:hover
+
+{
+	  -webkit-transition: border-color 0.3s ease-in-out;
+  -moz-transition: border-color 0.3s ease-in-out;
+  transition: border-color 0.3s ease-in-out;
+  border: 1px solid #f49242;
+	
+}
+input[type="number"]
+
+{
+	width: 100%;
+  border: 1px solid #ccc;
+  background: #FFF;
+  margin: 0 0 5px;
+  padding: 10px;
+	
+}
+input[type="email"]
+
+{
+	width: 100%;
+  border: 1px solid #ccc;
+  background: #FFF;
+  margin: 0 0 5px;
+  padding: 10px;
+	
+}
+input[type="password"]
+
+{
+	width: 100%;
+  border: 1px solid #ccc;
+  background: #FFF;
+  margin: 0 0 5px;
+  padding: 10px;
+	
+}
+
+
+
+
+
+#messages_thread_list #sent_by_me 
+{
+   
+    background-color: #4F8A10;
+   margin-bottom: 10px;
+   margin-top: 10px;
+  margin-right:25%;
+    border-radius: 5px;
+    border-color: #ccc;
+    background-color: #ddd;
+	padding:10px;
+}
+#messages_thread_list #sent_by_me 
+{
+    list-style:none;
+    
+}
+#messages_thread_list #sent_by_other 
+{
+    list-style:none;
+    
+}
+
+#messages_thread_list #sent_by_other 
+{
+	padding:10px;
+   
+    background-color: #ededed;
+    margin-bottom: 10px;
+    margin-top:  10px;
+	
+   border-radius: 5px;
+    margin-left:25%;
+    background-color: #9df9f0;
+	   
+   
+}
+
+ 
+
