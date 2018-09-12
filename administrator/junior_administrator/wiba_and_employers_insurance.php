@@ -345,6 +345,7 @@ else//else failed
                  <span id="employee_liabilities_span_0">
                  <input type="text"  name="employee_liability_options[0][option_name]"  required  placeholder="Option name" />
                  <input type="number"  name="employee_liability_options[0][limit]" required  placeholder="Limit" />
+                  <input type="number"  name="employee_liability_options[0][multiplier]" step=any required  placeholder="Multiplier" />
                  <input type="text"  name="employee_liability_options[0][html]"  required  placeholder="HTML" />
                   </span><br>
               </div>

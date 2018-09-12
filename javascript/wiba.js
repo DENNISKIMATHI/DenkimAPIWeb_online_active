@@ -46,11 +46,12 @@ function add_employee_liabilities(how_many_categories)
        
          var option_name="<input type=\"text\"  name=\"employee_liability_options["+current_max_liabilities+"][option_name]\"  required  placeholder=\"Option name\" />";
           var limit="<input type=\"number\"  name=\"employee_liability_options["+current_max_liabilities+"][limit]\" required  placeholder=\"Limit\" />";
+          var multiplier="<input type=\"number\"  name=\"employee_liability_options["+current_max_liabilities+"][multiplier]\" required step=any placeholder=\"Multiplier\" />";
           var html="<input type=\"text\"  name=\"employee_liability_options["+current_max_liabilities+"][html]\"  required  placeholder=\"HTML\" />";
                  
      
         var button_name_is="button_name_liabilities_is_"+( current_max_liabilities);
-         $('#employee_liabilities_are').append("<span id=\""+span_id_is+"\">"+option_name+limit+html+"</span> <input type=\"button\" id=\""+button_name_is+"\" value=\"Remove\" onclick=\"remove_employee_liabilities('"+span_id_is+"','"+button_name_is+"')\"/><br>")
+         $('#employee_liabilities_are').append("<span id=\""+span_id_is+"\">"+option_name+limit+multiplier+html+"</span> <input type=\"button\" id=\""+button_name_is+"\" value=\"Remove\" onclick=\"remove_employee_liabilities('"+span_id_is+"','"+button_name_is+"')\"/><br>")
   
 	
 }
