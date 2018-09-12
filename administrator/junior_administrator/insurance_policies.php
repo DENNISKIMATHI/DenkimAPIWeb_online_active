@@ -172,6 +172,13 @@ header('location: ../ ');
            <a href="dental_insurance.php" title="create, view and delete Dental insurance" class="btn btn-block btn-lg btn-warning waves-effect">Dental insurance</a>
            <a href="optical_insurance.php" title="create, view and delete Optical insurance" class="btn btn-block btn-lg btn-warning waves-effect">Optical insurance</a>
             <a href="out_patient_medical_insurance.php" title="create, view and delete Out patient medical insurance" class="btn btn-block btn-lg btn-warning waves-effect">Out patient medical insurance</a>
+            
+            <a href="public_liability_insurance.php" title="create, view and delete Public liability insurance" class="btn btn-block btn-lg btn-warning waves-effect">Public liability insurance</a>
+            <a href="goods_in_transit_insurance.php" title="create, view and delete Goods in transit insurance" class="btn btn-block btn-lg btn-warning waves-effect">Goods in transit insurance</a>
+            <a href="product_liability_insurance.php" title="create, view and delete Product liability insurance" class="btn btn-block btn-lg btn-warning waves-effect">Product liability insurance</a>
+            <a href="motor_psv_uber_insurance.php" title="create, view and delete Motor psv, uber, taxify, little cab and institutional buses and vans insurance" class="btn btn-block btn-lg btn-warning waves-effect">Motor psv, uber, taxify, little cab and institutional buses and vans insurance</a>
+            <a href="wiba_and_employers_insurance.php" title="create, view and delete Wiba and employers liability insurance" class="btn btn-block btn-lg btn-warning waves-effect">Wiba and employers liability insurance</a>
+
  <a href="../junior_administrator/" title="Go to the main page" class="btn btn-primary m-t-15 waves-effect"> <i class="material-icons">arrow_back</i>Back </a><br><br> 
 			  
             </div>
