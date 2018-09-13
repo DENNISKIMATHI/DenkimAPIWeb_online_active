@@ -280,9 +280,79 @@
 
       </div>
 
+       <div class="row">
+
+      <div class="col-md-8 col-md-offset-2 col-lg-8 col-md-offset-2">
+
+        <div class="edge"> 
 
 
+          <a href="./policies/public_liability_insurance.php" title="View and select Public liability insurance">Public liability insurance</a>
 
+         </div>
+       </div>
+
+      </div>
+
+            <div class="row">
+
+      <div class="col-md-8 col-md-offset-2 col-lg-8 col-md-offset-2">
+
+        <div class="edge"> 
+
+
+          <a href="./policies/goods_in_transit_insurance.php" title="View and select Public liability insurance">Goods in transit insurance</a>
+
+         </div>
+       </div>
+
+      </div>
+            
+            
+            <div class="row">
+
+      <div class="col-md-8 col-md-offset-2 col-lg-8 col-md-offset-2">
+
+        <div class="edge"> 
+
+
+          <a href="./policies/product_liability_insurance.php" title="View and select Product liability insurance">Product liability insurance</a>
+
+         </div>
+       </div>
+
+      </div>
+            
+            
+            <div class="row">
+
+      <div class="col-md-8 col-md-offset-2 col-lg-8 col-md-offset-2">
+
+        <div class="edge"> 
+
+
+          <a href="./policies/motor_psv_uber_insurance.php" title="View and select Motor psv, uber, taxify, little cab and institutional buses and vans insurance">Motor psv, uber, taxify, little cab and institutional buses and vans insurance</a>
+
+         </div>
+       </div>
+
+      </div>
+            
+            
+            
+            <div class="row">
+
+      <div class="col-md-8 col-md-offset-2 col-lg-8 col-md-offset-2">
+
+        <div class="edge"> 
+
+
+          <a href="./policies/wiba_and_employers_insurance.php" title="View and select Wiba and employers liability insurance">Wiba and employers liability insurance</a>
+
+         </div>
+       </div>
+
+      </div>
       
 
 

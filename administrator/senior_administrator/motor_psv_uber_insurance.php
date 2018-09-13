@@ -104,6 +104,8 @@ $check_is=$returned_json_decoded["check"];//check
 
 $message_is=$returned_json_decoded["message"];//message
 
+//get privacy items
+$policy_privacy_array=fetch_policy_privacy('15','/senior_administrator/motor_psv_uber_insurance.php');
 
 if($check_is==true)//if check is true
 { 
@@ -132,6 +134,10 @@ if($check_is==true)//if check is true
                             $html_url=$value['html_url'];
                             $time_stamp=$value['time_stamp'];
 
+                            $is_private=check_if_is_private($policy_privacy_array['message'],$policy_number);
+                            $is_private_status=   $is_private==false? 'Public' : 'Private';
+                            $is_private_status_make=   $is_private==false? 'Make private' : 'Make Public';
+
 
                             $row_color=$count%2;
                             $row_color=$row_color==0?'odd':'even';
@@ -152,7 +158,8 @@ if($check_is==true)//if check is true
                                                                               <td id="expiry_duration_days_td'.$count.'" >'.$expiry_duration_days.'</td>
                                                                           <td id="logo_url_td'.$count.'" ><a href="'.$logo_url.'" target="_blank">Logo</a></td>
                                                                           <td id="html_url_td'.$count.'" ><a href="'.$html_url.'" target="_blank">HTML</a></td>
-                                                                          <td id="time_stamp_td'.$count.'" >'.return_date_function($time_stamp).'</td> 
+                                                                          <td id="time_stamp_td'.$count.'" >'.return_date_function($time_stamp).'</td>  
+                                                                          <td id="privacy_td'.$count.'" >'.$is_private_status.' [<a href="policy_change_privacy.php?s=15&st='.$is_private_status.'&pn='.$policy_number.'&rp=motor_psv_uber_insurance.php" >'.$is_private_status_make.'</a>]</td>
                                                                           <td id="delete_td'.$count.'" ><span id="red_text_span"><a href="policy_delete_type_specific.php?p='.$policy_number.'&t=15&s=motor_psv_uber_insurance.php" title="Remove '.$policy_number.'">Delete</a></span></td>   
                                                         </tr>';
                             
@@ -180,6 +187,8 @@ if($check_is==true)//if check is true
                                        <th><a href="#" onmouseover="hover_link(\'html_url_td\',\''.$count.'\');" onmouseout="out_link(\'html_url_td\',\''.$count.'\');" >HTML</a></th>
                                        
                                         <th><a href="#" onmouseover="hover_link(\'time_stamp_td\',\''.$count.'\');" onmouseout="out_link(\'time_stamp_td\',\''.$count.'\');" >Date added</a></th>
+                                            
+                                        <th><a href="#" onmouseover="hover_link(\'privacy_td\',\''.$count.'\');" onmouseout="out_link(\'privacy_td\',\''.$count.'\');" >Private</a></th>
                                       <th><a href="#" onmouseover="hover_link(\'delete_td\',\''.$count.'\');" onmouseout="out_link(\'delete_td\',\''.$count.'\');" >Delete</a></th>
                                       </tr>';
                       $table='<table class="table table-bordered table-hover table-responsive">'.$table_head.$table.'

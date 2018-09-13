@@ -3,6 +3,7 @@ require '../le_functions/functions.php';
 require '../le_functions/sessions.php';
 
 
+
 //setting edit message
 if(isset($_GET['message']) && !empty($_GET['message']) && isset($_GET['type']) && !empty($_GET['type']))
 {
@@ -16,7 +17,7 @@ if(isset($_GET['message']) && !empty($_GET['message']) && isset($_GET['type']) &
 
 
 //fetch
-$returned_json_decoded= fetch_policy_type(3,'/policies/accident_insurance.php');
+$returned_json_decoded= fetch_policy_type(13,'/policies/goods_in_transit_insurance.php');
 
 $check_is=$returned_json_decoded["check"];//check
 
@@ -27,50 +28,48 @@ if($check_is==true)//if check is true
 {
 
     //get privacy items
-    $policy_privacy_array=fetch_policy_privacy('3','/policies/accident_insurance.php');
+    $policy_privacy_array=fetch_policy_privacy('13','/policies/goods_in_transit_insurance.php');
 
                
                      $skip=0;
                      $count=$skip;//make count skipped rows
 
+                     $list_items='';
                       foreach ($message_is as $value) 
                       {//start of foreach $message_is as $value
                             $company_name=$value['company_name'];
-                            $options=$value['options'];
                             $policy_number=$value['policy_number'];
-                            $expiry_duration_days=$value['expiry_duration_days'];
-                            $logo_url=$value['logo_url'];
-                            $time_stamp=$value['time_stamp'];
-
+                            
                             $is_private=check_if_is_private($policy_privacy_array['message'],$policy_number);
                             if($is_private==false)
                             {
-                                //$list_items.='<li><a href="../policies_select/accident_insurance_select.php?pn='.$policy_number.'" title="click to view '.$company_name.' accident insurance " class="btn btn-block btn-lg btn-warning waves-effect">'.strtoupper($company_name).'</a><br><br><img src="'.$logo_url.'"/></li><br> <br>';
-                             $list_items.='<li><a href="../policies_select/accident_insurance_select.php?pn='.$policy_number.'" title="click to view '.$company_name.' accident insurance " class="btn btn-block btn-lg btn-warning waves-effect">'.strtoupper($company_name).'</a></li><br> <br>';
+                                $list_items.='<li><a href="../policies_select/goods_in_transit_insurance_select.php?pn='.$policy_number.'" title="click to view '.$company_name.' goods in transit insurance "class="btn btn-block btn-lg btn-warning waves-effect">'.strtoupper($company_name).'</a></li><br><br>';
 
                             }
-
-
-                             
+                            
+                            
+                           
                            
                       }//end of foreach $message_is as $value
                       
-                       $list='<ol id="policies_list_item">'.$list_items.'</ol>';
+                      $list='<ol id="policies_list_item">'.$list_items.'</ol>';
+                      
                      
 }
 else//else failed
 {
 
-            $message='<span id="bad_upload_message">'.$message_is.'</span>';
-        
+   $message='<span id="bad_upload_message">'.$message_is.'</span>';
+           
 } 
+
 ?>
 <html>
 
 <head>
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-     <title>Accident insurance</title>
+         <title>Goods in transit insurance</title>
     <!-- Favicon-->
     <link rel="icon" href="../favicon.ico" type="image/x-icon">
 
@@ -163,7 +162,7 @@ else//else failed
                             <span>Sign Up</span>
                         </a>
                     </li>
-                    
+                
                     <li class="active">
                              <a href="../shopping_kart/index.php" title="Go to shopping cart">
 						<i class="material-icons">assignment</i>
@@ -202,7 +201,7 @@ else//else failed
                         <div class="header">
                             <div class="row clearfix">
                                 <div class="col-xs-12 col-sm-6">
-                                    <h2>Accident Insuarance : Select from the insurance options below</h2>
+                                    <h2>Goods in transit insurance : Select from the insurance options below</h2>
                                 </div>
                                </div>
                          </div>

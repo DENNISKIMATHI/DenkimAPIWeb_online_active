@@ -161,6 +161,38 @@ function fetch_policy_user_type_specific($policy_id,$session_key,$cookie,$origin
     return $returned_json_decoded;
 }
 
+//function to fetch policy type
+function fetch_policy_privacy($type,$origin)
+{
+    //fetch
+    $url_is=the_api_authentication_api_url_is()."denkimAPILogic/MainPackages.PolicyFetchPrivacy";
+
+    $myvars='type='.$type;
+
+    $header_array= array('Authorization:'.api_key_is(),'Origin:'.$origin);
+
+    $returned_json=send_curl_post($url_is,$myvars,$header_array);//cap output
+
+    $returned_json_decoded= json_decode($returned_json,true);//decode
+    
+    return $returned_json_decoded;
+}
+
+function check_if_is_private($array,$policy_number)
+{
+    if(count($array)>0)
+    {
+        foreach ($array as $value) 
+        {
+            if($value['policy_number']==$policy_number)
+            {
+                return $value['private'];
+            }
+        }
+    }
+    
+    return false;
+}
 
 //function make table out of medical array
 function make_list_out_of_medical_array($array)

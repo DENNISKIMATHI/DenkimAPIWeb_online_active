@@ -26,6 +26,9 @@ $message_is=$returned_json_decoded["message"];//message
 if($check_is==true)//if check is true
 {
 
+    //get privacy items
+    $policy_privacy_array=fetch_policy_privacy('9','/policies/dental_insurance.php');
+
                
                      $skip=0;
                      $count=$skip;//make count skipped rows
@@ -39,10 +42,16 @@ if($check_is==true)//if check is true
                             $logo_url=$value['logo_url'];
                             $time_stamp=$value['time_stamp'];
 
-
-                           // $list_items.='<li><a href="../policies_select/dental_insurance_select.php?pn='.$policy_number.'" title="click to view '.$company_name.' dental insurance "class="btn btn-block btn-lg btn-warning waves-effect">'.strtoupper($company_name).'</a><br><br><img src="'.$logo_url.'"/></li><br><br>';
+                            $is_private=check_if_is_private($policy_privacy_array['message'],$policy_number);
+                            if($is_private==false)
+                            {
+                                // $list_items.='<li><a href="../policies_select/dental_insurance_select.php?pn='.$policy_number.'" title="click to view '.$company_name.' dental insurance "class="btn btn-block btn-lg btn-warning waves-effect">'.strtoupper($company_name).'</a><br><br><img src="'.$logo_url.'"/></li><br><br>';
                             $list_items.='<li><a href="../policies_select/dental_insurance_select.php?pn='.$policy_number.'" title="click to view '.$company_name.' dental insurance "class="btn btn-block btn-lg btn-warning waves-effect">'.strtoupper($company_name).'</a></li><br><br>';
 
+                            }
+
+
+                           
                            
                       }//end of foreach $message_is as $value
                       
