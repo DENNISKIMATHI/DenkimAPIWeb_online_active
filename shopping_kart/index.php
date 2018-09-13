@@ -11,7 +11,7 @@ if(isset($_GET['message']) && !empty($_GET['message']) && isset($_GET['type']) &
 	$message='<span id="'.$good_bad_id.'">'.$message.'</span>';
 }
 
-//echo json_encode($_SESSION['shoping_cart']).'<hr>';
+echo json_encode($_SESSION['shoping_cart']).'<hr>';
 if(!empty($_SESSION['shoping_cart']))
 {
     $list='';
