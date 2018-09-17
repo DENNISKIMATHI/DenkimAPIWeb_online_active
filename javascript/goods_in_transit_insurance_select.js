@@ -30,7 +30,7 @@ $(document).ready(function()
                                             
                                             var x_is=v_is+w_is;
                                             
-                                            var y_is=x_is*0.45;
+                                            var y_is=x_is*(0.45/100);
                                             
                                                     
                                                 
@@ -61,7 +61,7 @@ $(document).ready(function()
                                             
                                             var x_is=v_is+w_is;
                                             
-                                            var y_is=x_is*0.45;
+                                            var y_is=x_is*(0.45/100);
                                             
                                                     
                                                 

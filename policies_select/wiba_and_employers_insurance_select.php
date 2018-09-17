@@ -265,8 +265,17 @@ if(isset($_GET['pn']) && !empty($_GET['pn']) )
         <?php echo $message;?><br>
 		
            <form action="<?php echo $action_page;?>" method="post">
-            <h2>Enter the employee details under the category.</h2>
+               
+               <div id="some_div_name_never_do_this">
+                </div>
+           
+            <h2>Enter employee ID.</h2>
+            <input type="text" id="employee_id_for_use_is"/><br>  
+             <h2>Enter employee salary.</h2>
+            <input type="number" id="employee_salary_for_use_is"/><br> 
             
+            <select  name="list_of_categories" id="list_of_categories" onchange="add_employees_for_wiba_plan_b()">
+                <option  value="">Select a category</option>
             <?php
                     foreach ($wiba_categories as $value) 
                     {
@@ -274,14 +283,19 @@ if(isset($_GET['pn']) && !empty($_GET['pn']) )
                         $div_id='div_is_'.$id_for_use;
                         
                         ?>
+                        <!--
                         <h3><?php echo $value['category_name'];?></h3>
                         <div id="<?php echo $div_id;?>">
                         </div>
                         <input type="button" value="Add employee" onclick="add_employees_for_wiba('<?php echo $id_for_use;?>','<?php echo $div_id;?>','<?php echo $value['category_multiplier'];?>','<?php echo $value['category_name'];?>')"/><br>
+                        -->
+                        <option  value="<?php echo $value['category_name'];?>" id_for_use="<?php echo $id_for_use;?>" category_multiplier="<?php echo $value['category_multiplier'];?>" category_name="<?php echo $value['category_name'];?>"   ><?php echo $value['category_name'];?></option>
                         <?php
                     }
             ?>
-           <h2>Select a liability from the list.</h2>
+                        <br><input type="button" id="ädd_employee_btn" value="Add employee" onclick=""/><br>
+            </select>
+           <h2>Select employers liability insurance from the options below;</h2>
              <?php
                     foreach ($employee_liability_options as $value) 
                     {
@@ -290,7 +304,7 @@ if(isset($_GET['pn']) && !empty($_GET['pn']) )
                         
                         ?>
                          
-                         <label class="container"><?php echo $value['option_name'];?>: limit <?php echo number_format($value['limit'],2);?> <input type="radio" required name="elected_empoloyee_liability_option" value="<?php echo $value['option_name'];?>" id="<?php echo $radio_is?>"  onclick="record_option('<?php echo $value['multiplier'];?>','<?php echo $radio_is?>');" /><span class="checkmark"></span></label>
+                         <label class="container"><?php echo $value['option_name'];?> <input type="radio" required name="elected_empoloyee_liability_option" value="<?php echo $value['option_name'];?>" id="<?php echo $radio_is?>"  onclick="record_option('<?php echo $value['multiplier'];?>','<?php echo $radio_is?>');" /><span class="checkmark"></span></label>
                        
                         
                         <?php echo send_curl_post($value['html'], null, null);?>

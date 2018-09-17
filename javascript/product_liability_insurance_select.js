@@ -36,7 +36,7 @@ $(document).ready(function()
                                         else
                                         {
                                             var x_is=limit*premium_percentage_is;
-                                             var y_is=x_is *0.45;
+                                             var y_is=x_is *(0.45/100);
                                              
                                                 var premium=x_is+y_is+40;
                                                 

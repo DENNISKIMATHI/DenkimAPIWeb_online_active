@@ -22,10 +22,16 @@ $(document).ready(function()
         
                 $('#number_of_passengers').keyup(function()//mobile
                 {
-
+                    
                         $('#premium_span').html('');//clear
+                        $('#excess_protector_percentage_is_span').html('');//clear
+                        $('#political_risk_terrorism_percentage_is_span').html('');//clear
+                       
                         var total_premium=return_the_premium_motor_psv()+return_the_excess_protector_motor_psv()+ return_the_political_violence_motor_psv()+return_the_aa_membership_motor_psv();
                         $('#premium_span').html(format_kes(total_premium));//clear
+                        
+                         $('#excess_protector_percentage_is_span').html(format_kes(return_the_excess_protector_motor_psv()));//clear
+                        $('#political_risk_terrorism_percentage_is_span').html(format_kes(return_the_political_violence_motor_psv()));//clear
                 }
 		);
         
@@ -33,8 +39,14 @@ $(document).ready(function()
                 {
 
                         $('#premium_span').html('');//clear
+                        $('#excess_protector_percentage_is_span').html('');//clear
+                        $('#political_risk_terrorism_percentage_is_span').html('');//clear
+                        
                         var total_premium=return_the_premium_motor_psv()+return_the_excess_protector_motor_psv()+ return_the_political_violence_motor_psv()+return_the_aa_membership_motor_psv();
                         $('#premium_span').html(format_kes(total_premium));//clear
+                        
+                         $('#excess_protector_percentage_is_span').html(format_kes(return_the_excess_protector_motor_psv()));//clear
+                        $('#political_risk_terrorism_percentage_is_span').html(format_kes(return_the_political_violence_motor_psv()));//clear
 
                 }
 		);
@@ -43,8 +55,14 @@ $(document).ready(function()
                 {
 
                         $('#premium_span').html('');//clear
+                        $('#excess_protector_percentage_is_span').html('');//clear
+                        $('#political_risk_terrorism_percentage_is_span').html('');//clear
+                        
                         var total_premium=return_the_premium_motor_psv()+return_the_excess_protector_motor_psv()+ return_the_political_violence_motor_psv()+return_the_aa_membership_motor_psv();
                         $('#premium_span').html(format_kes(total_premium));//clear
+                        
+                         $('#excess_protector_percentage_is_span').html(format_kes(return_the_excess_protector_motor_psv()));//clear
+                        $('#political_risk_terrorism_percentage_is_span').html(format_kes(return_the_political_violence_motor_psv()));//clear
 
 
                 }
@@ -54,8 +72,14 @@ $(document).ready(function()
                 {
 
                         $('#premium_span').html('');//clear
+                        $('#excess_protector_percentage_is_span').html('');//clear
+                        $('#political_risk_terrorism_percentage_is_span').html('');//clear
+                        
                         var total_premium=return_the_premium_motor_psv()+return_the_excess_protector_motor_psv()+ return_the_political_violence_motor_psv()+return_the_aa_membership_motor_psv();
                         $('#premium_span').html(format_kes(total_premium));//clear
+                        
+                         $('#excess_protector_percentage_is_span').html(format_kes(return_the_excess_protector_motor_psv()));//clear
+                        $('#political_risk_terrorism_percentage_is_span').html(format_kes(return_the_political_violence_motor_psv()));//clear
 
 
                 }
@@ -78,7 +102,7 @@ $(document).ready(function()
                                               var  x_is=n_percentage* number_of_passengers;
                                                
 						 var y_is=x_is +w_is;
-                                                 var z_is=y_is*0.45;
+                                                 var z_is=y_is*(0.45/100);
                                                  
                                                   premium=z_is+y_is+40;
 					}
@@ -100,7 +124,7 @@ $(document).ready(function()
 				if($('#excess_protector_percentage').is(':checked') && vehicle_value!=='' && number_of_passengers!=='')
                                 {
                                      var  k_is=excess_protector_multiplier* vehicle_value;
-                                     var  l_is=0.45* k_is;
+                                     var  l_is=(0.45/100)* k_is;
                                      var total=l_is+k_is;
                                      
                                      ans=total<=minimum_excess_protector?minimum_excess_protector:total;
@@ -124,7 +148,7 @@ $(document).ready(function()
 				if($('#political_risk_terrorism_percentage').is(':checked') && vehicle_value!=='' && number_of_passengers!=='')
                                 {
                                      var  n_is=political_violence_multiplier* vehicle_value;
-                                     var  q_is=0.45* n_is;
+                                     var  q_is=(0.45/100)* n_is;
                                      var total=q_is+n_is;
                                      
                                      ans=total<=minimum_political_violence?minimum_political_violence:total;

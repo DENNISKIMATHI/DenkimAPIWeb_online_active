@@ -378,8 +378,9 @@ else//else failed
                         <div class="body">
 	       <?php echo $message;?><br>
           <form action="" method="POST">
+               <h3>Company name</h3>
               <input type="text" name="company_name" required placeholder="Company name"/>
-              
+              <h3>Wiba categories</h3>
             <div id="wiba_categories_are">
                  <span id="wiba_categories_span_0">
                  <input type="text"  name="wiba_categories[0][category_name]"  required  placeholder="Category name" />
@@ -388,11 +389,10 @@ else//else failed
               </div>
               
               <input type="button" value="Add category" onclick="add_category('0');"/>
-            
+             <h3>Wiba liability options</h3>
               <div id="employee_liabilities_are">
                  <span id="employee_liabilities_span_0">
                  <input type="text"  name="employee_liability_options[0][option_name]"  required  placeholder="Option name" />
-                 <input type="number"  name="employee_liability_options[0][limit]" required  placeholder="Limit" />
                  <input type="number"  name="employee_liability_options[0][multiplier]" step=any required  placeholder="Multiplier" />
                  <input type="text"  name="employee_liability_options[0][html]"  required  placeholder="HTML" />
                   </span><br>
@@ -400,6 +400,7 @@ else//else failed
               
               <input type="button" value="Add liability" onclick="add_employee_liabilities('0');"/>
               
+              <h3>Policy information</h3>
             <input type="text" name="policy_number" required placeholder="Policy number"/>
             <input type="number" name="expiry_duration_days" required placeholder="Expiry duration days"/>
             <input type="text" name="html_url"  required placeholder="HTML link"/>

@@ -247,21 +247,28 @@ if(isset($_GET['pn']) && !empty($_GET['pn']) )
         <?php echo $message;?><br>
 		
            <form action="<?php echo $action_page;?>" method="post">
-            <h2>Enter the estimated carry on any trip.</h2>
-            <input type="number" min="1" name="estimated_carry_on_any_trip" required a_percentage_is="<?php echo $a_percentage;?>" b_percentage_is="<?php echo $b_percentage;?>" id="estimated_carry_on_any_trip" placeholder="Estimated carry on any trip"/>
+            <h2>Enter estimated total value of goods carried at any one trip.</h2>
+            <input type="number" min="1" name="estimated_carry_on_any_trip" required a_percentage_is="<?php echo $a_percentage;?>" b_percentage_is="<?php echo $b_percentage;?>" id="estimated_carry_on_any_trip" placeholder="Estimated total value of goods carried at any one tripp"/>
             <br>
-            <h2>Enter the total annual estimated carry all trips.</h2>
-            <input type="number" min="1" name="total_annual_estimated_carry_all_trips" required a_percentage_is="<?php echo $a_percentage;?>" b_percentage_is="<?php echo $b_percentage;?>" id="total_annual_estimated_carry_all_trips" placeholder="Total annual estimated carry all trips"/>
+            <h2>Enter estimated total value of all goods carried annually in all trip.</h2>
+            <input type="number" min="1" name="total_annual_estimated_carry_all_trips" required a_percentage_is="<?php echo $a_percentage;?>" b_percentage_is="<?php echo $b_percentage;?>" id="total_annual_estimated_carry_all_trips" placeholder="Estimated total value of all goods carried annually in all trip"/>
             <br>
             
-            <h2>Geographical area</h2>
-            <textarea name="geographical_area" required placeholder="Geographical area"/></textarea>
+            <h2>Enter geographical area of transit.</h2>
+            <textarea name="geographical_area" required placeholder="Geographical area of transit"/></textarea>
             <br>
-            <h2>Types of goods</h2>
-            <textarea name="types_of_goods" required placeholder="Types of goods"/></textarea>
+            <h2>Enter types of goods carried.</h2>
+            <textarea name="types_of_goods" required placeholder="Types of goods carried."/></textarea>
             <br>
-            <h2>Mode of transport</h2>
-            <textarea name="mode_of_transport" required placeholder="Mode of transport"/></textarea>
+           
+            <select name="mode_of_transport" required>
+                <option value="">Select mode of transport</option>
+                <option value="Road">Road</option>
+                <option value="Railroad">RailRoad</option>
+                <option value="Air">Air</option>
+                <option value="Sea">Sea</option>
+            </select>
+            
             <br>
             
             <b>Premium</b><br>

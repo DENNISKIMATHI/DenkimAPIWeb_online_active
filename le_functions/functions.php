@@ -241,7 +241,7 @@ function make_list_out_of_wiba_employee_liability_array($array)
     $list_options='';
     foreach ($array as $value) 
     {
-        $list_options.=' [Option name: '.$value['option_name'].', Limit: '.number_format($value['limit'],2).', Multiplier: '.number_format($value['multiplier'],2).'] ';
+        $list_options.=' [Option name: '.$value['option_name'].', Multiplier: '.number_format($value['multiplier'],2).'] ';
             
            
     }

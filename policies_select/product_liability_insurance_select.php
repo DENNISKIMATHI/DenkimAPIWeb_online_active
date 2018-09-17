@@ -51,13 +51,11 @@ if(isset($_GET['pn']) && !empty($_GET['pn']) )
         
         //submit
         if(isset($_POST['limit']) && !empty($_POST['limit']) &&
-           isset($_POST['types_of_goods']) && !empty($_POST['types_of_goods']) &&
-           isset($_POST['product_type']) && !empty($_POST['product_type']) 
+           isset($_POST['types_of_goods']) && !empty($_POST['types_of_goods']) 
                 )
         {
             $limit=trim($_POST['limit']);
             $types_of_goods=trim($_POST['types_of_goods']);
-            $product_type=trim($_POST['product_type']);
             
             //echo $insured_item_value.'--'.$excess_protector_percentage_is_boolean.'--'.$political_risk_terrorism_percentage_is_boolean.'--'.$aa_membership_is_boolean.'<hr>';
             
@@ -69,7 +67,7 @@ if(isset($_GET['pn']) && !empty($_GET['pn']) )
             $items_array_is=array('policy_number'=>$policy_number,
                                 'limit'=>$limit,
                                 'types_of_goods'=>$types_of_goods,
-                                'product_type'=>$product_type,
+                                'product_type'=>'Removed on development, do not show this.',
                                 'premium_percentage'=>$premium_percentage,
                                 'minimum'=>$minimum,
                                 'company_name'=>$company_name,
@@ -240,14 +238,11 @@ if(isset($_GET['pn']) && !empty($_GET['pn']) )
         <?php echo $message;?><br>
 		
            <form action="<?php echo $action_page;?>" method="post">
-            <h2>Enter the limit.</h2>
-            <input type="number" min="<?php echo $minimum;?>" name="limit" premium_percentage_is="<?php echo $premium_percentage;?>" required id="limit" placeholder="Limit"/>
+               <h2>Enter limits of cover (minimum limit <?php echo number_format($minimum)?>).</h2>
+            <input type="number" min="<?php echo $minimum;?>" name="limit" premium_percentage_is="<?php echo $premium_percentage;?>" required id="limit" placeholder="Limits of cover."/>
             <br>
             <h2>Types of goods.</h2>
             <textarea name="types_of_goods" required  placeholder="Types of goods"></textarea>
-            <br>
-            <h2>Product type.</h2>
-            <textarea name="product_type" required placeholder="Product type"></textarea>
             <br>
             
             <b>Premium</b><br>

@@ -234,7 +234,7 @@ if(isset($_GET['pn']) && !empty($_GET['pn']) )
 		
            <form action="<?php echo $action_page;?>" method="post">
                <h2>Enter the limit.(Minimum is: <?php echo number_format($minimum,2);?>)</h2>
-            <input type="number" min="<?php echo $minimum;?>" required name="limit" premium_percentage_is="<?php echo $premium_percentage;?>" id="limit" placeholder="Limit"/>
+            <input type="number" min="<?php echo $minimum;?>" required name="limit" premium_percentage_is="<?php echo $premium_percentage;?>" id="limit" placeholder="Limits of cover."/>
             <br>
             <br>
             
