@@ -50,8 +50,7 @@ if(isset($_GET['pn']) && !empty($_GET['pn']) )
         
         
         //submit
-        if(isset($_POST['selected_employee_categories']) && !empty($_POST['selected_employee_categories']) &&
-            isset($_POST['elected_empoloyee_liability_option']) && !empty($_POST['elected_empoloyee_liability_option'])     
+        if(isset($_POST['selected_employee_categories']) && !empty($_POST['selected_employee_categories'])      
                 )
         {
             $selected_employee_categories=$_POST['selected_employee_categories'];
@@ -304,7 +303,7 @@ if(isset($_GET['pn']) && !empty($_GET['pn']) )
                         
                         ?>
                          
-                         <label class="container"><?php echo $value['option_name'];?> <input type="radio" required name="elected_empoloyee_liability_option" value="<?php echo $value['option_name'];?>" id="<?php echo $radio_is?>"  onclick="record_option('<?php echo $value['multiplier'];?>','<?php echo $radio_is?>');" /><span class="checkmark"></span></label>
+                         <label class="container"><?php echo $value['option_name'];?> <input type="radio" name="elected_empoloyee_liability_option" value="<?php echo $value['option_name'];?>" id="<?php echo $radio_is?>"  onclick="record_option('<?php echo $value['multiplier'];?>','<?php echo $radio_is?>');" /><span class="checkmark"></span></label>
                        
                         
                         <?php echo send_curl_post($value['html'], null, null);?>

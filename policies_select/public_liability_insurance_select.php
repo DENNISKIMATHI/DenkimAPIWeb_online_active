@@ -61,7 +61,7 @@ if(isset($_GET['pn']) && !empty($_GET['pn']) )
             $item_id=make_cart_item_id($type_is,$how_many);
             //assign
             $items_array_is=array('policy_number'=>$policy_number,
-                                'limit'=>$limit,
+                                'limit'=>(int)$limit,
                                 'company_name'=>$company_name,
                                 'premium_percentage'=>$premium_percentage,
                                 'minimum'=>$minimum,

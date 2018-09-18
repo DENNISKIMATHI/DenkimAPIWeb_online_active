@@ -11,7 +11,7 @@ if(isset($_GET['message']) && !empty($_GET['message']) && isset($_GET['type']) &
 	$message='<span id="'.$good_bad_id.'">'.$message.'</span>';
 }
 
-echo json_encode($_SESSION['shoping_cart']).'<hr>';
+//echo json_encode($_SESSION['shoping_cart']).'<hr>';
 if(!empty($_SESSION['shoping_cart']))
 {
     $list='';
@@ -167,7 +167,67 @@ if(!empty($_SESSION['shoping_cart']))
                     }
 
                 break;
-            
+                
+                case 12://Public liability insurance
+                     foreach ($kart_item_array as $value) 
+                    {
+                        $item=make_shoping_kart_for_public_liability($value);
+                        $html=$item['html'];
+                        $item_id=$item['item_id'];
+                        $remove_link='<span id="red_text_span"><a href="remove_kart_item.php?item_id='.$item_id.'" class="btn btn-primary m-t-15 waves-effect">Remove</a></span>';
+                        
+                    $list.='<li><h2>Public liability insurance</h2>'.$html.$remove_link.'</li>';//concatnate
+                    }
+                break;
+                
+                 case 13://Goods in transit insurance
+                     foreach ($kart_item_array as $value) 
+                    {
+                        $item=make_shoping_kart_for_goods_in_transit($value);
+                        $html=$item['html'];
+                        $item_id=$item['item_id'];
+                        $remove_link='<span id="red_text_span"><a href="remove_kart_item.php?item_id='.$item_id.'" class="btn btn-primary m-t-15 waves-effect">Remove</a></span>';
+                        
+                    $list.='<li><h2>Goods in transit insurance</h2>'.$html.$remove_link.'</li>';//concatnate
+                    }
+                break;
+                
+                case 14://Product liability insurance
+                     foreach ($kart_item_array as $value) 
+                    {
+                        $item=make_shoping_kart_for_product_liability($value);
+                        $html=$item['html'];
+                        $item_id=$item['item_id'];
+                        $remove_link='<span id="red_text_span"><a href="remove_kart_item.php?item_id='.$item_id.'" class="btn btn-primary m-t-15 waves-effect">Remove</a></span>';
+                        
+                    $list.='<li><h2>Product liability insurance</h2>'.$html.$remove_link.'</li>';//concatnate
+                    }
+                break;
+                
+                case 15://Motor psv insurance for uber, taxify, little cab and institutional buses and vans
+                     foreach ($kart_item_array as $value) 
+                    {
+                        $item=make_shoping_kart_for_motor_psv_insurance_for_uber($value);
+                        $html=$item['html'];
+                        $item_id=$item['item_id'];
+                        $remove_link='<span id="red_text_span"><a href="remove_kart_item.php?item_id='.$item_id.'" class="btn btn-primary m-t-15 waves-effect">Remove</a></span>';
+                        
+                    $list.='<li><h2>Motor psv insurance for uber, taxify, little cab and institutional buses and vans</h2>'.$html.$remove_link.'</li>';//concatnate
+                    }
+                break;
+                
+                case 16://Wiba and employers liability insurance policy
+                     foreach ($kart_item_array as $value) 
+                    {
+                        $item=make_shoping_kart_for_wiba_and_employers_liability($value);
+                        $html=$item['html'];
+                        $item_id=$item['item_id'];
+                        $remove_link='<span id="red_text_span"><a href="remove_kart_item.php?item_id='.$item_id.'" class="btn btn-primary m-t-15 waves-effect">Remove</a></span>';
+                        
+                    $list.='<li><h2>Wiba and employers liability insurance policy</h2>'.$html.$remove_link.'</li>';//concatnate
+                    }
+                break;
+                
                 default:
                 break;
         }//end of switch $type

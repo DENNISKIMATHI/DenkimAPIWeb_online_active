@@ -71,8 +71,8 @@ if(isset($_GET['pn']) && !empty($_GET['pn']) )
             $item_id=make_cart_item_id($type_is,$how_many);
             //assign
             $items_array_is=array('policy_number'=>$policy_number,
-                                'estimated_carry_on_any_trip'=>$estimated_carry_on_any_trip,
-                                'total_annual_estimated_carry_all_trips'=>$total_annual_estimated_carry_all_trips,
+                                'estimated_carry_on_any_trip'=>(int)$estimated_carry_on_any_trip,
+                                'total_annual_estimated_carry_all_trips'=>(int)$total_annual_estimated_carry_all_trips,
                                 'geographical_area'=>$geographical_area,
                                 'types_of_goods'=>$types_of_goods,
                                 'mode_of_transport'=>$mode_of_transport,

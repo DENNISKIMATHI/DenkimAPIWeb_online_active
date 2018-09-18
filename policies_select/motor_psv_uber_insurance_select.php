@@ -81,9 +81,9 @@ if(isset($_GET['pn']) && !empty($_GET['pn']) )
             //assign
             $items_array_is=array('policy_number'=>$policy_number,
                 
-                                'vehicle_value'=>$vehicle_value,
+                                'vehicle_value'=>(int)$vehicle_value,
                                 'vehicle_registration_details'=>$vehicle_registration_details,
-                                'number_of_passengers'=>$number_of_passengers,
+                                'number_of_passengers'=>(int)$number_of_passengers,
                                 'excess_protector_percentage'=>$excess_protector_percentage_boolean,
                                 'political_risk_terrorism_percentage'=>$political_risk_terrorism_percentage_boolean,
                                 'aa_membership'=>$aa_membership_boolean,
@@ -275,7 +275,7 @@ if(isset($_GET['pn']) && !empty($_GET['pn']) )
             <br>
             
             <h2>Enter the vehicle registration details.</h2>
-            <textarea name="vehicle_registration_details" required></textarea>
+            <textarea name="vehicle_registration_details" required placeholder="Vehicle registration details"></textarea>
             <br>
             
             

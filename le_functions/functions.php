@@ -1679,6 +1679,409 @@ function make_shoping_kart_for_optical_medical($kart_item_array)
     
 }
 
+
+//make shopping kart for Public liability insurance
+function make_shoping_kart_for_public_liability($kart_item_array)
+{
+    //echo json_encode($kart_item_array);
+    
+    
+    
+        foreach ($kart_item_array as $key => $value_items) 
+        {
+            $item_id=$key;//item id
+        
+            $policy_number=$value_items['policy_number'];
+            $limit=$value_items['limit'];
+            $premium_percentage=$value_items['premium_percentage'];
+            $minimum=$value_items['minimum'];
+            $company_name=$value_items['company_name'];
+            $expiry_duration_days=$value_items['expiry_duration_days'];
+            $logo_url=$value_items['logo_url'];
+            $time_stamp=$value_items['time_stamp'];
+        }
+            
+        
+            $table='';
+    
+            $total=0;
+    
+            $premium= get_premium_for_public_liability($limit,$premium_percentage);
+            $table.='<h3>'.$company_name.'</h3>';
+            $table.='<h2>Set limit</h2>';
+            $table.='<table>';
+            $table.='<tr><th>Limit</th><th>Premium</th></tr>';
+            $table.='<tr><td>KES. '.number_format($limit).'</td><th>KES. '.number_format($premium).'</td></tr>';
+            
+     $table.='<tr><th>TOTAL</th><td>KES. '.number_format($premium).'</td></tr>';
+     $table.='</table>';
+     
+    return array('html'=>$table,'item_id'=>$item_id,'policy_number'=>$policy_number,'limit'=>$limit);
+    
+}
+
+//make shopping kart for Goods in transit insurance
+function make_shoping_kart_for_goods_in_transit($kart_item_array)
+{
+    //echo json_encode($kart_item_array);
+    
+    
+    
+        foreach ($kart_item_array as $key => $value_items) 
+        {
+            $item_id=$key;//item id
+        
+            $policy_number=$value_items['policy_number'];
+            
+            $estimated_carry_on_any_trip=$value_items['estimated_carry_on_any_trip'];
+            $total_annual_estimated_carry_all_trips=$value_items['total_annual_estimated_carry_all_trips'];
+            $geographical_area=$value_items['geographical_area'];
+            $types_of_goods=$value_items['types_of_goods'];
+            $mode_of_transport=$value_items['mode_of_transport'];
+            
+            $a_percentage=$value_items['a_percentage'];
+            $b_percentage=$value_items['b_percentage'];
+            $company_name=$value_items['company_name'];
+            $expiry_duration_days=$value_items['expiry_duration_days'];
+            $logo_url=$value_items['logo_url'];
+            $time_stamp=$value_items['time_stamp'];
+        }
+            
+        
+            $table='';
+    
+            $total=0;
+    
+            $premium= get_premium_for_goods_in_transit($a_percentage,$b_percentage,$estimated_carry_on_any_trip,$total_annual_estimated_carry_all_trips);
+            $table.='<h3>'.$company_name.'</h3>';
+            $table.='<h2>Goods infomation</h2>';
+            $table.='<table>';
+            $table.='<tr><th>Geographical area</th><td>'.$geographical_area.'</td></tr>';
+            $table.='<tr><th>Types of goods</th><td>'.$types_of_goods.'</td></tr>';
+            $table.='<tr><th>Mode of transport</th><td>'.$mode_of_transport.'</td></tr>';
+            
+            $table.='<tr><th>Estimated carry on any trip</th><td>KES. '.number_format($estimated_carry_on_any_trip).'</td></tr>';
+            $table.='<tr><th>Total annual estimated carry all trips</th><td>KES. '.number_format($total_annual_estimated_carry_all_trips).'</td></tr>';
+             
+            $table.='<tr><th>Premium</th><td>KES. '.number_format($premium).'</td></tr>';
+            
+     $table.='<tr><th>TOTAL</th><td>KES. '.number_format($premium).'</td></tr>';
+     $table.='</table>';
+     
+    return array('html'=>$table,'item_id'=>$item_id,'policy_number'=>$policy_number,'estimated_carry_on_any_trip'=>$estimated_carry_on_any_trip,'total_annual_estimated_carry_all_trips'=>$total_annual_estimated_carry_all_trips,'geographical_area'=>$geographical_area,'types_of_goods'=>$types_of_goods,'mode_of_transport'=>$mode_of_transport);
+    
+}
+
+
+//make shopping kart for Product liability insurance
+function make_shoping_kart_for_product_liability($kart_item_array)
+{
+    //echo json_encode($kart_item_array);
+    
+    
+    
+        foreach ($kart_item_array as $key => $value_items) 
+        {
+            $item_id=$key;//item id
+        
+            $policy_number=$value_items['policy_number'];
+            
+            $limit=$value_items['limit'];
+            $types_of_goods=$value_items['types_of_goods'];
+            $product_type=$value_items['product_type'];
+            $premium_percentage=$value_items['premium_percentage'];
+            $minimum=$value_items['minimum'];
+            
+            $company_name=$value_items['company_name'];
+            $expiry_duration_days=$value_items['expiry_duration_days'];
+            $logo_url=$value_items['logo_url'];
+            $time_stamp=$value_items['time_stamp'];
+        }
+            
+        
+            $table='';
+    
+            $total=0;
+    
+            $premium= get_premium_for_product_liability($limit,$premium_percentage);
+            $table.='<h3>'.$company_name.'</h3>';
+            $table.='<h2>Product information</h2>';
+            $table.='<table>';
+            $table.='<tr><th>Type of Goods</th><td>'.$types_of_goods.'</td></tr>';
+            $table.='<tr><th>Limit</th><td>KES. '.number_format($limit).'</td></tr>';
+            $table.='<tr><th>Premium</th><td>KES. '.number_format($premium).'</td></tr>';
+                    
+           
+     $table.='<tr><th>TOTAL</th><td>KES. '.number_format($premium).'</td></tr>';
+     $table.='</table>';
+     
+    return array('html'=>$table,'item_id'=>$item_id,'policy_number'=>$policy_number,'limit'=>$limit,'types_of_goods'=>$types_of_goods,'product_type'=>$product_type);
+    
+}
+
+//make shopping kart for Motor psv insurance for uber, taxify, little cab and institutional buses and vans
+function make_shoping_kart_for_motor_psv_insurance_for_uber($kart_item_array)
+{
+    //echo json_encode($kart_item_array);
+    
+    
+    
+        foreach ($kart_item_array as $key => $value_items) 
+        {
+            $item_id=$key;//item id
+        
+            $policy_number=$value_items['policy_number'];
+            
+            $vehicle_value=$value_items['vehicle_value'];
+            $vehicle_registration_details=$value_items['vehicle_registration_details'];
+            $number_of_passengers=$value_items['number_of_passengers'];
+            $excess_protector_percentage=$value_items['excess_protector_percentage'];
+            $political_risk_terrorism_percentage=$value_items['political_risk_terrorism_percentage'];
+            $aa_membership=$value_items['aa_membership'];
+            
+            $company_name=$value_items['company_name'];
+            $v_percentage=$value_items['v_percentage'];
+            $n_percentage=$value_items['n_percentage'];
+            $minimum_excess_protector=$value_items['minimum_excess_protector'];
+            $minimum_political_violence=$value_items['minimum_political_violence'];
+            $excess_protector_multiplier=$value_items['excess_protector_multiplier'];
+            $political_violence_multiplier=$value_items['political_violence_multiplier'];
+            $aa_constant=$value_items['aa_constant'];
+             
+            $expiry_duration_days=$value_items['expiry_duration_days'];
+            $logo_url=$value_items['logo_url'];
+            $time_stamp=$value_items['time_stamp'];
+        }
+            
+       
+        
+            $table='';
+    
+            $total=0;
+    
+            $premium= get_premium_for_motor_psv_insurance_for_uber($v_percentage,$n_percentage,$vehicle_value,$number_of_passengers);
+            
+            $excess_protector_value=$excess_protector_percentage=='true'? get_excess_protector_for_motor_psv_insurance_for_uber($excess_protector_multiplier,$vehicle_value,$minimum_excess_protector): 0;
+            $political_risk_terrorism_value=$political_risk_terrorism_percentage=='true'? get_political_violence_protector_for_motor_psv_insurance_for_uber($political_violence_multiplier,$vehicle_value,$minimum_political_violence): 0;
+            $aa_membership_value=$aa_membership=='true'? $aa_constant: 0;
+                    
+            $table.='<h3>'.$company_name.'</h3>';
+            $table.='<h2>Vehicle details</h2>';
+            $table.='<table>';
+            $table.='<tr><th>Vehicle registration details</th><td>'.$vehicle_registration_details.'</td></tr>';
+            $table.='<tr><th>Number of passengers</th><td>'.$number_of_passengers.'</td></tr>';
+            $table.='<tr><th>Vehicle value</th><td>KES. '.number_format($vehicle_value).'</td></tr>';
+            $table.='<tr><th>Premium</th><td>KES. '.number_format($premium).'</td></tr>';
+            $table.='<tr><th>Excess protector</th><td>KES. '.number_format($excess_protector_value).'</td></tr>';
+            $table.='<tr><th>Political risk terrorism</th><td>KES. '.number_format($political_risk_terrorism_value).'</td></tr>';
+            $table.='<tr><th>AA membership</th><td>KES. '.number_format($aa_membership_value).'</td></tr>';
+           
+     $table.='<tr><th>TOTAL</th><td>KES. '.number_format($premium+$excess_protector_value+$political_risk_terrorism_value+$aa_membership_value).'</td></tr>';
+     $table.='</table>';
+     
+      
+            
+    return array('html'=>$table,'item_id'=>$item_id,'policy_number'=>$policy_number,'vehicle_value'=>$vehicle_value,'vehicle_registration_details'=>$vehicle_registration_details,'number_of_passengers'=>$number_of_passengers,'excess_protector_percentage'=>$excess_protector_percentage,'political_risk_terrorism_percentage'=>$political_risk_terrorism_percentage,'aa_membership'=>$aa_membership
+            );
+    
+}
+
+//get premium for Motor psv insurance for uber, taxify, little cab and institutional buses and vans
+function get_premium_for_motor_psv_insurance_for_uber($v_percentage,$n_percentage,$vehicle_value,$number_of_passengers)
+{
+    $premium_is=0;
+    
+              $w_is=$v_percentage* $vehicle_value;
+                                                $x_is=$n_percentage* $number_of_passengers;
+                                               
+						  $y_is=$x_is +$w_is;
+                                                  $z_is=$y_is*(0.45/100);
+                                                 
+                                                  $premium_is=$z_is+$y_is+40;
+            
+    return $premium_is;
+}
+
+//get Excess protector for Motor psv insurance for uber, taxify, little cab and institutional buses and vans
+function get_excess_protector_for_motor_psv_insurance_for_uber($excess_protector_multiplier,$vehicle_value,$minimum_excess_protector)
+{
+    $total_is=0;
+    
+              $k_is=$excess_protector_multiplier* $vehicle_value;
+                                     $l_is=(0.45/100)* $k_is;
+                                     $total=$l_is+$k_is;
+                                     $total_is=$total<=$minimum_excess_protector?$minimum_excess_protector:$total;
+                                      
+            
+    return $total_is;
+}
+
+
+
+//make shopping kart for Wiba and employers liability insurance policy
+function make_shoping_kart_for_wiba_and_employers_liability($kart_item_array)
+{
+    //echo json_encode($kart_item_array);
+    
+    
+    
+        foreach ($kart_item_array as $key => $value_items) 
+        {
+            $item_id=$key;//item id
+        
+            $policy_number=$value_items['policy_number'];
+            
+            $selected_employee_categories=$value_items['selected_employee_categories'];
+            $elected_empoloyee_liability_option=$value_items['elected_empoloyee_liability_option'];
+            
+            $employee_liability_options=$value_items['employee_liability_options'];
+            $wiba_categories=$value_items['wiba_categories'];
+            
+            
+            $company_name=$value_items['company_name'];
+            $expiry_duration_days=$value_items['expiry_duration_days'];
+            $logo_url=$value_items['logo_url'];
+            $time_stamp=$value_items['time_stamp'];
+        }
+            
+        
+            $table='';
+    
+            $total=0;
+    
+            $total= 0;
+            $table.='<h3>'.$company_name.'</h3>';
+            $table.='<h2>Employee information</h2>';
+            $table.='<table>';
+            $table.='<tr><th>Employee id</th><th>Category name</th><th>Monthly salary</th></tr>';
+            
+            foreach ($selected_employee_categories as $employee_details) 
+            {
+                $table.='<tr><td>'.$employee_details['employee_id'].'</td><td>'.$employee_details['category_name'].'</td><td>KES. '.number_format($employee_details['monthly_salary']).'</td></tr>';
+                $total+=get_premium_for_wiba_and_employers_liability($employee_details['category_name'],$employee_details['monthly_salary'],$wiba_categories);
+            }
+            
+            $v_is=$total*(0.45/100);
+            $premium=$v_is+$total+40;
+                        
+            
+            $table.='<tr><th></th><th>Premium</th><th>KES. '.number_format($premium).'</th></tr>';
+            
+            $option_total=$elected_empoloyee_liability_option==''? 0: get_liability_option_for_wiba_and_employers_liability($elected_empoloyee_liability_option,$employee_liability_options,$premium);
+            $table.='<tr><th>Selected option liability</th><th>'.$elected_empoloyee_liability_option.'</th><th>KES. '.number_format($option_total).'</th></tr>';
+                    
+           
+                    
+           
+     $table.='<tr><th></th><th>TOTAL</th><td>KES. '.number_format($premium+$option_total).'</td></tr>';
+     $table.='</table>';
+     
+      
+            
+            
+    return array('html'=>$table,'item_id'=>$item_id,'policy_number'=>$policy_number,'selected_employee_categories'=>$selected_employee_categories,'elected_empoloyee_liability_option'=>$elected_empoloyee_liability_option,'employee_liability_options'=>$employee_liability_options,'wiba_categories'=>$wiba_categories );
+    
+}
+
+//get premium for Wiba and employers liability insurance policy
+function get_premium_for_wiba_and_employers_liability($category_name,$monthly_salary,$wiba_categories)
+{
+    $premium_is=0;
+    
+    //look for multiplier
+    foreach ($wiba_categories as $wiba_category) 
+    {
+        if($wiba_category['category_name']==$category_name)
+        {
+            $premium_is=$wiba_category['category_multiplier']*$monthly_salary*12;
+            return $premium_is;
+        }
+    }
+           
+            
+    return $premium_is;
+}
+
+
+//get option liability for Wiba and employers liability insurance policy
+function get_liability_option_for_wiba_and_employers_liability($elected_empoloyee_liability_option,$employee_liability_options,$premium)
+{
+    $premium_is=0;
+    
+    //look for multiplier
+    foreach ($employee_liability_options as $employee_liability_option) 
+    {
+        if($employee_liability_option['option_name']==$elected_empoloyee_liability_option)
+        {
+            
+                            $u_is=$premium*$employee_liability_option['multiplier'];
+                            $t_is=$u_is*(0.45/100);
+
+                            return ($u_is+$t_is+40);
+        }
+    }
+           
+            
+    return $premium_is;
+}
+
+//get political violence protector for Motor psv insurance for uber, taxify, little cab and institutional buses and vans
+function get_political_violence_protector_for_motor_psv_insurance_for_uber($political_violence_multiplier,$vehicle_value,$minimum_political_violence)
+{
+    $total_is=0;
+    
+              $n_is=$political_violence_multiplier* $vehicle_value;
+                                     $q_is=(0.45/100)* $n_is;
+                                     $total=$q_is+$n_is;
+                                     
+                                     $total_is=$total<=$minimum_political_violence?$minimum_political_violence:$total;
+                                      
+            
+    return $total_is;
+}
+
+//get premium for Product liability insurance
+function get_premium_for_product_liability($limit,$premium_percentage)
+{
+    $premium_is=0;
+            $x_is=$limit*$premium_percentage;
+            $y_is=$x_is *(0.45/100);
+            $premium_is=$x_is+$y_is+40;
+            
+    return $premium_is;
+}
+
+
+//get premium for Goods in transit insurance
+function get_premium_for_goods_in_transit($a_percentage,$b_percentage,$estimated_carry_on_any_trip,$total_annual_estimated_carry_all_trips)
+{
+    $premium_is=0;
+            $v_is=$a_percentage*$estimated_carry_on_any_trip;
+                                            $w_is=$b_percentage*$total_annual_estimated_carry_all_trips;
+                                            
+                                            $x_is=$v_is+$w_is;
+                                            
+                                            $y_is=$x_is*(0.45/100);
+                                            
+                                                    
+                                                
+                                               $premium_is=$x_is+$y_is+40;
+            
+    return $premium_is;
+}
+
+
+//get premium for public liability
+function get_premium_for_public_liability($limit,$premium_percentage)
+{
+    $premium_is=0;
+           $m_is=$limit*$premium_percentage;
+            $n_is=$m_is*(0.45/100);
+            $premium_is=$n_is+$m_is+40; 
+            
+    return $premium_is;
+}
+
 //get premium using option name from maternity,optical,dental options array
 function get_premium_using_option_name_from_maternity_optical_dental_array($option_name_is,$options_array)
 {
@@ -2900,6 +3303,177 @@ function check_out_kart_with_email($shopping_kart,$email,$source,$full_names=nul
                             {
                                     $message_send="Client ".$full_names.": ".$email.", selected out patient insurance policy ".$actual_item['policy_number']." insured at ".$actual_item['company_name']." on ".return_date_function((time()*1000) );
                                     $header_email_is=$full_names.": ".$email." new selected out patient insurance policy ".return_date_function((time()*1000));
+                                    send_email_free_message(emai_address_for_admin(),$header_email_is,$message_send,'/le_functions/functions.php'); 
+
+                            }
+                            //$returned_json_decoded= json_decode($returned_json,true);//decode
+                            
+                           
+                            //$check_is=$returned_json_decoded["check"];//check
+
+                            //$message_is=$returned_json_decoded["message"];//message
+                    }
+
+                break;
+                
+                case 12://Public liability insurance
+                    foreach ($kart_item_array as $value) 
+                    {
+                        $item=make_shoping_kart_for_public_liability($value);
+                        
+                            $url_is=the_api_authentication_api_url_is()."denkimAPILogic/MainPackages.PolicySelectPublicLiabilityInsurance";
+                            
+                            $myvars='email='.$email.'&policy_number='.$item['policy_number'].'&limit='.$item['limit'];
+                            
+                            $returned_json=send_curl_post($url_is,$myvars,$header_array);//cap output
+                            
+                              foreach ($value as $kart_value => $actual_item){}
+                            
+                            if(!is_null($full_names) )
+                            {
+                                    $message_send="Client ".$full_names.": ".$email.", selected public liability insurance policy ".$actual_item['policy_number']." insured at ".$actual_item['company_name']." on ".return_date_function((time()*1000) );
+                                    $header_email_is=$full_names.": ".$email." new selected public liability insurance policy ".return_date_function((time()*1000));
+                                    send_email_free_message(emai_address_for_admin(),$header_email_is,$message_send,'/le_functions/functions.php'); 
+
+                            }
+                            //$returned_json_decoded= json_decode($returned_json,true);//decode
+                            
+                           
+                            //$check_is=$returned_json_decoded["check"];//check
+
+                            //$message_is=$returned_json_decoded["message"];//message
+                    }
+
+                break;
+                
+                case 13://Goods in transit insurance
+                    foreach ($kart_item_array as $value) 
+                    {
+                        $item=make_shoping_kart_for_goods_in_transit($value);
+                        
+                            $url_is=the_api_authentication_api_url_is()."denkimAPILogic/MainPackages.PolicySelectGoodsInTransitInsurance";
+                            
+                           
+                            $myvars='email='.$email.'&policy_number='.$item['policy_number']
+                                    .'&estimated_carry_on_any_trip='.$item['estimated_carry_on_any_trip']
+                                    .'&total_annual_estimated_carry_all_trips='.$item['total_annual_estimated_carry_all_trips']
+                                    .'&geographical_area='.$item['geographical_area']
+                                    .'&types_of_goods='.$item['types_of_goods']
+                                    .'&mode_of_transport='.$item['mode_of_transport']
+                                    ;
+                            
+                            $returned_json=send_curl_post($url_is,$myvars,$header_array);//cap output
+                            
+                              foreach ($value as $kart_value => $actual_item){}
+                            
+                            if(!is_null($full_names) )
+                            {
+                                    $message_send="Client ".$full_names.": ".$email.", selected goods in transit insurance policy ".$actual_item['policy_number']." insured at ".$actual_item['company_name']." on ".return_date_function((time()*1000) );
+                                    $header_email_is=$full_names.": ".$email." new selected goods in transit insurance policy ".return_date_function((time()*1000));
+                                    send_email_free_message(emai_address_for_admin(),$header_email_is,$message_send,'/le_functions/functions.php'); 
+
+                            }
+                            //$returned_json_decoded= json_decode($returned_json,true);//decode
+                            
+                           
+                            //$check_is=$returned_json_decoded["check"];//check
+
+                            //$message_is=$returned_json_decoded["message"];//message
+                    }
+
+                break;
+                
+                 case 14://Product liability insurance
+                     foreach ($kart_item_array as $value) 
+                    {
+                        $item=make_shoping_kart_for_product_liability($value);
+                        
+                            $url_is=the_api_authentication_api_url_is()."denkimAPILogic/MainPackages.PolicySelectProductLiabilityInsurance";
+                            
+                            
+                            $myvars='email='.$email.'&policy_number='.$item['policy_number'].'&limit='.$item['limit'].'&types_of_goods='.$item['types_of_goods'].'&product_type='.$item['product_type'];
+                            
+                            $returned_json=send_curl_post($url_is,$myvars,$header_array);//cap output
+                            
+                              foreach ($value as $kart_value => $actual_item){}
+                            
+                            if(!is_null($full_names) )
+                            {
+                                    $message_send="Client ".$full_names.": ".$email.", selected product liability insurance policy ".$actual_item['policy_number']." insured at ".$actual_item['company_name']." on ".return_date_function((time()*1000) );
+                                    $header_email_is=$full_names.": ".$email." new selected product liability insurance policy ".return_date_function((time()*1000));
+                                    send_email_free_message(emai_address_for_admin(),$header_email_is,$message_send,'/le_functions/functions.php'); 
+
+                            }
+                            //$returned_json_decoded= json_decode($returned_json,true);//decode
+                            
+                           
+                            //$check_is=$returned_json_decoded["check"];//check
+
+                            //$message_is=$returned_json_decoded["message"];//message
+                    }
+
+                break;
+                
+                case 15://Motor psv insurance for uber, taxify, little cab and institutional buses and vans
+                     foreach ($kart_item_array as $value) 
+                    {
+                        $item=make_shoping_kart_for_motor_psv_insurance_for_uber($value);
+                        
+                            $url_is=the_api_authentication_api_url_is()."denkimAPILogic/MainPackages.PolicySelectMotorPsvUberTaxiInsurance";
+                            
+                            
+                            $myvars='email='.$email.'&policy_number='.$item['policy_number']
+                                    .'&vehicle_value='.$item['vehicle_value']
+                                    .'&vehicle_registration_details='.$item['vehicle_registration_details']
+                                    .'&number_of_passengers='.$item['number_of_passengers']
+                                    .'&excess_protector_percentage='.$item['excess_protector_percentage']
+                                    .'&political_risk_terrorism_percentage='.$item['political_risk_terrorism_percentage']
+                                    .'&aa_membership='.$item['aa_membership']
+                                    ;
+                            
+                            $returned_json=send_curl_post($url_is,$myvars,$header_array);//cap output
+                            
+                              foreach ($value as $kart_value => $actual_item){}
+                            
+                            if(!is_null($full_names) )
+                            {
+                                    $message_send="Client ".$full_names.": ".$email.", selected motor psv insurance for uber, taxify, little cab and institutional buses and vans policy ".$actual_item['policy_number']." insured at ".$actual_item['company_name']." on ".return_date_function((time()*1000) );
+                                    $header_email_is=$full_names.": ".$email." new selected motor psv insurance for uber, taxify, little cab and institutional buses and vans policy ".return_date_function((time()*1000));
+                                    send_email_free_message(emai_address_for_admin(),$header_email_is,$message_send,'/le_functions/functions.php'); 
+
+                            }
+                            //$returned_json_decoded= json_decode($returned_json,true);//decode
+                            
+                           
+                            //$check_is=$returned_json_decoded["check"];//check
+
+                            //$message_is=$returned_json_decoded["message"];//message
+                    }
+
+                break;
+                
+                case 16://Wiba and employers liability insurance policy
+                     foreach ($kart_item_array as $value) 
+                    {
+                        $item=make_shoping_kart_for_wiba_and_employers_liability($value);
+                        
+                            $url_is=the_api_authentication_api_url_is()."denkimAPILogic/MainPackages.PolicySelectWibaInsurance";
+                            
+                             
+                            
+                            $myvars='email='.$email.'&policy_number='.$item['policy_number']
+                                    .'&selected_employee_categories='.json_encode($item['selected_employee_categories'])
+                                    .'&elected_empoloyee_liability_option='.$item['elected_empoloyee_liability_option']
+                                    ;
+                            
+                            $returned_json=send_curl_post($url_is,$myvars,$header_array);//cap output
+                            
+                              foreach ($value as $kart_value => $actual_item){}
+                            
+                            if(!is_null($full_names) )
+                            {
+                                    $message_send="Client ".$full_names.": ".$email.", selected wiba and employers liability insurance policy ".$actual_item['policy_number']." insured at ".$actual_item['company_name']." on ".return_date_function((time()*1000) );
+                                    $header_email_is=$full_names.": ".$email." new selected wiba and employers liability insurance policy ".return_date_function((time()*1000));
                                     send_email_free_message(emai_address_for_admin(),$header_email_is,$message_send,'/le_functions/functions.php'); 
 
                             }
