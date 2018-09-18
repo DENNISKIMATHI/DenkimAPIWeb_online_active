@@ -275,7 +275,7 @@ if(isset($_GET['pn']) && !empty($_GET['pn']) )
             <input type="number" id="employee_salary_for_use_is"/><br> 
             
             <select  name="list_of_categories" id="list_of_categories" onchange="add_employees_for_wiba_plan_b()">
-                <option  value="">Select a category</option>
+                <option  value="">Select job category</option>
             <?php
                     foreach ($wiba_categories as $value) 
                     {
