@@ -106,7 +106,7 @@ if(isset($_GET['e']) && !empty($_GET['e']) && isset($_GET['f']) && !empty($_GET[
                                 ////login and send message
                                 $message_is_is=login_behalf_of_client($email_address,'/senior_administrator/policy_activate_deactivate.php');
                                              
-                                $message_send="Hello ".$full_names.", Motor policy to be insured by ".$returned_array['company_name']." has been selected. The policy will be activated after payment of KES. ". number_format($returned_array['total'])." is made. Payment to be done via Denkim Insurance Portal. Click the following link to log in and pay. ".$message_is_is;
+                                $message_send="Hello ".$full_names.", Product liability policy to be insured by ".$returned_array['company_name']." has been selected. The policy will be activated after payment of KES. ". number_format($returned_array['total'])." is made. Payment to be done via Denkim Insurance Portal. Click the following link to log in and pay. ".$message_is_is;
 
                                 //send message to notify on claim
                                 send_sms_message($_SESSION['session_key'],$_SESSION['cookie'],$message_send,$phone_number,'/senior_administrator/view_user_product_liability_insurance.php');

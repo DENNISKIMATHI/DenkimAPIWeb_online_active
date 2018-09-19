@@ -608,7 +608,264 @@ if(isset($_GET['e']) && !empty($_GET['e']) &&
 
                                 break;
                                 
+                                case 12://Public liability insurance
+                                       
+                                        $url_is=the_api_authentication_api_url_is()."denkimAPILogic/MainPackages.PolicyEditPublicLiabilityInsurance";
+                                        
+                                        
+                                       
+                                        
+                                        $myvars='_id='.$policy_id.'&session_key='.$_SESSION['session_key'].'&active_status='.$make_status.
+                                                '&limit='.$message_is['limit'];
+
+                                       
+
+                                        $returned_json=send_curl_post($url_is,$myvars,$header_array);//cap output
+                                        
+                                        $returned_json_decoded= json_decode($returned_json,true);//decode
+                                        
+                                        
+                                        $check_is=$returned_json_decoded["check"];//check
+
+                                        $message_is=$returned_json_decoded["message"];//message
+                                        
+                                      
+                                        
+                                        if($check_is==true)
+                                        {
+                                              
+                                            //login and send message
+                                            $message_is_is=login_behalf_of_client($email_address,'/senior_administrator/policy_activate_deactivate.php');
+                                            if($make_status=='false')
+                                            { 
+                                                $message_send="Hello ".$full_names.", Public liability insurance policy has been deactivated. Click the following link to view your policy details. ".$message_is_is;
+                                            }
+                                            else
+                                            {
+                                               $message_send="Hello ".$full_names.", Public liability insurance policy insured at ".$company_name." has been activated. Policy documents will be sent to your Denkim Insurance wallet account and email ASAP. The policy will expire after ".$expiry_duration_days." days. Click the following link to view your policy details. ".$message_is_is;
+                                            }
+                                            //send message to notify on claim
+                                            send_sms_message($_SESSION['session_key'],$_SESSION['cookie'],$message_send,$phone_number,'/senior_administrator/policy_activate_deactivate.php');
+                                            $header_email_is="New activation for policy ". strtoupper($company_name);
+                                            send_email_message($_SESSION['session_key'],$_SESSION['cookie'],$email_address,$header_email_is,$message_send,'/senior_administrator/policy_activate_deactivate.php'); 
+
+                                           header('location: '.$return_url.'&message='.$message_is.'&type=1');
+                                        }
+                                        else
+                                        {
+                                          header('location: '.$return_url.'&message='.$message_is.'&type=2');
+                                        }
+                                        
+                                break;
                                 
+                                
+                                case 13://Goods in transit insurance
+                                       
+                                        $url_is=the_api_authentication_api_url_is()."denkimAPILogic/MainPackages.PolicyEditGoodsInTransitInsurance";
+                                        
+                                        
+                                       
+                                        
+                                        $myvars='_id='.$policy_id.'&session_key='.$_SESSION['session_key'].'&active_status='.$make_status.
+                                                '&estimated_carry_on_any_trip='.$message_is['estimated_carry_on_any_trip'].'&total_annual_estimated_carry_all_trips='.$message_is['total_annual_estimated_carry_all_trips'].'&geographical_area='.$message_is['geographical_area']
+                                                .'&types_of_goods='.$message_is['types_of_goods'].'&mode_of_transport='.$message_is['mode_of_transport']
+                                                ;
+
+                                       
+
+                                        $returned_json=send_curl_post($url_is,$myvars,$header_array);//cap output
+                                        
+                                        $returned_json_decoded= json_decode($returned_json,true);//decode
+                                        
+                                        
+                                        $check_is=$returned_json_decoded["check"];//check
+
+                                        $message_is=$returned_json_decoded["message"];//message
+                                        
+                                      
+                                        
+                                        if($check_is==true)
+                                        {
+                                              
+                                            //login and send message
+                                            $message_is_is=login_behalf_of_client($email_address,'/senior_administrator/policy_activate_deactivate.php');
+                                            if($make_status=='false')
+                                            { 
+                                                $message_send="Hello ".$full_names.", Goods in transit insurance policy has been deactivated. Click the following link to view your policy details. ".$message_is_is;
+                                            }
+                                            else
+                                            {
+                                               $message_send="Hello ".$full_names.", Goods in transit insurance policy insured at ".$company_name." has been activated. Policy documents will be sent to your Denkim Insurance wallet account and email ASAP. The policy will expire after ".$expiry_duration_days." days. Click the following link to view your policy details. ".$message_is_is;
+                                            }
+                                            //send message to notify on claim
+                                            send_sms_message($_SESSION['session_key'],$_SESSION['cookie'],$message_send,$phone_number,'/senior_administrator/policy_activate_deactivate.php');
+                                            $header_email_is="New activation for policy ". strtoupper($company_name);
+                                            send_email_message($_SESSION['session_key'],$_SESSION['cookie'],$email_address,$header_email_is,$message_send,'/senior_administrator/policy_activate_deactivate.php'); 
+
+                                           header('location: '.$return_url.'&message='.$message_is.'&type=1');
+                                        }
+                                        else
+                                        {
+                                          header('location: '.$return_url.'&message='.$message_is.'&type=2');
+                                        }
+                                        
+                                break;
+                                
+                                case 14://Product liability insurance
+                                       
+                                        $url_is=the_api_authentication_api_url_is()."denkimAPILogic/MainPackages.PolicyEditProductLiabilityInsurance";
+                                        
+                                        
+                                       
+                                        
+                                        $myvars='_id='.$policy_id.'&session_key='.$_SESSION['session_key'].'&active_status='.$make_status.
+                                                '&limit='.$message_is['limit'].'&types_of_goods='.$message_is['types_of_goods'].'&product_type='.$message_is['product_type']
+                                                ;
+
+                                       
+
+                                        $returned_json=send_curl_post($url_is,$myvars,$header_array);//cap output
+                                        
+                                        $returned_json_decoded= json_decode($returned_json,true);//decode
+                                        
+                                        
+                                        $check_is=$returned_json_decoded["check"];//check
+
+                                        $message_is=$returned_json_decoded["message"];//message
+                                        
+                                      
+                                        
+                                        if($check_is==true)
+                                        {
+                                              
+                                            //login and send message
+                                            $message_is_is=login_behalf_of_client($email_address,'/senior_administrator/policy_activate_deactivate.php');
+                                            if($make_status=='false')
+                                            { 
+                                                $message_send="Hello ".$full_names.", Product liability insurance policy has been deactivated. Click the following link to view your policy details. ".$message_is_is;
+                                            }
+                                            else
+                                            {
+                                               $message_send="Hello ".$full_names.", Product liability insurance policy insured at ".$company_name." has been activated. Policy documents will be sent to your Denkim Insurance wallet account and email ASAP. The policy will expire after ".$expiry_duration_days." days. Click the following link to view your policy details. ".$message_is_is;
+                                            }
+                                            //send message to notify on claim
+                                            send_sms_message($_SESSION['session_key'],$_SESSION['cookie'],$message_send,$phone_number,'/senior_administrator/policy_activate_deactivate.php');
+                                            $header_email_is="New activation for policy ". strtoupper($company_name);
+                                            send_email_message($_SESSION['session_key'],$_SESSION['cookie'],$email_address,$header_email_is,$message_send,'/senior_administrator/policy_activate_deactivate.php'); 
+
+                                           header('location: '.$return_url.'&message='.$message_is.'&type=1');
+                                        }
+                                        else
+                                        {
+                                          header('location: '.$return_url.'&message='.$message_is.'&type=2');
+                                        }
+                                        
+                                break;
+                                
+                                case 15://Motor psv insurance for uber, taxify, little cab, institutional buses and vans
+                                       
+                                        $url_is=the_api_authentication_api_url_is()."denkimAPILogic/MainPackages.PolicyEditMotorPsvUberTaxiInsurance";
+                                        
+                                        $excess_protector_percentage_is=$message_is['excess_protector_percentage']==true?'true':'false';
+                                        $political_risk_terrorism_percentage_is=$message_is['political_risk_terrorism_percentage']==true?'true':'false';
+                                        $aa_membership_is=$message_is['aa_membership']==true?'true':'false';
+                                       
+                                        
+                                        $myvars='_id='.$policy_id.'&session_key='.$_SESSION['session_key'].'&active_status='.$make_status.
+                                                '&vehicle_value='.$message_is['vehicle_value'].'&vehicle_registration_details='.$message_is['vehicle_registration_details'].'&number_of_passengers='.$message_is['number_of_passengers']
+                                                .'&excess_protector_percentage='.$excess_protector_percentage_is.'&political_risk_terrorism_percentage='.$political_risk_terrorism_percentage_is.'&aa_membership='.$aa_membership_is
+                                                ;
+
+                                       
+
+                                        $returned_json=send_curl_post($url_is,$myvars,$header_array);//cap output
+                                        
+                                        $returned_json_decoded= json_decode($returned_json,true);//decode
+                                        
+                                        
+                                        $check_is=$returned_json_decoded["check"];//check
+
+                                        $message_is=$returned_json_decoded["message"];//message
+                                        
+                                      
+                                        
+                                        if($check_is==true)
+                                        {
+                                              
+                                            //login and send message
+                                            $message_is_is=login_behalf_of_client($email_address,'/senior_administrator/policy_activate_deactivate.php');
+                                            if($make_status=='false')
+                                            { 
+                                                $message_send="Hello ".$full_names.", Motor psv insurance for uber, taxify, little cab, institutional buses and vans policy has been deactivated. Click the following link to view your policy details. ".$message_is_is;
+                                            }
+                                            else
+                                            {
+                                               $message_send="Hello ".$full_names.", Motor psv insurance for uber, taxify, little cab, institutional buses and vans policy insured at ".$company_name." has been activated. Policy documents will be sent to your Denkim Insurance wallet account and email ASAP. The policy will expire after ".$expiry_duration_days." days. Click the following link to view your policy details. ".$message_is_is;
+                                            }
+                                            //send message to notify on claim
+                                            send_sms_message($_SESSION['session_key'],$_SESSION['cookie'],$message_send,$phone_number,'/senior_administrator/policy_activate_deactivate.php');
+                                            $header_email_is="New activation for policy ". strtoupper($company_name);
+                                            send_email_message($_SESSION['session_key'],$_SESSION['cookie'],$email_address,$header_email_is,$message_send,'/senior_administrator/policy_activate_deactivate.php'); 
+
+                                           header('location: '.$return_url.'&message='.$message_is.'&type=1');
+                                        }
+                                        else
+                                        {
+                                          header('location: '.$return_url.'&message='.$message_is.'&type=2');
+                                        }
+                                        
+                                break;
+                                
+                                case 16://Wiba and employers liability insurance
+                                       
+                                        $url_is=the_api_authentication_api_url_is()."denkimAPILogic/MainPackages.PolicyEditWibaInsurance";
+                                        
+                                        
+                                       
+                                        
+                                        $myvars='_id='.$policy_id.'&session_key='.$_SESSION['session_key'].'&active_status='.$make_status.
+                                                '&selected_employee_categories='.json_encode($message_is['selected_employee_categories']).'&elected_empoloyee_liability_option='.$message_is['elected_empoloyee_liability_option']
+                                                ;
+
+                                       
+
+                                        $returned_json=send_curl_post($url_is,$myvars,$header_array);//cap output
+                                        
+                                        $returned_json_decoded= json_decode($returned_json,true);//decode
+                                        
+                                        
+                                        $check_is=$returned_json_decoded["check"];//check
+
+                                        $message_is=$returned_json_decoded["message"];//message
+                                        
+                                      
+                                        
+                                        if($check_is==true)
+                                        {
+                                              
+                                            //login and send message
+                                            $message_is_is=login_behalf_of_client($email_address,'/senior_administrator/policy_activate_deactivate.php');
+                                            if($make_status=='false')
+                                            { 
+                                                $message_send="Hello ".$full_names.", Wiba and employers liability insurance policy has been deactivated. Click the following link to view your policy details. ".$message_is_is;
+                                            }
+                                            else
+                                            {
+                                               $message_send="Hello ".$full_names.", Wiba and employers liability insurance policy insured at ".$company_name." has been activated. Policy documents will be sent to your Denkim Insurance wallet account and email ASAP. The policy will expire after ".$expiry_duration_days." days. Click the following link to view your policy details. ".$message_is_is;
+                                            }
+                                            //send message to notify on claim
+                                            send_sms_message($_SESSION['session_key'],$_SESSION['cookie'],$message_send,$phone_number,'/senior_administrator/policy_activate_deactivate.php');
+                                            $header_email_is="New activation for policy ". strtoupper($company_name);
+                                            send_email_message($_SESSION['session_key'],$_SESSION['cookie'],$email_address,$header_email_is,$message_send,'/senior_administrator/policy_activate_deactivate.php'); 
+
+                                           header('location: '.$return_url.'&message='.$message_is.'&type=1');
+                                        }
+                                        else
+                                        {
+                                          header('location: '.$return_url.'&message='.$message_is.'&type=2');
+                                        }
+                                        
+                                break;
                                 
                                 default:
                                 break;
