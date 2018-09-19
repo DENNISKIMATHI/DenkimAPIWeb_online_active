@@ -76,7 +76,7 @@ if(isset($_GET['e']) && !empty($_GET['e']) && isset($_GET['f']) && !empty($_GET[
                             
                 
                             $returned_array=  make_maternity_policy_view($array_to_print);
-                            $delete_link='policy_delete_user_type_specific.php?_id='.$policy_id.'&e='.$email_address.'&f='.$full_names.'&p='.$policy_number.'&s=view_user_maternity_insurance.php';
+                            $delete_link='policy_delete_user_type_specific.php?_id='.$policy_id.'&e='.$email_address.'&f='.$full_names.'&p='.$policy_number.'&s=view_user_maternity_insurance.php&phn='.$phone_number;
                             $full_delete_link='<span id="red_text_span"><a href="'.$delete_link.'" title="Delete '.$policy_number.' for '.$full_names.'">Delete</a></span>';
                             //activate
                             $activate_deactivate_link='policy_activate_deactivate.php?s=view_user_maternity_insurance.php&t='.$type.'&e='.$email_address.'&f='.$full_names.'&pi='.$returned_array['policy_id'].'&as='.$returned_array['status'].'&cn='.$returned_array['company_name'].'&p='.$phone_number.'&ex='.$returned_array['expiry_duration_days'];

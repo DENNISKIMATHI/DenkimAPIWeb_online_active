@@ -1720,6 +1720,128 @@ function make_shoping_kart_for_public_liability($kart_item_array)
     
 }
 
+
+//make Public liability view
+function make_public_liability_policy_view($value_items)
+{
+    
+    
+    $table='';
+    
+    
+            $policy_id=$value_items['policy_id'];
+            $policy_number=$value_items['policy_number'];
+            $limit=$value_items['limit'];
+            $active_status=$value_items['active_status'];
+            $selected_policy_time_stamp=$value_items['selected_policy_time_stamp'];
+            
+            $company_name=$value_items['company_name'];
+            $premium_percentage=$value_items['premium_percentage'];
+            $minimum=$value_items['minimum'];
+            $expiry_duration_days=$value_items['expiry_duration_days'];
+            $logo_url=$value_items['logo_url'];
+            $html_url=$value_items['html_url'];
+            $company_time_stamp=$value_items['company_time_stamp'];
+            
+       
+     $premium=get_premium_for_public_liability($limit,$premium_percentage);
+     
+     
+    
+    $seconds_in_a_day=3600*24; 
+   
+    $seconds_since_policy_was_selected=time()-($selected_policy_time_stamp/1000);
+    $days_since_policy_was_selected=(int)($seconds_since_policy_was_selected/$seconds_in_a_day);
+    $diff=$expiry_duration_days-$days_since_policy_was_selected;        
+    
+    $active_status_is=$active_status==true? 'Active': 'Inactive';
+    
+    $total_is=$premium;
+    
+    $table.='<h3>'.$company_name.'</h3>';
+    $table.='<h2>Limit: KES. '.number_format($limit).'</h2>';
+    $table.='<table>';
+    $table.='<tr><th>Premium</th><td>KES. '.number_format($premium).'</td></tr>';
+    $table.='<tr><th>TOTAL</th><th>KES. '.number_format($total_is).'</th></tr>';
+    $table.='<tr><th>Policy number</th><td>'.$policy_number.'</td></tr>';
+    $table.='<tr><th>Policy date</th><td>'.  return_date_function($selected_policy_time_stamp).'</td></tr>';
+    $table.='<tr><th>Expires in</th><td>'.$diff.' day(s)</td></tr>';
+    $table.='<tr><th>Status</th><th>'.$active_status_is.'</th></tr>';
+    $table.='</table>';
+    
+    return array('html'=>$table,'status'=>strtolower($active_status_is),'total'=>$total_is,'policy_id'=>$policy_id,'policy_number'=>$policy_number,'company_name'=>$company_name,'policy_date'=>$selected_policy_time_stamp,'expiry_duration_days'=>$expiry_duration_days);
+    
+   
+}
+
+
+//make Goods in transit view
+function make_goods_in_transit_policy_view($value_items)
+{
+    
+    
+    $table='';
+    
+    
+            $policy_id=$value_items['policy_id'];
+            $policy_number=$value_items['policy_number'];
+            $estimated_carry_on_any_trip=$value_items['estimated_carry_on_any_trip'];
+            $total_annual_estimated_carry_all_trips=$value_items['total_annual_estimated_carry_all_trips'];
+            $geographical_area=$value_items['geographical_area'];
+            $types_of_goods=$value_items['types_of_goods'];
+            $mode_of_transport=$value_items['mode_of_transport'];
+            $active_status=$value_items['active_status'];
+            $selected_policy_time_stamp=$value_items['selected_policy_time_stamp'];
+            
+            $company_name=$value_items['company_name'];
+            $a_percentage=$value_items['a_percentage'];
+            $b_percentage=$value_items['b_percentage'];
+            $expiry_duration_days=$value_items['expiry_duration_days'];
+            $logo_url=$value_items['logo_url'];
+            $html_url=$value_items['html_url'];
+            $company_time_stamp=$value_items['company_time_stamp'];
+            
+       
+        
+        
+    
+    
+     
+     $premium=get_premium_for_goods_in_transit($a_percentage,$b_percentage,$estimated_carry_on_any_trip,$total_annual_estimated_carry_all_trips);
+     
+     
+    
+    $seconds_in_a_day=3600*24; 
+   
+    $seconds_since_policy_was_selected=time()-($selected_policy_time_stamp/1000);
+    $days_since_policy_was_selected=(int)($seconds_since_policy_was_selected/$seconds_in_a_day);
+    $diff=$expiry_duration_days-$days_since_policy_was_selected;        
+    
+    $active_status_is=$active_status==true? 'Active': 'Inactive';
+    
+    $total_is=$premium;
+    
+    $table.='<h3>'.$company_name.'</h3>';
+    $table.='<table>';
+    $table.='<tr><th>Geographical area</th><td>'.$geographical_area.'</td></tr>';
+    $table.='<tr><th>Types of goods</th><td>'.$types_of_goods.'</td></tr>';
+    $table.='<tr><th>Mode of transport</th><td>'.$mode_of_transport.'</td></tr>';
+     $table.='<tr><th>Estimated carry on any trip</th><td>KES. '.number_format($estimated_carry_on_any_trip).'</td></tr>';
+    $table.='<tr><th>Total annual estimated carry all trips</th><td>KES. '.number_format($total_annual_estimated_carry_all_trips).'</td></tr>';
+    $table.='<tr><th>Premium</th><td>KES. '.number_format($premium).'</td></tr>';
+    
+    $table.='<tr><th>TOTAL</th><th>KES. '.number_format($total_is).'</th></tr>';
+    $table.='<tr><th>Policy number</th><td>'.$policy_number.'</td></tr>';
+    $table.='<tr><th>Policy date</th><td>'.  return_date_function($selected_policy_time_stamp).'</td></tr>';
+    $table.='<tr><th>Expires in</th><td>'.$diff.' day(s)</td></tr>';
+    $table.='<tr><th>Status</th><th>'.$active_status_is.'</th></tr>';
+    $table.='</table>';
+    
+    return array('html'=>$table,'status'=>strtolower($active_status_is),'total'=>$total_is,'policy_id'=>$policy_id,'policy_number'=>$policy_number,'company_name'=>$company_name,'policy_date'=>$selected_policy_time_stamp,'expiry_duration_days'=>$expiry_duration_days);
+    
+   
+}
+
 //make shopping kart for Goods in transit insurance
 function make_shoping_kart_for_goods_in_transit($kart_item_array)
 {
@@ -1772,6 +1894,66 @@ function make_shoping_kart_for_goods_in_transit($kart_item_array)
     
 }
 
+//make Product liability insurance view
+function make_product_liability_policy_view($value_items)
+{
+    
+    
+    $table='';
+    
+    
+            $policy_id=$value_items['policy_id'];
+            $policy_number=$value_items['policy_number'];
+            $limit=$value_items['limit'];
+            $types_of_goods=$value_items['types_of_goods'];
+            $product_type=$value_items['product_type'];
+            $active_status=$value_items['active_status'];
+            $selected_policy_time_stamp=$value_items['selected_policy_time_stamp'];
+            
+            $company_name=$value_items['company_name'];
+            $premium_percentage=$value_items['premium_percentage'];
+            $minimum=$value_items['minimum'];
+            $expiry_duration_days=$value_items['expiry_duration_days'];
+            $logo_url=$value_items['logo_url'];
+            $html_url=$value_items['html_url'];
+            $company_time_stamp=$value_items['company_time_stamp'];
+            
+       
+        
+        
+    
+    
+     
+     $premium= get_premium_for_product_liability($limit,$premium_percentage);
+     
+     
+    
+    $seconds_in_a_day=3600*24; 
+   
+    $seconds_since_policy_was_selected=time()-($selected_policy_time_stamp/1000);
+    $days_since_policy_was_selected=(int)($seconds_since_policy_was_selected/$seconds_in_a_day);
+    $diff=$expiry_duration_days-$days_since_policy_was_selected;        
+    
+    $active_status_is=$active_status==true? 'Active': 'Inactive';
+    
+    $total_is=$premium;
+    
+    $table.='<h3>'.$company_name.'</h3>';
+    $table.='<table>';
+    $table.='<tr><th>Type of Goods</th><td>'.$types_of_goods.'</td></tr>';
+    $table.='<tr><th>Limit</th><td>KES. '.number_format($limit).'</td></tr>';
+    $table.='<tr><th>TOTAL</th><th>KES. '.number_format($total_is).'</th></tr>';
+    $table.='<tr><th>Policy number</th><td>'.$policy_number.'</td></tr>';
+    $table.='<tr><th>Policy date</th><td>'.  return_date_function($selected_policy_time_stamp).'</td></tr>';
+    $table.='<tr><th>Expires in</th><td>'.$diff.' day(s)</td></tr>';
+    $table.='<tr><th>Status</th><th>'.$active_status_is.'</th></tr>';
+    $table.='</table>';
+    
+    return array('html'=>$table,'status'=>strtolower($active_status_is),'total'=>$total_is,'policy_id'=>$policy_id,'policy_number'=>$policy_number,'company_name'=>$company_name,'policy_date'=>$selected_policy_time_stamp,'expiry_duration_days'=>$expiry_duration_days);
+    
+   
+}
+
 
 //make shopping kart for Product liability insurance
 function make_shoping_kart_for_product_liability($kart_item_array)
@@ -1817,6 +1999,82 @@ function make_shoping_kart_for_product_liability($kart_item_array)
      
     return array('html'=>$table,'item_id'=>$item_id,'policy_number'=>$policy_number,'limit'=>$limit,'types_of_goods'=>$types_of_goods,'product_type'=>$product_type);
     
+}
+
+//make Motor psv insurance for uber, taxify, little cab and institutional buses and vans view
+function make_motor_psv_insurance_for_uber_policy_view($value_items)
+{
+    
+    
+    $table='';
+    
+    
+            $policy_id=$value_items['policy_id'];
+            $policy_number=$value_items['policy_number'];
+            $vehicle_value=$value_items['vehicle_value'];
+            $vehicle_registration_details=$value_items['vehicle_registration_details'];
+            $number_of_passengers=$value_items['number_of_passengers'];
+            $excess_protector_percentage=$value_items['excess_protector_percentage'];
+            $political_risk_terrorism_percentage=$value_items['political_risk_terrorism_percentage'];
+            $aa_membership=$value_items['aa_membership'];
+            $active_status=$value_items['active_status'];
+            $selected_policy_time_stamp=$value_items['selected_policy_time_stamp'];
+            
+            $company_name=$value_items['company_name'];
+            $v_percentage=$value_items['v_percentage'];
+            $n_percentage=$value_items['n_percentage'];
+            $minimum_excess_protector=$value_items['minimum_excess_protector'];
+            $minimum_political_violence=$value_items['minimum_political_violence'];
+            $excess_protector_multiplier=$value_items['excess_protector_multiplier'];
+            $political_violence_multiplier=$value_items['political_violence_multiplier'];
+            $aa_constant=$value_items['aa_constant'];
+            $expiry_duration_days=$value_items['expiry_duration_days'];
+            $logo_url=$value_items['logo_url'];
+            $html_url=$value_items['html_url'];
+            $company_time_stamp=$value_items['company_time_stamp'];
+            
+       
+        
+        
+    
+    
+     
+     $premium=get_premium_for_motor_psv_insurance_for_uber($v_percentage,$n_percentage,$vehicle_value,$number_of_passengers);
+     
+    $excess_protector_value=$excess_protector_percentage==true? get_excess_protector_for_motor_psv_insurance_for_uber($excess_protector_multiplier,$vehicle_value,$minimum_excess_protector): 0;
+    $political_risk_terrorism_value=$political_risk_terrorism_percentage==true? get_political_violence_protector_for_motor_psv_insurance_for_uber($political_violence_multiplier,$vehicle_value,$minimum_political_violence): 0;
+    $aa_membership_value=$aa_membership==true? $aa_constant: 0;
+    
+    $seconds_in_a_day=3600*24; 
+   
+    $seconds_since_policy_was_selected=time()-($selected_policy_time_stamp/1000);
+    $days_since_policy_was_selected=(int)($seconds_since_policy_was_selected/$seconds_in_a_day);
+    $diff=$expiry_duration_days-$days_since_policy_was_selected;        
+    
+    $active_status_is=$active_status==true? 'Active': 'Inactive';
+    
+    $total_is=$premium+$excess_protector_value+$political_risk_terrorism_value+$aa_membership_value;
+    
+    $table.='<h3>'.$company_name.'</h3>';
+    $table.='<table>';
+    $table.='<tr><th>Vehicle registration details</th><td>'.$vehicle_registration_details.'</td></tr>';
+            $table.='<tr><th>Number of passengers</th><td>'.$number_of_passengers.'</td></tr>';
+            $table.='<tr><th>Vehicle value</th><td>KES. '.number_format($vehicle_value).'</td></tr>';
+            $table.='<tr><th>Premium</th><td>KES. '.number_format($premium).'</td></tr>';
+            $table.='<tr><th>Excess protector</th><td>KES. '.number_format($excess_protector_value).'</td></tr>';
+            $table.='<tr><th>Political risk terrorism</th><td>KES. '.number_format($political_risk_terrorism_value).'</td></tr>';
+            $table.='<tr><th>AA membership</th><td>KES. '.number_format($aa_membership_value).'</td></tr>';
+            
+    $table.='<tr><th>TOTAL</th><th>KES. '.number_format($total_is).'</th></tr>';
+    $table.='<tr><th>Policy number</th><td>'.$policy_number.'</td></tr>';
+    $table.='<tr><th>Policy date</th><td>'.  return_date_function($selected_policy_time_stamp).'</td></tr>';
+    $table.='<tr><th>Expires in</th><td>'.$diff.' day(s)</td></tr>';
+    $table.='<tr><th>Status</th><th>'.$active_status_is.'</th></tr>';
+    $table.='</table>';
+    
+    return array('html'=>$table,'status'=>strtolower($active_status_is),'total'=>$total_is,'policy_id'=>$policy_id,'policy_number'=>$policy_number,'company_name'=>$company_name,'policy_date'=>$selected_policy_time_stamp,'expiry_duration_days'=>$expiry_duration_days);
+    
+   
 }
 
 //make shopping kart for Motor psv insurance for uber, taxify, little cab and institutional buses and vans
@@ -1916,6 +2174,77 @@ function get_excess_protector_for_motor_psv_insurance_for_uber($excess_protector
     return $total_is;
 }
 
+
+//make  Wiba and employers liability insurance policy view
+function make_wiba_and_employers_liability_policy_view($value_items)
+{
+    
+    
+    $table='';
+    
+    
+            $policy_id=$value_items['policy_id'];
+            $policy_number=$value_items['policy_number'];
+            $selected_employee_categories=$value_items['selected_employee_categories'];
+            $elected_empoloyee_liability_option=$value_items['elected_empoloyee_liability_option'];
+            $active_status=$value_items['active_status'];
+            $selected_policy_time_stamp=$value_items['selected_policy_time_stamp'];
+            
+            $company_name=$value_items['company_name'];
+            $wiba_categories=$value_items['wiba_categories'];
+            $employee_liability_options=$value_items['employee_liability_options'];
+            $expiry_duration_days=$value_items['expiry_duration_days'];
+            $logo_url=$value_items['logo_url'];
+            $html_url=$value_items['html_url'];
+            $company_time_stamp=$value_items['company_time_stamp'];
+            
+       
+        
+        
+    
+    
+    
+    
+    $seconds_in_a_day=3600*24; 
+   
+    $seconds_since_policy_was_selected=time()-($selected_policy_time_stamp/1000);
+    $days_since_policy_was_selected=(int)($seconds_since_policy_was_selected/$seconds_in_a_day);
+    $diff=$expiry_duration_days-$days_since_policy_was_selected;        
+    
+    $active_status_is=$active_status==true? 'Active': 'Inactive';
+    
+    
+    
+    $table.='<h3>'.$company_name.'</h3>';
+    $table.='<table>';
+    $table.='<tr><th>Employee id</th><th>Category name</th><th>Monthly salary</th></tr>';
+            
+            foreach ($selected_employee_categories as $employee_details) 
+            {
+                $table.='<tr><td>'.$employee_details['employee_id'].'</td><td>'.$employee_details['category_name'].'</td><td>KES. '.number_format($employee_details['monthly_salary']).'</td></tr>';
+                $total+=get_premium_for_wiba_and_employers_liability($employee_details['category_name'],$employee_details['monthly_salary'],$wiba_categories);
+            }
+            
+            $v_is=$total*(0.45/100);
+            $premium=$v_is+$total+40;
+            $table.='<tr><th></th><th>Premium</th><th>KES. '.number_format($premium).'</th></tr>';
+            
+            $option_total=$elected_empoloyee_liability_option==''? 0: get_liability_option_for_wiba_and_employers_liability($elected_empoloyee_liability_option,$employee_liability_options,$premium);
+            $table.='<tr><th>Selected option liability</th><th>'.$elected_empoloyee_liability_option.'</th><th>KES. '.number_format($option_total).'</th></tr>';
+            
+    $total_is=$premium+$option_total;
+    
+    $table.='<tr><th></th><th>TOTAL</th><th>KES. '.number_format($premium+$option_total).'</th></tr>';
+    $table.='<tr><th></th><th>Policy number</th><td>'.$policy_number.'</td></tr>';
+    $table.='<tr><th></th><th>Policy date</th><td>'.  return_date_function($selected_policy_time_stamp).'</td></tr>';
+    $table.='<tr><th></th><th>Expires in</th><td>'.$diff.' day(s)</td></tr>';
+    $table.='<tr><th></th><th>Status</th><th>'.$active_status_is.'</th></tr>';
+    $table.='</table>';
+    
+    return array('html'=>$table,'status'=>strtolower($active_status_is),'total'=>$total_is,'policy_id'=>$policy_id,'policy_number'=>$policy_number,'company_name'=>$company_name,'policy_date'=>$selected_policy_time_stamp,'expiry_duration_days'=>$expiry_duration_days);
+    
+   
+}
 
 
 //make shopping kart for Wiba and employers liability insurance policy

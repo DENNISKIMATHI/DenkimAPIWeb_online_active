@@ -29,29 +29,30 @@ if(isset($_GET['e']) && !empty($_GET['e']) && isset($_GET['f']) && !empty($_GET[
                 $email_address=trim($_GET['e']);
                 $full_names=trim($_GET['f']);
                    $phone_number=trim($_GET['p']);
-                $type=6;
+                $type=13;
                 //fetch
-            $returned_json_decoded= fetch_policy_user_type($type,$email_address,$_SESSION['session_key'],$_SESSION['cookie'],'/senior_administrator/view_user_fire_burglary_theft_insurance.php');
+            $returned_json_decoded= fetch_policy_user_type($type,$email_address,$_SESSION['session_key'],$_SESSION['cookie'],'/senior_administrator/view_user_goods_in_transit_insurance.php');
 
             $check_is=$returned_json_decoded["check"];//check
 
             $message_is=$returned_json_decoded["message"];//message
 
-
+            $list='';
+            
             if($check_is==true)//if check is true
             {
 
                 foreach ($message_is as $value) 
                 {
-                    //echo json_encode($value).'<hr>';
+                   //echo json_encode($value).'<hr>';
                     
                     $policy_number=$value['policy_number'];
                     
-                    $policy_info= fetch_policy_type_specific($type,$policy_number,'/senior_administrator/view_user_fire_burglary_theft_insurance.php');
+                    $policy_info= fetch_policy_type_specific($type,$policy_number,'/senior_administrator/view_user_goods_in_transit_insurance.php');
                     $policy_infocheck_is=$policy_info["check"];//check
                     $policy_infomessage_is=$policy_info["message"];//message
                     
-                     $array_to_print=array();
+                    $array_to_print=array();
                     //handle if policy check s true
                     if($policy_infocheck_is==true)
                     {
@@ -60,48 +61,43 @@ if(isset($_GET['e']) && !empty($_GET['e']) && isset($_GET['f']) && !empty($_GET[
                            
                             $array_to_print['policy_id']=$policy_id;
                             $array_to_print['policy_number']=$policy_number;
-                            
-                            $array_to_print['fire_price']=$value['fire_price'];
-                            $array_to_print['burglary_price']=$value['burglary_price'];
-                            $array_to_print['all_risk_price']=$value['all_risk_price'];
-                            
-                            
+                            $array_to_print['estimated_carry_on_any_trip']=$value['estimated_carry_on_any_trip'];
+                            $array_to_print['total_annual_estimated_carry_all_trips']=$value['total_annual_estimated_carry_all_trips'];
+                            $array_to_print['geographical_area']=$value['geographical_area'];
+                            $array_to_print['types_of_goods']=$value['types_of_goods'];
+                            $array_to_print['mode_of_transport']=$value['mode_of_transport'];
                             $array_to_print['active_status']=$value['active_status'];
                             $array_to_print['selected_policy_time_stamp']=$value['time_stamp'];
+                            
                             $array_to_print['company_name']=$policy_infomessage_is['company_name'];
-                            
-                            $array_to_print['fire_multiplier']=$policy_infomessage_is['fire_multiplier'];
-                            $array_to_print['fire_html_url']=$policy_infomessage_is['fire_html_url'];
-                            $array_to_print['burglary_multiplier']=$policy_infomessage_is['burglary_multiplier'];
-                            $array_to_print['burglary_html_url']=$policy_infomessage_is['burglary_html_url'];
-                            $array_to_print['all_risk_multiplier']=$policy_infomessage_is['all_risk_multiplier'];
-                            $array_to_print['all_risk_html_url']=$policy_infomessage_is['all_risk_html_url'];
-                            
+                            $array_to_print['a_percentage']=$policy_infomessage_is['a_percentage'];
+                            $array_to_print['b_percentage']=$policy_infomessage_is['b_percentage'];
                             $array_to_print['expiry_duration_days']=$policy_infomessage_is['expiry_duration_days'];
                             $array_to_print['logo_url']=$policy_infomessage_is['logo_url'];
                             $array_to_print['html_url']=$policy_infomessage_is['html_url'];
                             $array_to_print['company_time_stamp']=$policy_infomessage_is['time_stamp'];
                             
+                           
                             
-                
-                            $returned_array=make_fire_burglary_theft_insurance_view($array_to_print);
-                            $delete_link='policy_delete_user_type_specific.php?_id='.$policy_id.'&e='.$email_address.'&f='.$full_names.'&p='.$policy_number.'&s=view_user_fire_burglary_theft_insurance.php&phn='.$phone_number;
+                            
+                            $returned_array=make_goods_in_transit_policy_view($array_to_print);
+                            $delete_link='policy_delete_user_type_specific.php?_id='.$policy_id.'&e='.$email_address.'&f='.$full_names.'&p='.$policy_number.'&s=view_user_goods_in_transit_insurance.php&phn='.$phone_number;
                             $full_delete_link='<span id="red_text_span"><a href="'.$delete_link.'" title="Delete '.$policy_number.' for '.$full_names.'">Delete</a></span>';
+                            
+                            
                             //activate
-                            $activate_deactivate_link='policy_activate_deactivate.php?s=view_user_fire_burglary_theft_insurance.php&t='.$type.'&e='.$email_address.'&f='.$full_names.'&pi='.$returned_array['policy_id'].'&as='.$returned_array['status'].'&cn='.$returned_array['company_name'].'&p='.$phone_number.'&ex='.$returned_array['expiry_duration_days'];
+                            $activate_deactivate_link='policy_activate_deactivate.php?s=view_user_goods_in_transit_insurance.php&t='.$type.'&e='.$email_address.'&f='.$full_names.'&pi='.$returned_array['policy_id'].'&as='.$returned_array['status'].'&cn='.$returned_array['company_name'].'&p='.$phone_number.'&ex='.$returned_array['expiry_duration_days'];
                             $active_deactive_word=$returned_array['status']=='active'? 'Deactivate': 'Activate';
                             
                             $full_link='<a href="'.$activate_deactivate_link.'" title="'.$active_deactive_word.' '.$returned_array['policy_number'].' for '.$full_names.'">'.$active_deactive_word.'</a>'; 
                             
                             $link_with_span=$returned_array['status']=='active'? '<span id="red_text_span">'.$full_link.'</span>': '<span id="green_text_span">'.$full_link.'</span>';
-                             
-                           //
-                            $payments_link='policy_view_payments_specific.php?s=view_user_fire_burglary_theft_insurance.php&t='.$type.'&e='.$email_address.'&f='.$full_names.'&pi='.$returned_array['policy_id'].'&pn='.$returned_array['policy_number'].'&cn='.$returned_array['company_name'].'&pd='.$returned_array['policy_date'].'&edd='.$returned_array['expiry_duration_days'].'&t='.$returned_array['total'].'&p='.$phone_number;
+                            //
+                            $payments_link='policy_view_payments_specific.php?s=view_user_goods_in_transit_insurance.php&t='.$type.'&e='.$email_address.'&f='.$full_names.'&pi='.$returned_array['policy_id'].'&pn='.$returned_array['policy_number'].'&cn='.$returned_array['company_name'].'&pd='.$returned_array['policy_date'].'&edd='.$returned_array['expiry_duration_days'].'&t='.$returned_array['total'].'&p='.$phone_number;
                             
                             $full_payments_link='<a href="'.$payments_link.'" title="View '.$returned_array['policy_number'].' payments for '.$full_names.'">Payments</a>';
                             
                             $list.=$returned_array['html'].'<br>'.$full_delete_link.'&nbsp;&nbsp;&nbsp;'.$link_with_span.'&nbsp;&nbsp;&nbsp;'.$full_payments_link;
-                            //echo json_encode($array_to_print).'<hr>';
                             
                             $check_time= time()*1000;
                             $diff_time_is=$check_time-$value['time_stamp'];
@@ -109,19 +105,21 @@ if(isset($_GET['e']) && !empty($_GET['e']) && isset($_GET['f']) && !empty($_GET[
                             if($diff_time_is<5000)//less than 5 seconds
                             {
                                 ////login and send message
-                                $message_is_is=login_behalf_of_client($email_address,'/senior_administrator/view_user_fire_burglary_theft_insurance.php');
+                                $message_is_is=login_behalf_of_client($email_address,'/senior_administrator/policy_activate_deactivate.php');
                                              
-                                $message_send="Hello ".$full_names.", Burglary and theft policy to be insured by ".$returned_array['company_name']." has been selected. The policy will be activated after payment of KES. ". number_format($returned_array['total'])." is made. Payment to be done via Denkim Insurance Portal. Click the following link to log in and pay. ".$message_is_is;
+                                $message_send="Hello ".$full_names.", Motor policy to be insured by ".$returned_array['company_name']." has been selected. The policy will be activated after payment of KES. ". number_format($returned_array['total'])." is made. Payment to be done via Denkim Insurance Portal. Click the following link to log in and pay. ".$message_is_is;
 
                                 //send message to notify on claim
-                                send_sms_message($_SESSION['session_key'],$_SESSION['cookie'],$message_send,$phone_number,'/senior_administrator/view_user_motor_insurance.php');
+                                send_sms_message($_SESSION['session_key'],$_SESSION['cookie'],$message_send,$phone_number,'/senior_administrator/view_user_goods_in_transit_insurance.php');
                                 $header_email_is="New policy ". strtoupper($company_name);
-                                send_email_message($_SESSION['session_key'],$_SESSION['cookie'],$email_address,$header_email_is,$message_send,'/senior_administrator/view_user_motor_insurance.php'); 
+                                send_email_message($_SESSION['session_key'],$_SESSION['cookie'],$email_address,$header_email_is,$message_send,'/senior_administrator/view_user_goods_in_transit_insurance.php'); 
 
                             }
+                            //echo json_encode($array_to_print).'<hr>';
                     }
                     
-                        
+                   
+                    
                 }
                          
 
@@ -150,7 +148,7 @@ if(isset($_GET['e']) && !empty($_GET['e']) && isset($_GET['f']) && !empty($_GET[
 <head>
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-       <title>View fire burglary insurance</title>
+           <title>View Goods in transit insurance</title>
     <!-- Favicon-->
     <link rel="icon" href="../../favicon.ico" type="image/x-icon">
 

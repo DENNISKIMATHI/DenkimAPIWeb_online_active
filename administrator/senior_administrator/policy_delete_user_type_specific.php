@@ -24,17 +24,17 @@ if(isset($_GET['message']) && !empty($_GET['message']) && isset($_GET['type']) &
 
 
 
-if(  isset($_GET['_id']) && !empty($_GET['_id']) && isset($_GET['e']) && !empty($_GET['e']) && isset($_GET['f']) && !empty($_GET['f']) && isset($_GET['p']) && !empty($_GET['p']) && isset($_GET['s']) && !empty($_GET['s']) )
+if(  isset($_GET['_id']) && !empty($_GET['_id']) && isset($_GET['e']) && !empty($_GET['e']) && isset($_GET['f']) && !empty($_GET['f']) && isset($_GET['p']) && !empty($_GET['p']) && isset($_GET['s']) && !empty($_GET['s']) && isset($_GET['phn']) && !empty($_GET['phn']) )
 {
 	$policy_id=trim($_GET['_id']);
         $email_address=trim($_GET['e']);
         $full_names=trim($_GET['f']);
         $policy_number=trim($_GET['p']);
         $source=trim($_GET['s']);
+        $phone_number=trim($_GET['phn']);
         
-        
-        $full_link='policy_delete_user_type_specific.php?_id='.$policy_id.'&e='.$email_address.'&f='.$full_names.'&p='.$policy_number.'&s='.$source;//for form submission
-        $source_link=$source.'?e='.$email_address.'&f='.$full_names;//return
+        $full_link='policy_delete_user_type_specific.php?_id='.$policy_id.'&e='.$email_address.'&f='.$full_names.'&p='.$policy_number.'&s='.$source.'&phn='.$phone_number;//for form submission
+        $source_link=$source.'?e='.$email_address.'&f='.$full_names.'&p='.$phone_number;//return
         
         $statement='Are you sure you want to delete '.strtoupper($policy_number).' for '.strtoupper($full_names).' ? <span id="red_text_span"><a href="'.$full_link.'&a=yes">[YES]</a></span>  &nbsp;&nbsp;&nbsp;&nbsp;  <span id="green_text_span"><a href="'.$source_link.'">[NO]</a></span> ';
      

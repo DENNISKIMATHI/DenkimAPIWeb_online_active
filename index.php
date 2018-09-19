@@ -301,7 +301,7 @@
         <div class="edge"> 
 
 
-          <a href="./policies/goods_in_transit_insurance.php" title="View and select Public liability insurance">Goods in transit insurance</a>
+          <a href="./policies/goods_in_transit_insurance.php" title="View and select Goods in transit insurance">Goods in transit insurance</a>
 
          </div>
        </div>
