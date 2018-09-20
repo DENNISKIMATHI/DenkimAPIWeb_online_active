@@ -1,7 +1,6 @@
 ﻿<?php
-require '../../le_functions/sessions.php';
 require '../../le_functions/functions.php';
-
+require '../../le_functions/sessions.php';
 
 if(loggedin() && !empty($_SESSION['session_key']) && !empty($_SESSION['cookie']))//if logged in and user_id session is not empty
 {
@@ -13,51 +12,104 @@ session_destroy();
 header('location: ../ ');	
 }
 
+
 //setting edit message
 if(isset($_GET['message']) && !empty($_GET['message']) && isset($_GET['type']) && !empty($_GET['type']))
 {
 	$message=$_GET['message'];
         $type=$_GET['type'];
         $good_bad_id=$type==1? 'good_upload_message': 'bad_upload_message';
-	$message='<span id="'.$good_bad_id.'">'.$message.'</span>';
+	 $message='<span id="'.$good_bad_id.'">'.$message.'</span>';
 }
 
 
 
-
-
-
-
-
-
-
-if(  isset($_GET['l']) && is_numeric($_GET['l']) && ( $_GET['s']==0 || is_numeric($_GET['s']) ) &&  isset($_GET['sc']) && !empty($_GET['sc']) && isset($_GET['so']) && !empty($_GET['so']) && isset($_GET['re']) && !empty($_GET['re']) && isset($_GET['e']) && !empty($_GET['e']) && isset($_GET['f']) && !empty($_GET['f']))
+if(isset($_GET['e']) && !empty($_GET['e']) && isset($_GET['f']) && !empty($_GET['f']))
 {
-	$limit=trim($_GET['l']);
-        $skip=trim($_GET['s']);
-        $sort_column=trim($_GET['sc']);
-        $sort_order=trim($_GET['so']);
-        $rows_every=trim($_GET['re']);
-        $email_address=trim($_GET['e']);
-        $full_names=trim($_GET['f']);
+                $email_address=trim($_GET['e']);
+                $full_names=trim($_GET['f']);
+                $type=12;
+                //fetch
+            $returned_json_decoded= fetch_policy_user_type($type,$email_address,$_SESSION['session_key'],$_SESSION['cookie'],'/junior_administrator/view_user_public_liability_insurance.php');
+
+            $check_is=$returned_json_decoded["check"];//check
+
+            $message_is=$returned_json_decoded["message"];//message
+
+            $list='';
+            
+            if($check_is==true)//if check is true
+            {
+
+                foreach ($message_is as $value) 
+                {
+                   //echo json_encode($value).'<hr>';
+                    
+                    $policy_number=$value['policy_number'];
+                    
+                    $policy_info= fetch_policy_type_specific($type,$policy_number,'/junior_administrator/view_user_public_liability_insurance.php');
+                    $policy_infocheck_is=$policy_info["check"];//check
+                    $policy_infomessage_is=$policy_info["message"];//message
+                    
+                    $array_to_print=array();
+                    //handle if policy check s true
+                    if($policy_infocheck_is==true)
+                    {
+                         //echo json_encode($policy_infomessage_is).'<hr>';
+                            $policy_id=$value['_id']['$oid'];
+                           
+                            $array_to_print['policy_id']=$policy_id;
+                            $array_to_print['policy_number']=$policy_number;
+                            $array_to_print['limit']=$value['limit'];
+                            $array_to_print['active_status']=$value['active_status'];
+                            $array_to_print['selected_policy_time_stamp']=$value['time_stamp'];
+                            
+                            $array_to_print['company_name']=$policy_infomessage_is['company_name'];
+                            $array_to_print['premium_percentage']=$policy_infomessage_is['premium_percentage'];
+                            $array_to_print['minimum']=$policy_infomessage_is['minimum'];
+                            $array_to_print['expiry_duration_days']=$policy_infomessage_is['expiry_duration_days'];
+                            $array_to_print['logo_url']=$policy_infomessage_is['logo_url'];
+                            $array_to_print['html_url']=$policy_infomessage_is['html_url'];
+                            $array_to_print['company_time_stamp']=$policy_infomessage_is['time_stamp'];
+                            
+                           
+                            
+                            
+                            $returned_array=make_public_liability_policy_view($array_to_print);
+                            $list.=$returned_array['html'].'<br>';
+                    }
+                    
+                   
+                    
+                }
+                         
+
+
+            }
+            else//else failed
+            {
+
+                    if($message_is=='')
+                    {
+                        header('location: ../logout.php?message=Your session has expired, please log in again!&type=2');
+                    }
+                    else
+                    {
+                         $message='<span id="bad_upload_message">'.$message_is.'</span>';
+                    }
+
+            } 
         
-        
-        $full_link="clients_insurance.php?l=".$limit."&s=".$skip."&sc=".$sort_column."&so=".$sort_order."&re=".$rows_every."&e=".$email_address."&f=".$full_names;//for form submission
-        $return_link="clients.php?l=".$limit."&s=".$skip."&sc=".$sort_column."&so=".$sort_order."&re=".$rows_every;//for form submission
-        $view_argument="?e=".$email_address."&f=".$full_names;
-       
-       
 }
 
-    
-//check login
+
 ?>
 <html>
 
 <head>
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-      <title>Insurance policies</title>
+     <title>View Public liability insurance</title>
     <!-- Favicon-->
     <link rel="icon" href="../../favicon.ico" type="image/x-icon">
 
@@ -205,38 +257,20 @@ if(  isset($_GET['l']) && is_numeric($_GET['l']) && ( $_GET['s']==0 || is_numeri
                         <div class="header">
                             <div class="row clearfix">
                                 <div class="col-xs-12 col-sm-6">
-                                    <h2><?php echo $full_names;?></h2>
+                                     <h2><?php echo $full_names;?></h2>
                                 </div>
                                </div>
                          </div>
                         <div class="body">
-		       <?php echo $message;?><br>
-                             <h4>Motor insurance: <a href="./view_user_motor_insurance.php<?php echo $view_argument;?>" title="View Motor insurance">View</a></h4>
-            <h4>In patient medical insurance: <a href="./view_user_in_patient_medical_insurance.php<?php echo $view_argument;?>" title="View In patient medical insurance">View</a></h4>
-            <h4>Accident insurance: <a href="./view_user_accident_insurance.php<?php echo $view_argument;?>" title="View Accident insurance">View</a></h4>
-            <h4>Contractors all risk insurance: <a href="./view_user_contractors_all_risk_insurance.php<?php echo $view_argument;?>" title="View Contractors all risk insurance">View</a></h4>
-            <h4>Performance Bond insurance: <a href="./view_user_performance_bond_insurance.php<?php echo $view_argument;?>" title="View Performance Bond insurance">View</a></h4>
-            <h4>Fire burglary theft insurance: <a href="./view_user_fire_burglary_theft_insurance.php<?php echo $view_argument;?>" title="View Fire burglary theft insurance">View</a></h4>
-            <h4>Home insurance: <a href="./view_user_home_insurance.php<?php echo $view_argument;?>" title="View =Home insurance">View</a></h4>
-            <h4>Maternity insurance: <a href="./view_user_maternity_insurance.php<?php echo $view_argument;?>" title="View =Maternity insurance">View</a></h4>
-            <h4>Dental insurance: <a href="./view_user_dental_insurance.php<?php echo $view_argument;?>" title="View Dental insurance">View</a></h4> 
-            <h4>Optical insurance: <a href="./view_user_optical_insurance.php<?php echo $view_argument;?>" title="View Optical insurance">View</a></h4> 
-            <h4>Out patient medical insurance: <a href="./view_user_out_patient_medical_insurance.php<?php echo $view_argument;?>" title="View Out patient medical insurance">View</a></h4>
-            
-            <h4>Public liability insurance: <a href="./view_user_public_liability_insurance.php<?php echo $view_argument;?>" title="View Public liability insurance">View</a></h4>
-            <h4>Goods in transit insurance: <a href="./view_user_goods_in_transit_insurance.php<?php echo $view_argument;?>" title="View Goods in transit insurance">View</a></h4>
-            <h4>Product liability insurance: <a href="./view_user_product_liability_insurance.php<?php echo $view_argument;?>" title="View Product liability insurance">View</a></h4>
-            <h4>Motor psv insurance for uber, taxify, little cab, institutional buses and vans: <a href="./view_user_motor_psv_uber_insurance.php<?php echo $view_argument;?>" title="View Motor psv insurance for uber, taxify, little cab, institutional buses and vans">View</a></h4>
-            <h4>Wiba and employers liability insurance: <a href="./view_user_wiba_and_employers_insurance.php<?php echo $view_argument;?>" title="View Wiba and employers liability insurance">View</a></h4>
-            
-		 
-                        </div>
+			 <?php echo $message;?><br>
+        <?php echo $list;?><br>
+			</div>
                     </div>
                 </div>
             </div>
             <!-- #END# -->
-			 
-	 <a href="../junior_administrator/" title="Go to the main page" class="btn btn-primary m-t-15 waves-effect"> <i class="material-icons">arrow_back</i>Back </a><br><br> 		  
+	 <a href="../junior_administrator/" title="Go to the main page" class="btn btn-primary m-t-15 waves-effect"> <i class="material-icons">arrow_back</i>Back </a><br><br> 	
+			  
 			  
             </div>
         </div>

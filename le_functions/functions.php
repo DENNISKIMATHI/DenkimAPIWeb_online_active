@@ -1942,6 +1942,7 @@ function make_product_liability_policy_view($value_items)
     $table.='<table>';
     $table.='<tr><th>Type of Goods</th><td>'.$types_of_goods.'</td></tr>';
     $table.='<tr><th>Limit</th><td>KES. '.number_format($limit).'</td></tr>';
+    $table.='<tr><th>Premium</th><td>KES. '.number_format($premium).'</td></tr>';
     $table.='<tr><th>TOTAL</th><th>KES. '.number_format($total_is).'</th></tr>';
     $table.='<tr><th>Policy number</th><td>'.$policy_number.'</td></tr>';
     $table.='<tr><th>Policy date</th><td>'.  return_date_function($selected_policy_time_stamp).'</td></tr>';
