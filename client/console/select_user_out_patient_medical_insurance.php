@@ -36,6 +36,9 @@ if(isset($_GET['message']) && !empty($_GET['message']) && isset($_GET['type']) &
 
                 $message_is=$returned_json_decoded["message"];//message
 
+             //get privacy items
+            $policy_privacy_array=fetch_policy_privacy('11','/client/console/select_user_out_patient_medical_insurance.php');
+
 
                 if($check_is==true)//if check is true
                 {
@@ -58,10 +61,16 @@ if(isset($_GET['message']) && !empty($_GET['message']) && isset($_GET['type']) &
                                             $html_url=$value['html_url'];
                                             $time_stamp=$value['time_stamp'];
 
-
-                                             //$list_items.='<li><a href="select_policy_user_out_patient_medical_insurance.php?pn='.$policy_number.'" title="click to view '.$company_name.' out patient insurance "class="btn btn-block btn-lg btn-warning waves-effect">'.strtoupper($company_name).'</a><br><img src="'.$logo_url.'"/><br><br></li>';
+                                        $is_private=check_if_is_private($policy_privacy_array['message'],$policy_number);
+                                        if($is_private==false)
+                                        {
+                                            //$list_items.='<li><a href="select_policy_user_out_patient_medical_insurance.php?pn='.$policy_number.'" title="click to view '.$company_name.' out patient insurance "class="btn btn-block btn-lg btn-warning waves-effect">'.strtoupper($company_name).'</a><br><img src="'.$logo_url.'"/><br><br></li>';
                                             $list_items.='<li><a href="select_policy_user_out_patient_medical_insurance.php?pn='.$policy_number.'" title="click to view '.$company_name.' out patient insurance "class="btn btn-block btn-lg btn-warning waves-effect">'.strtoupper($company_name).'</a><br><br></li>';
 
+                                        }
+
+
+                                             
 
                                       }//end of foreach $message_is as $value
 

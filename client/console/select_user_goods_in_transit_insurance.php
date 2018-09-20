@@ -13,80 +13,72 @@ header('location: ../ ');
 }
 
 
-
-
 //setting edit message
 if(isset($_GET['message']) && !empty($_GET['message']) && isset($_GET['type']) && !empty($_GET['type']))
 {
 	$message=$_GET['message'];
         $type=$_GET['type'];
         $good_bad_id=$type==1? 'good_upload_message': 'bad_upload_message';
-	$message='<span id="'.$good_bad_id.'">'.$message.'</span>';
+	 $message='<span id="'.$good_bad_id.'">'.$message.'</span>';
 }
 
 
 
 
-                
 
-               //fetch
-                $returned_json_decoded= fetch_policy_type(4,'/client/console/select_user_contractors_all_risk_insurance.php');
+                //fetch
+            $returned_json_decoded= fetch_policy_type(13,'/client/console/select_user_goods_in_transit_insurance.php');
 
-                $check_is=$returned_json_decoded["check"];//check
+            $check_is=$returned_json_decoded["check"];//check
 
-                $message_is=$returned_json_decoded["message"];//message
+            $message_is=$returned_json_decoded["message"];//message
 
-             //get privacy items
-            $policy_privacy_array=fetch_policy_privacy('4','/client/console/select_user_contractors_all_risk_insurance.php');
-
-
-                if($check_is==true)//if check is true
-                {
+            //get privacy items
+               $policy_privacy_array=fetch_policy_privacy('13','/client/console/select_user_goods_in_transit_insurance.php');
+               
+            if($check_is==true)//if check is true
+            {
 
 
-                                     $skip=0;
-                                     $count=$skip;//make count skipped rows
+                                 $skip=0;
+                                 $count=$skip;//make count skipped rows
 
-
-
-                                      foreach ($message_is as $value) 
-                                      {//start of foreach $message_is as $value
-                                            $company_name=$value['company_name'];
-                                            $contract_price_multiplier=$value['contract_price_multiplier'];
-                                            $policy_number=$value['policy_number'];
-                                            $expiry_duration_days=$value['expiry_duration_days'];
-                                            $logo_url=$value['logo_url'];
-                                            $html_url=$value['html_url'];
-                                            $time_stamp=$value['time_stamp'];
+                                 $list_items='';
+                                  foreach ($message_is as $value) 
+                                  {//start of foreach $message_is as $value
+                                        $company_name=$value['company_name'];
+                                        $policy_number=$value['policy_number'];
 
                                         $is_private=check_if_is_private($policy_privacy_array['message'],$policy_number);
                                         if($is_private==false)
                                         {
-                                            //$list_items.='<li><a href="select_policy_user_contractors_all_risk_insurance.php?pn='.$policy_number.'" title="click to view '.$company_name.' contractors insurance " class="btn btn-block btn-lg btn-warning waves-effect">'.strtoupper($company_name).'</a><br><br><img src="'.$logo_url.'"/><br><br></li>';
-                                                $list_items.='<li><a href="select_policy_user_contractors_all_risk_insurance.php?pn='.$policy_number.'" title="click to view '.$company_name.' contractors insurance " class="btn btn-block btn-lg btn-warning waves-effect">'.strtoupper($company_name).'</a><br><br></li>';
+                                             //$list_items.='<li><a href="select_policy_user_motor_insurance.php?pn='.$policy_number.'" title="click to view '.$company_name.' motor insurance " class="btn btn-block btn-lg btn-warning waves-effect">'.strtoupper($company_name).'</a><br><br><img src="'.$logo_url.'"/><br><br></li>';
+                                        $list_items.='<li><a href="select_policy_user_goods_in_transit_insurance.php?pn='.$policy_number.'" title="click to view '.$company_name.' motor insurance " class="btn btn-block btn-lg btn-warning waves-effect">'.strtoupper($company_name).'</a><br><br></li>';
 
                                         }
 
+                                       
 
-                                             
 
-                                      }//end of foreach $message_is as $value
+                                  }//end of foreach $message_is as $value
 
-                                       $list='<ol id="policies_list_item">'.$list_items.'</ol>';
-                }
-                else//else failed
-                {
+                                  $list='<ol id="policies_list_item">'.$list_items.'</ol>';
 
-                            if($message_is=='')
-                            {
-                                header('location: ../logout.php?message=Your session has expired, please log in again!&type=2');
-                            }
-                            else
-                            {
-                                 $message='<span id="bad_upload_message">'.$message_is.'</span>';
-                            }
 
-                } 
+            }
+            else//else failed
+            {
+
+                    if($message_is=='')
+                    {
+                        header('location: ../logout.php?message=Your session has expired, please log in again!&type=2');
+                    }
+                    else
+                    {
+                         $message='<span id="bad_upload_message">'.$message_is.'</span>';
+                    }
+
+            } 
         
 
 
@@ -97,7 +89,7 @@ if(isset($_GET['message']) && !empty($_GET['message']) && isset($_GET['type']) &
 <head>
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-          <title>Contractors all risk insurance</title>
+              <title>Goods in transit insurance</title>
     <!-- Favicon-->
     <link rel="icon" href="../../favicon.ico" type="image/x-icon">
 
@@ -250,7 +242,7 @@ if(isset($_GET['message']) && !empty($_GET['message']) && isset($_GET['type']) &
                 </div>
             </div>
             <!-- #END# -->
-		<a href="../../client/console/" title="Go to the main page" class="btn btn-primary m-t-15 waves-effect"> <i class="material-icons">arrow_back</i>Back </a><br><br>	  
+	<a href="../../client/console/" title="Go to the main page" class="btn btn-primary m-t-15 waves-effect"> <i class="material-icons">arrow_back</i>Back </a><br><br>		  
             </div>
         </div>
     </section>

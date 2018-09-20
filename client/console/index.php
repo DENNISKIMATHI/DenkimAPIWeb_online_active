@@ -165,7 +165,13 @@ header('location: ../ ');
            <a href="./select_user_dental_insurance.php" title="Select Dental insurance" class="btn btn-block btn-lg btn-warning waves-effect">Buy Dental Insurance </a>
            <a href="./select_user_optical_insurance.php" title="Select Optical insurance" class="btn btn-block btn-lg btn-warning waves-effect"> Buy Optical Insurance</a>
             <a href="./select_user_out_patient_medical_insurance.php" title="Select Out patient medical insurance" class="btn btn-block btn-lg btn-warning waves-effect">Buy Out Patient Medical Insurance </a>
-
+            
+            <a href="./select_user_public_liability_insurance.php" title="Select Public liability insurance" class="btn btn-block btn-lg btn-warning waves-effect">Buy Public liability insurance </a>
+            <a href="./select_user_goods_in_transit_insurance.php" title="Select Goods in transit insurance" class="btn btn-block btn-lg btn-warning waves-effect">Buy Goods in transit insurance </a>
+            <a href="./select_user_product_liability_insurance.php" title="Select Product liability insurance" class="btn btn-block btn-lg btn-warning waves-effect">Buy Product liability insurance </a>
+            <a href="./select_user_motor_psv_uber_insurance.php" title="Select Motor psv, uber, taxify, little cab and institutional buses and vans insurance" class="btn btn-block btn-lg btn-warning waves-effect">Buy Motor psv, uber, taxify, little cab and institutional buses and vans insurance </a>
+            <a href="./select_user_wiba_and_employers_insurance.php" title="Select Wiba and employers liability insurance" class="btn btn-block btn-lg btn-warning waves-effect">Buy Wiba and employers liability insurance </a>
+            
 			  <a href="../../client/console/" title="Go to the main page" class="btn btn-primary m-t-15 waves-effect"> <i class="material-icons">arrow_back</i>Back </a><br><br>
             </div>
         </div>

@@ -1,6 +1,6 @@
 ﻿<?php
-require '../../le_functions/functions.php';
 require '../../le_functions/sessions.php';
+require '../../le_functions/functions.php';
 
 if(loggedin() && !empty($_SESSION['session_key']) && !empty($_SESSION['cookie']))//if logged in and user_id session is not empty
 {
@@ -11,9 +11,6 @@ else
 session_destroy();		
 header('location: ../ ');	
 }
-
-
-
 
 //setting edit message
 if(isset($_GET['message']) && !empty($_GET['message']) && isset($_GET['type']) && !empty($_GET['type']))
@@ -27,69 +24,97 @@ if(isset($_GET['message']) && !empty($_GET['message']) && isset($_GET['type']) &
 
 
 
-                
-
-               //fetch
-                $returned_json_decoded= fetch_policy_type(4,'/client/console/select_user_contractors_all_risk_insurance.php');
-
-                $check_is=$returned_json_decoded["check"];//check
-
-                $message_is=$returned_json_decoded["message"];//message
-
-             //get privacy items
-            $policy_privacy_array=fetch_policy_privacy('4','/client/console/select_user_contractors_all_risk_insurance.php');
-
-
-                if($check_is==true)//if check is true
-                {
-
-
-                                     $skip=0;
-                                     $count=$skip;//make count skipped rows
-
-
-
-                                      foreach ($message_is as $value) 
-                                      {//start of foreach $message_is as $value
-                                            $company_name=$value['company_name'];
-                                            $contract_price_multiplier=$value['contract_price_multiplier'];
-                                            $policy_number=$value['policy_number'];
-                                            $expiry_duration_days=$value['expiry_duration_days'];
-                                            $logo_url=$value['logo_url'];
-                                            $html_url=$value['html_url'];
-                                            $time_stamp=$value['time_stamp'];
-
-                                        $is_private=check_if_is_private($policy_privacy_array['message'],$policy_number);
-                                        if($is_private==false)
-                                        {
-                                            //$list_items.='<li><a href="select_policy_user_contractors_all_risk_insurance.php?pn='.$policy_number.'" title="click to view '.$company_name.' contractors insurance " class="btn btn-block btn-lg btn-warning waves-effect">'.strtoupper($company_name).'</a><br><br><img src="'.$logo_url.'"/><br><br></li>';
-                                                $list_items.='<li><a href="select_policy_user_contractors_all_risk_insurance.php?pn='.$policy_number.'" title="click to view '.$company_name.' contractors insurance " class="btn btn-block btn-lg btn-warning waves-effect">'.strtoupper($company_name).'</a><br><br></li>';
-
-                                        }
-
-
-                                             
-
-                                      }//end of foreach $message_is as $value
-
-                                       $list='<ol id="policies_list_item">'.$list_items.'</ol>';
-                }
-                else//else failed
-                {
-
-                            if($message_is=='')
-                            {
-                                header('location: ../logout.php?message=Your session has expired, please log in again!&type=2');
-                            }
-                            else
-                            {
-                                 $message='<span id="bad_upload_message">'.$message_is.'</span>';
-                            }
-
-                } 
+if(isset($_GET['pn']) && !empty($_GET['pn']) )
+{   
+        $type_is=14;//type
+         //fetch email
+        $personal_details_array=fetch_personal_details(3,$_SESSION['session_key'],$_SESSION['cookie'],'/client/console/select_policy_user_product_liability_insurance.php');
+        $email_address=$personal_details_array['email_address'];
         
+        $policy_number=trim($_GET['pn']);
+        
+        $action_page='select_policy_user_product_liability_insurance.php?pn='.$policy_number;
+	 //fetch
+        $returned_json_decoded= fetch_policy_type_specific($type_is,$policy_number,'/client/console/select_policy_user_product_liability_insurance.php');
+
+        $check_is=$returned_json_decoded["check"];//check
+
+        $message_is=$returned_json_decoded["message"];//message
+        
+        if($check_is==true)//if check is true
+        {
+            $company_name=$message_is['company_name'];
+            $premium_percentage=$message_is['premium_percentage'];
+            $minimum=$message_is['minimum'];
+            $policy_number=$message_is['policy_number'];
+            $expiry_duration_days=$message_is['expiry_duration_days'];
+            $logo_url=$message_is['logo_url'];
+            $html_url=$message_is['html_url'];
+            $time_stamp=$message_is['time_stamp'];
+            
+            //request html_content
+            $html_content=  send_curl_post($html_url, null, null);
+        }
+        else
+        {
+                    if($message_is=='')
+                    {
+                        header('location: ../logout.php?message=Your session has expired, please log in again!&type=2');
+                    }
+                    else
+                    {
+                         $message='<span id="bad_upload_message">'.$message_is.'</span>';
+                    }
+        }
+        
+        
+        
+        
+         //submit
+        if(isset($_POST['limit']) && !empty($_POST['limit']) &&
+           isset($_POST['types_of_goods']) && !empty($_POST['types_of_goods']) 
+                )
+        {
+            $limit=trim($_POST['limit']);
+            $types_of_goods=trim($_POST['types_of_goods']);
+            
+            //echo $insured_item_value.'--'.$excess_protector_percentage_is_boolean.'--'.$political_risk_terrorism_percentage_is_boolean.'--'.$aa_membership_is_boolean.'<hr>';
+            
+            $how_many=count($_SESSION['shoping_cart'][$type_is]);//for motor
+            
+            //get id
+            $item_id=make_cart_item_id($type_is,$how_many);
+            //assign
+            $items_array_is=array('policy_number'=>$policy_number,
+                                'limit'=>(int)$limit,
+                                'types_of_goods'=>$types_of_goods,
+                                'product_type'=>'Removed on development, do not show this.',
+                                'premium_percentage'=>$premium_percentage,
+                                'minimum'=>$minimum,
+                                'company_name'=>$company_name,
+                                'expiry_duration_days'=>$expiry_duration_days,
+                                'logo_url'=>$logo_url,
+                                'html_url'=>$html_url,
+                                'time_stamp'=>$time_stamp
+                                );
+            
+            $array_kart=array();
+            $array_kart[$type_is][0]=array($item_id=>$items_array_is);
+            
+            
 
 
+             check_out_kart_with_email($array_kart,$email_address,'/client/console/select_policy_user_product_liability_insurance.php',$personal_details_array['full_names']);
+            
+           
+            header('location: view_user_product_liability_insurance.php?message=Policy selected&type=1');//
+        }
+}
+
+
+   
+           
+//echo json_encode($_SESSION['shoping_cart']);
 
 ?>
 <html>
@@ -97,7 +122,7 @@ if(isset($_GET['message']) && !empty($_GET['message']) && isset($_GET['type']) &
 <head>
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-          <title>Contractors all risk insurance</title>
+        <title>Product liability insurance select</title>
     <!-- Favicon-->
     <link rel="icon" href="../../favicon.ico" type="image/x-icon">
 
@@ -119,7 +144,7 @@ if(isset($_GET['message']) && !empty($_GET['message']) && isset($_GET['type']) &
     <!-- Custom Css -->
     <link href="../../css/style.css" rel="stylesheet">
 
-   
+   <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link href="../../css/themes/all-themes.css" rel="stylesheet" />
 </head>
 
@@ -237,14 +262,34 @@ if(isset($_GET['message']) && !empty($_GET['message']) && isset($_GET['type']) &
                             <div class="row clearfix">
                                 <div class="col-xs-12 col-sm-6">
                                     
-									<h2></h2>
+									<h2><?php echo $company_name;?></h2>
                                 </div>
                                </div>
                          </div>
                         <div class="body">
-			  <?php echo $message;?><br>  
-        <?php echo $list;?><br>
-               
+			        <img src="<?php echo $logo_url;?>"/>
+        <?php echo $message;?><br>
+         <form action="<?php echo $action_page;?>" method="post">
+               <h2>Enter limits of cover (minimum limit <?php echo number_format($minimum)?>).</h2>
+            <input type="number" min="<?php echo $minimum;?>" name="limit" premium_percentage_is="<?php echo $premium_percentage;?>" required id="limit" placeholder="Limits of cover."/>
+            <br>
+            <h2>Types of goods.</h2>
+            <textarea name="types_of_goods" required  placeholder="Types of goods"></textarea>
+            <br>
+            
+            <b>Premium</b><br>
+            <br>
+            <span id="premium_span"></span>
+                
+                <h2>See What's Covered</h2>
+                <?php echo $html_content;?>
+           </div>
+                <button type="submit" class="btn btn-primary m-t-15 waves-effect">Proceed and buy</button>
+        </form>
+        <script type="text/javascript" src="../../javascript/jquery-1.11.1.min.js"></script>
+        <script type="text/javascript" src="../../javascript/product_liability_insurance_select.js"></script>
+            
+                
                         </div>
                     </div>
                 </div>
