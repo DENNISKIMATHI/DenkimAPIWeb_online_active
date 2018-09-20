@@ -1,7 +1,6 @@
 ﻿<?php
-require '../../le_functions/sessions.php';
 require '../../le_functions/functions.php';
-
+require '../../le_functions/sessions.php';
 
 if(loggedin() && !empty($_SESSION['session_key']) && !empty($_SESSION['cookie']))//if logged in and user_id session is not empty
 {
@@ -13,14 +12,113 @@ session_destroy();
 header('location: ../ ');	
 }
 
-//check login
+
+//setting edit message
+if(isset($_GET['message']) && !empty($_GET['message']) && isset($_GET['type']) && !empty($_GET['type']))
+{
+	$message=$_GET['message'];
+        $type=$_GET['type'];
+        $good_bad_id=$type==1? 'good_upload_message': 'bad_upload_message';
+	 $message='<span id="'.$good_bad_id.'">'.$message.'</span>';
+}
+
+
+
+
+                //fetch email
+        $personal_details_array=fetch_personal_details(3,$_SESSION['session_key'],$_SESSION['cookie'],'/client/console/view_user_public_liability_insurance.php');
+        $email_address=$personal_details_array['email_address'];
+        
+                $type=12;
+                //fetch
+            $returned_json_decoded= fetch_policy_user_type($type,$email_address,$_SESSION['session_key'],$_SESSION['cookie'],'/client/console/view_user_public_liability_insurance.php');
+
+            $check_is=$returned_json_decoded["check"];//check
+
+            $message_is=$returned_json_decoded["message"];//message
+
+            $list='';
+            
+            if($check_is==true)//if check is true
+            {
+
+                foreach ($message_is as $value) 
+                {
+                   //echo json_encode($value).'<hr>';
+                    
+                    $policy_number=$value['policy_number'];
+                    
+                    $policy_info= fetch_policy_type_specific($type,$policy_number,'/client/console/view_user_public_liability_insurance.php');
+                    $policy_infocheck_is=$policy_info["check"];//check
+                    $policy_infomessage_is=$policy_info["message"];//message
+                    
+                    $array_to_print=array();
+                    //handle if policy check s true
+                    if($policy_infocheck_is==true)
+                    {
+                         //echo json_encode($policy_infomessage_is).'<hr>';
+                            $policy_id=$value['_id']['$oid'];
+                           
+                            $array_to_print['policy_id']=$policy_id;
+                            $array_to_print['policy_number']=$policy_number;
+                            $array_to_print['limit']=$value['limit'];
+                            $array_to_print['active_status']=$value['active_status'];
+                            $array_to_print['selected_policy_time_stamp']=$value['time_stamp'];
+                            
+                            $array_to_print['company_name']=$policy_infomessage_is['company_name'];
+                            $array_to_print['premium_percentage']=$policy_infomessage_is['premium_percentage'];
+                            $array_to_print['minimum']=$policy_infomessage_is['minimum'];
+                            $array_to_print['expiry_duration_days']=$policy_infomessage_is['expiry_duration_days'];
+                            $array_to_print['logo_url']=$policy_infomessage_is['logo_url'];
+                            $array_to_print['html_url']=$policy_infomessage_is['html_url'];
+                            $array_to_print['company_time_stamp']=$policy_infomessage_is['time_stamp'];
+                            
+                           
+                            
+                            
+                            $returned_array=make_public_liability_policy_view($array_to_print);
+                           
+                            $payments_link='policy_view_payments_specific.php?s=view_user_public_liability_insurance.php&t='.$type.'&pi='.$returned_array['policy_id'].'&pn='.$returned_array['policy_number'].'&cn='.$returned_array['company_name'].'&pd='.$returned_array['policy_date'].'&edd='.$returned_array['expiry_duration_days'].'&t='.$returned_array['total'];
+                            $make_payments_link='policy_make_payments_specific.php?s=view_user_public_liability_insurance.php&t='.$type.'&pi='.$returned_array['policy_id'].'&pn='.$returned_array['policy_number'].'&cn='.$returned_array['company_name'].'&pd='.$returned_array['policy_date'].'&edd='.$returned_array['expiry_duration_days'].'&t='.$returned_array['total'];
+                            
+                            
+                            $full_payments_link='<a href="'.$payments_link.'" title="View '.$returned_array['policy_number'].' payments" class="btn btn-block btn-lg btn-warning waves-effect">View payments</a>';
+                            $full_make_payments_link='<a style="background-color:green" href="'.$make_payments_link.'" title="Make '.$returned_array['policy_number'].' payments" class="btn btn-block btn-lg btn-warning waves-effect">Make payment</a>';
+                            
+                            $list.=$returned_array['html'].'<br>'.$full_payments_link.'<br><br>'.$full_make_payments_link;
+                    }
+                    
+                   
+                    
+                }
+                         
+
+
+            }
+            else//else failed
+            {
+
+                    if($message_is=='')
+                    {
+                        header('location: ../logout.php?message=Your session has expired, please log in again!&type=2');
+                    }
+                    else
+                    {
+                         $message='<span id="bad_upload_message">'.$message_is.'</span>';
+                    }
+
+            } 
+        
+
+
+
 ?>
 <html>
 
 <head>
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-      <title>Insurance policies</title>
+          <title>View Public liability insuranc</title>
     <!-- Favicon-->
     <link rel="icon" href="../../favicon.ico" type="image/x-icon">
 
@@ -152,28 +250,28 @@ header('location: ../ ');
     <section class="content">
         <div class="container-fluid">
             <div class="block-header">
-           <!-- innerbody -->
-            <a href="./view_user_motor_insurance.php" title="View Motor insurance" class="btn btn-block btn-lg btn-warning waves-effect">View Motor insurance</a>
-             <a href="./view_user_in_patient_medical_insurance.php" title="View and select In patient medical insurance" class="btn btn-block btn-lg btn-warning waves-effect">View In patient medical insurance</a>
-             <a href="./view_user_accident_insurance.php" title="View and select Accident insurance" class="btn btn-block btn-lg btn-warning waves-effect">View Accident insurance</a>
-             <a href="./view_user_contractors_all_risk_insurance.php" title="View and select Contractors all risk insurance" class="btn btn-block btn-lg btn-warning waves-effect">View Contractors all risk insurance</a>
-            <a href="./view_user_performance_bond_insurance.php" title="View and select Performance Bond insurance" class="btn btn-block btn-lg btn-warning waves-effect">View Performance Bond insurance</a>
-             <a href="./view_user_fire_burglary_theft_insurance.php" title="View and selectFire burglary theft insurance" class="btn btn-block btn-lg btn-warning waves-effect">View Fire burglary theft insurance</a>
-             <a href="./view_user_home_insurance.php" title="View and select Home insurance" class="btn btn-block btn-lg btn-warning waves-effect">View Home insurance</a>
-            <a href="./view_user_maternity_insurance.php" title="View and select Maternity insurance" class="btn btn-block btn-lg btn-warning waves-effect">View Maternity insurance</a>
-            <a href="./view_user_dental_insurance.php" title="View and select Dental insurance" class="btn btn-block btn-lg btn-warning waves-effect">View Dental insurance</a>
-           <a href="./view_user_optical_insurance.php" title="View and select Optical insurance" class="btn btn-block btn-lg btn-warning waves-effect">View Optical insurance</a>
-             <a href="./view_user_out_patient_medical_insurance.php" title="View and select Out patient medical insurance" class="btn btn-block btn-lg btn-warning waves-effect">View Out patient medical insurance</a>
-
-              <a href="./view_user_public_liability_insurance.php" title="View and select Public liability insurance" class="btn btn-block btn-lg btn-warning waves-effect">View Public liability insurance</a>
-               <a href="./view_user_goods_in_transit_insurance.php" title="View and select Goods in transit insurance" class="btn btn-block btn-lg btn-warning waves-effect">View Goods in transit insurance</a>
-            <a href="./view_user_product_liability_insurance.php" title="View and select Product liability insurance" class="btn btn-block btn-lg btn-warning waves-effect">View Product liability insurance</a>
-            <a href="./view_user_motor_psv_uber_insurance.php" title="View and select Motor psv, uber, taxify, little cab and institutional buses and vans insurance" class="btn btn-block btn-lg btn-warning waves-effect">View Motor psv, uber, taxify, little cab and institutional buses and vans insurance</a>
-            <a href="./view_user_wiba_and_employers_insurance.php" title="View and select Wiba and employers liability insurance" class="btn btn-block btn-lg btn-warning waves-effect">View Wiba and employers liability insurance</a>
-
-       <a href="../../client/console/" title="Go to the main page" class="btn btn-primary m-t-15 waves-effect"> <i class="material-icons">arrow_back</i>Back </a><br><br>
-		  
-			  
+        <!-- innerbody -->
+            <div class="row clearfix">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <div class="card">
+                        <div class="header">
+                            <div class="row clearfix">
+                                <div class="col-xs-12 col-sm-6">
+                                    
+									<h2></h2>
+                                </div>
+                               </div>
+                         </div>
+                        <div class="body">
+			  <?php echo $message;?><br>  
+        <?php echo $list;?><br>
+               
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- #END# -->
+	<a href="../../client/console/" title="Go to the main page" class="btn btn-primary m-t-15 waves-effect"> <i class="material-icons">arrow_back</i>Back </a><br><br>		  
             </div>
         </div>
     </section>
