@@ -818,9 +818,10 @@ function make_shoping_kart_for_in_patient_medical($kart_item_array)
         $maximum=$value['maximum'];
         $options=$value['options'];
         
-        $table.='<h4>Minimum: '.$minimum.' Maximum: '.$maximum.'</h4>';
-        $table.='<table><tr><th>Limit</th><th>Premium</th></tr>';
+        //$table.='<h4>Minimum: '.$minimum.' Maximum: '.$maximum.'</h4>';
+        //$table.='<table><tr><th>Limit</th><th>Premium</th></tr>';
         //echo json_encode($options);
+        $checker_is=0;
         foreach ($options as $value_limit_boolean) 
         {
             //$limit=$key_limit_boolean;//limit
@@ -831,17 +832,23 @@ function make_shoping_kart_for_in_patient_medical($kart_item_array)
                 if($boolean==true)
                 {
                     $premium=get_premium_from_medical_option_limit_max_min($minimum,$maximum,$limit,$father_insurance);
-                    $table.='<tr><td>KES. '.number_format($limit).'</td><td>KES. '.number_format($premium).'</td></tr>';
+                    $rows.='<tr><td>KES. '.number_format($limit).'</td><td>KES. '.number_format($premium).'</td></tr>';
                     $fathers_total+=$premium;
+                    $checker_is++;
                 }
                 else
                 {
-                    $table.='<tr><td>KES. '.number_format($limit).'</td><td>KES. '.number_format(0).'</td></tr>';//zero because option is not selected
+                    //$table.='<tr><td>KES. '.number_format($limit).'</td><td>KES. '.number_format(0).'</td></tr>';//zero because option is not selected
                 }
             }
             
         }
-       $table.='</table>';
+        if($checker_is>0)
+        {
+            //echo $checker_is.$table;
+          $table.='<h4>Minimum: '.$minimum.' Maximum: '.$maximum.'</h4><table><tr><th>Limit</th><th>Premium</th></tr>'.$rows.'</table>';
+        }
+      // $table.='</table>';
     }
     
      //total   
@@ -853,7 +860,7 @@ function make_shoping_kart_for_in_patient_medical($kart_item_array)
     
     
     $mothers_total=0;
-    
+    $rows='';
     foreach ($mothers_array as $key => $value) 
     {
         
@@ -861,8 +868,9 @@ function make_shoping_kart_for_in_patient_medical($kart_item_array)
         $maximum=$value['maximum'];
         $options=$value['options'];
         
-        $table.='<h4>Minimum: '.$minimum.' Maximum: '.$maximum.'</h4>';
-        $table.='<table><tr><th>Limit</th><th>Premium</th></tr>';
+       // $table.='<h4>Minimum: '.$minimum.' Maximum: '.$maximum.'</h4>';
+       // $table.='<table><tr><th>Limit</th><th>Premium</th></tr>';
+        $checker_is=0;
         //echo json_encode($options);
         foreach ($options as $value_limit_boolean) 
         {
@@ -874,17 +882,23 @@ function make_shoping_kart_for_in_patient_medical($kart_item_array)
                 if($boolean==true)
                 {
                     $premium=get_premium_from_medical_option_limit_max_min($minimum,$maximum,$limit,$mother_insurance);
-                    $table.='<tr><td>KES. '.number_format($limit).'</td><td>KES. '.number_format($premium).'</td></tr>';
+                    $rows.='<tr><td>KES. '.number_format($limit).'</td><td>KES. '.number_format($premium).'</td></tr>';
                     $mothers_total+=$premium;
+                     $checker_is++;
                 }
                 else
                 {
-                    $table.='<tr><td>KES. '.number_format($limit).'</td><td>KES. '.number_format(0).'</td></tr>';//zero because option is not selected
+                    //$table.='<tr><td>KES. '.number_format($limit).'</td><td>KES. '.number_format(0).'</td></tr>';//zero because option is not selected
                 }
             }
             
         }
-       $table.='</table>';
+        if($checker_is>0)
+        {
+            //echo $checker_is.$table;
+          $table.='<h4>Minimum: '.$minimum.' Maximum: '.$maximum.'</h4><table><tr><th>Limit</th><th>Premium</th></tr>'.$rows.'</table>';
+        }
+       //$table.='</table>';
     }
     
      //total   
@@ -896,7 +910,7 @@ function make_shoping_kart_for_in_patient_medical($kart_item_array)
     
     
     $childrens_total=0;
-    
+    $rows='';
     foreach ($childrens_array as $key => $value) 
     {
         
@@ -906,9 +920,10 @@ function make_shoping_kart_for_in_patient_medical($kart_item_array)
         $number_of_children=$value['number_of_children'];
         $number_of_children=$number_of_children==''?0:$number_of_children;//if blank make zero
         
-        $table.='<h4>Minimum: '.$minimum.' Maximum: '.$maximum.' Number of children: '.$number_of_children.' </h4>';
-        $table.='<table><tr><th>Limit</th><th>Premium</th></tr>';
+        //$table.='<h4>Minimum: '.$minimum.' Maximum: '.$maximum.' Number of children: '.$number_of_children.' </h4>';
+        //$table.='<table><tr><th>Limit</th><th>Premium</th></tr>';
         //echo json_encode($options);
+        $checker_is=0;
         foreach ($options as $value_limit_boolean) 
         {
             //$limit=$key_limit_boolean;//limit
@@ -919,17 +934,23 @@ function make_shoping_kart_for_in_patient_medical($kart_item_array)
                 if($boolean==true && $number_of_children >0)
                 {
                     $premium=get_premium_from_medical_option_limit_max_min($minimum,$maximum,$limit,$children_insurance);
-                    $table.='<tr><td>KES. '.number_format($limit).'</td><td>KES. '.number_format($premium).'</td></tr>';
+                    $rows.='<tr><td>KES. '.number_format($limit).'</td><td>KES. '.number_format($premium).'</td></tr>';
                     $childrens_total+=($premium*$number_of_children);
+                     $checker_is++;
                 }
                 else
                 {
-                    $table.='<tr><td>KES. '.number_format($limit).'</td><td>KES. '.number_format(0).'</td></tr>';//zero because option is not selected
+                   // $table.='<tr><td>KES. '.number_format($limit).'</td><td>KES. '.number_format(0).'</td></tr>';//zero because option is not selected
                 }
             }
             
         }
-       $table.='</table>';
+        if($checker_is>0)
+        {
+            //echo $checker_is.$table;
+          $table.='<h4>Minimum: '.$minimum.' Maximum: '.$maximum.' Number of children: '.$number_of_children.' </h4><table><tr><th>Limit</th><th>Premium</th></tr>'.$rows.'</table>';
+        }
+       //$table.='</table>';
     }
     
      //total   
@@ -986,8 +1007,9 @@ function make_in_patient_medical_view($value_items)
         $maximum=$value['maximum'];
         $options=array($value['options']);
        
-        $table.='<h4>Minimum: '.$minimum.' Maximum: '.$maximum.'</h4>';
-        $table.='<table><tr><th>Limit</th><th>Premium</th></tr>';
+        //$table.='<h4>Minimum: '.$minimum.' Maximum: '.$maximum.'</h4>';
+        //$table.='<table><tr><th>Limit</th><th>Premium</th></tr>';
+         $checker_is=0;
         //echo json_encode($options);
         foreach ($options as $value_limit_boolean) 
         {
@@ -1001,18 +1023,27 @@ function make_in_patient_medical_view($value_items)
                 if($boolean=="true")
                 {
                     $premium=get_premium_from_medical_option_limit_max_min($minimum,$maximum,$limit,$father_insurance);
-                    $table.='<tr><td>KES. '.number_format($limit).'</td><td>KES. '.number_format($premium).'</td></tr>';
+                    $rows.='<tr><td>KES. '.number_format($limit).'</td><td>KES. '.number_format($premium).'</td></tr>';
                     $fathers_total+=$premium;
+                     $checker_is++;
                 }
                 else
                 {
-                    $table.='<tr><td>KES. '.number_format($limit).'</td><td>KES. '.number_format(0).'</td></tr>';//zero because option is not selected
+                   // $table.='<tr><td>KES. '.number_format($limit).'</td><td>KES. '.number_format(0).'</td></tr>';//zero because option is not selected
                 }
             }
             
         }
-       $table.='</table>';
+        
+        if($checker_is>0)
+        {
+            //echo $checker_is.$table;
+          $table.='<h4>Minimumm: '.$minimum.' Maximum: '.$maximum.'</h4><table><tr><th>Limit</th><th>Premium</th></tr>'.$rows.'</table>';
+        }
+       
+       //$table.='</table>';
     }
+    
     
      //total   
      //$table.='<table><tr><th>TOTAL</th><td>KES. '.number_format($fathers_total).'</td></tr></table>';//zero because option is not selected
@@ -1021,7 +1052,7 @@ function make_in_patient_medical_view($value_items)
     $table.='<h2>Mothers Insurance</h2>';
     
     
-    
+    $rows='';
     $mothers_total=0;
     
     foreach ($mothers_array as $key => $value) 
@@ -1031,8 +1062,9 @@ function make_in_patient_medical_view($value_items)
         $maximum=$value['maximum'];
         $options=array($value['options']);
         
-        $table.='<h4>Minimum: '.$minimum.' Maximum: '.$maximum.'</h4>';
-        $table.='<table><tr><th>Limit</th><th>Premium</th></tr>';
+        //$table.='<h4>Minimum: '.$minimum.' Maximum: '.$maximum.'</h4>';
+        //$table.='<table><tr><th>Limit</th><th>Premium</th></tr>';
+        $checker_is=0;
         //echo json_encode($options);
         foreach ($options as $value_limit_boolean) 
         {
@@ -1044,17 +1076,23 @@ function make_in_patient_medical_view($value_items)
                 if($boolean=="true")
                 {
                     $premium=get_premium_from_medical_option_limit_max_min($minimum,$maximum,$limit,$mother_insurance);
-                    $table.='<tr><td>KES. '.number_format($limit).'</td><td>KES. '.number_format($premium).'</td></tr>';
+                    $rows.='<tr><td>KES. '.number_format($limit).'</td><td>KES. '.number_format($premium).'</td></tr>';
                     $mothers_total+=$premium;
+                    $checker_is++;
                 }
                 else
                 {
-                    $table.='<tr><td>KES. '.number_format($limit).'</td><td>KES. '.number_format(0).'</td></tr>';//zero because option is not selected
+                   // $table.='<tr><td>KES. '.number_format($limit).'</td><td>KES. '.number_format(0).'</td></tr>';//zero because option is not selected
                 }
             }
             
         }
-       $table.='</table>';
+         if($checker_is>0)
+        {
+            //echo $checker_is.$table;
+          $table.='<h4>Minimum: '.$minimum.' Maximum: '.$maximum.'</h4><table><tr><th>Limit</th><th>Premium</th></tr>'.$rows.'</table>';
+        }
+      // $table.='</table>';
     }
     
      //total   
@@ -1064,7 +1102,7 @@ function make_in_patient_medical_view($value_items)
      $table.='<h2>Childrens Insurance</h2>';
     
     
-    
+    $rows='';
     $childrens_total=0;
     
     foreach ($childrens_array as $key => $value) 
@@ -1076,8 +1114,9 @@ function make_in_patient_medical_view($value_items)
         $number_of_children=$value['number_of_children'];
         $number_of_children=$number_of_children==''?0:$number_of_children;//if blank make zero
         
-        $table.='<h4>Minimum: '.$minimum.' Maximum: '.$maximum.' Number of children: '.$number_of_children.' </h4>';
-        $table.='<table><tr><th>Limit</th><th>Premium</th></tr>';
+        //$table.='<h4>Minimum: '.$minimum.' Maximum: '.$maximum.' Number of children: '.$number_of_children.' </h4>';
+        //$table.='<table><tr><th>Limit</th><th>Premium</th></tr>';
+        $checker_is=0;
         //echo json_encode($options);
         foreach ($options as $value_limit_boolean) 
         {
@@ -1089,17 +1128,24 @@ function make_in_patient_medical_view($value_items)
                 if($boolean=="true" && $number_of_children >0)
                 {
                     $premium=get_premium_from_medical_option_limit_max_min($minimum,$maximum,$limit,$children_insurance);
-                    $table.='<tr><td>KES. '.number_format($limit).'</td><td>KES. '.number_format($premium).'</td></tr>';
+                    $rows.='<tr><td>KES. '.number_format($limit).'</td><td>KES. '.number_format($premium).'</td></tr>';
                     $childrens_total+=($premium*$number_of_children);
+                    $checker_is++;
                 }
                 else
                 {
-                    $table.='<tr><td>KES. '.number_format($limit).'</td><td>KES. '.number_format(0).'</td></tr>';//zero because option is not selected
+                    //$table.='<tr><td>KES. '.number_format($limit).'</td><td>KES. '.number_format(0).'</td></tr>';//zero because option is not selected
                 }
             }
             
         }
-       $table.='</table>';
+        
+         if($checker_is>0)
+        {
+            //echo $checker_is.$table;
+          $table.='<h4>Minimum: '.$minimum.' Maximum: '.$maximum.' Number of children: '.$number_of_children.' </h4><table><tr><th>Limit</th><th>Premium</th></tr>'.$rows.'</table>';
+        }
+      // $table.='</table>';
     }
     
     $seconds_in_a_day=3600*24;
@@ -1166,8 +1212,9 @@ function make_shoping_kart_for_out_patient_medical($kart_item_array)
         $maximum=$value['maximum'];
         $options=$value['options'];
         
-        $table.='<h4>Minimum: '.$minimum.' Maximum: '.$maximum.'</h4>';
-        $table.='<table><tr><th>Limit</th><th>Premium</th></tr>';
+        //$table.='<h4>Minimum: '.$minimum.' Maximum: '.$maximum.'</h4>';
+        //$table.='<table><tr><th>Limit</th><th>Premium</th></tr>';
+        $checker_is=0;
         //echo json_encode($options);
         foreach ($options as $value_limit_boolean) 
         {
@@ -1179,17 +1226,23 @@ function make_shoping_kart_for_out_patient_medical($kart_item_array)
                 if($boolean==true)
                 {
                     $premium=get_premium_from_medical_option_limit_max_min($minimum,$maximum,$limit,$father_insurance);
-                    $table.='<tr><td>KES. '.number_format($limit).'</td><td>KES. '.number_format($premium).'</td></tr>';
+                    $rows.='<tr><td>KES. '.number_format($limit).'</td><td>KES. '.number_format($premium).'</td></tr>';
                     $fathers_total+=$premium;
+                    $checker_is++;
                 }
                 else
                 {
-                    $table.='<tr><td>KES. '.number_format($limit).'</td><td>KES. '.number_format(0).'</td></tr>';//zero because option is not selected
+                   // $table.='<tr><td>KES. '.number_format($limit).'</td><td>KES. '.number_format(0).'</td></tr>';//zero because option is not selected
                 }
             }
             
         }
-       $table.='</table>';
+         if($checker_is>0)
+        {
+            //echo $checker_is.$table;
+          $table.='<h4>Minimum: '.$minimum.' Maximum: '.$maximum.'</h4><table><tr><th>Limit</th><th>Premium</th></tr>'.$rows.'</table>';
+        }
+       //$table.='</table>';
     }
     
      //total   
@@ -1201,6 +1254,7 @@ function make_shoping_kart_for_out_patient_medical($kart_item_array)
     
     
     $mothers_total=0;
+    $rows='';
     
     foreach ($mothers_array as $key => $value) 
     {
@@ -1209,8 +1263,9 @@ function make_shoping_kart_for_out_patient_medical($kart_item_array)
         $maximum=$value['maximum'];
         $options=$value['options'];
         
-        $table.='<h4>Minimum: '.$minimum.' Maximum: '.$maximum.'</h4>';
-        $table.='<table><tr><th>Limit</th><th>Premium</th></tr>';
+        //$table.='<h4>Minimum: '.$minimum.' Maximum: '.$maximum.'</h4>';
+       // $table.='<table><tr><th>Limit</th><th>Premium</th></tr>';
+        $checker_is=0;
         //echo json_encode($options);
         foreach ($options as $value_limit_boolean) 
         {
@@ -1222,17 +1277,23 @@ function make_shoping_kart_for_out_patient_medical($kart_item_array)
                 if($boolean==true)
                 {
                     $premium=get_premium_from_medical_option_limit_max_min($minimum,$maximum,$limit,$mother_insurance);
-                    $table.='<tr><td>KES. '.number_format($limit).'</td><td>KES. '.number_format($premium).'</td></tr>';
+                    $rows.='<tr><td>KES. '.number_format($limit).'</td><td>KES. '.number_format($premium).'</td></tr>';
                     $mothers_total+=$premium;
+                    $checker_is++;
                 }
                 else
                 {
-                    $table.='<tr><td>KES. '.number_format($limit).'</td><td>KES. '.number_format(0).'</td></tr>';//zero because option is not selected
+                    //$table.='<tr><td>KES. '.number_format($limit).'</td><td>KES. '.number_format(0).'</td></tr>';//zero because option is not selected
                 }
             }
             
         }
-       $table.='</table>';
+         if($checker_is>0)
+        {
+            //echo $checker_is.$table;
+          $table.='<h4>Minimum: '.$minimum.' Maximum: '.$maximum.'</h4><table><tr><th>Limit</th><th>Premium</th></tr>'.$rows.'</table>';
+        }
+      //$table.='</table>';
     }
     
      //total   
@@ -1244,6 +1305,7 @@ function make_shoping_kart_for_out_patient_medical($kart_item_array)
     
     
     $childrens_total=0;
+    $rows='';
     
     foreach ($childrens_array as $key => $value) 
     {
@@ -1254,8 +1316,9 @@ function make_shoping_kart_for_out_patient_medical($kart_item_array)
         $number_of_children=$value['number_of_children'];
         $number_of_children=$number_of_children==''?0:$number_of_children;//if blank make zero
         
-        $table.='<h4>Minimum: '.$minimum.' Maximum: '.$maximum.' Number of children: '.$number_of_children.' </h4>';
-        $table.='<table><tr><th>Limit</th><th>Premium</th></tr>';
+        //$table.='<h4>Minimum: '.$minimum.' Maximum: '.$maximum.' Number of children: '.$number_of_children.' </h4>';
+        $checker_is=0;
+        //$table.='<table><tr><th>Limit</th><th>Premium</th></tr>';
         //echo json_encode($options);
         foreach ($options as $value_limit_boolean) 
         {
@@ -1267,17 +1330,23 @@ function make_shoping_kart_for_out_patient_medical($kart_item_array)
                 if($boolean==true && $number_of_children >0)
                 {
                     $premium=get_premium_from_medical_option_limit_max_min($minimum,$maximum,$limit,$children_insurance);
-                    $table.='<tr><td>KES. '.number_format($limit).'</td><td>KES. '.number_format($premium).'</td></tr>';
+                    $rows.='<tr><td>KES. '.number_format($limit).'</td><td>KES. '.number_format($premium).'</td></tr>';
                     $childrens_total+=($premium*$number_of_children);
+                    $checker_is++;
                 }
                 else
                 {
-                    $table.='<tr><td>KES. '.number_format($limit).'</td><td>KES. '.number_format(0).'</td></tr>';//zero because option is not selected
+                    //$table.='<tr><td>KES. '.number_format($limit).'</td><td>KES. '.number_format(0).'</td></tr>';//zero because option is not selected
                 }
             }
             
         }
-       $table.='</table>';
+         if($checker_is>0)
+        {
+            //echo $checker_is.$table;
+          $table.='<h4>Minimum: '.$minimum.' Maximum: '.$maximum.' Number of children: '.$number_of_children.' </h4><table><tr><th>Limit</th><th>Premium</th></tr>'.$rows.'</table>';
+        }
+       //$table.='</table>';
     }
     
      //total   
@@ -1335,8 +1404,9 @@ function make_out_patient_medical_view($value_items)
         $maximum=$value['maximum'];
         $options=array($value['options']);
        
-        $table.='<h4>Minimum: '.$minimum.' Maximum: '.$maximum.'</h4>';
-        $table.='<table><tr><th>Limit</th><th>Premium</th></tr>';
+        //$table.='<h4>Minimum: '.$minimum.' Maximum: '.$maximum.'</h4>';
+       // $table.='<table><tr><th>Limit</th><th>Premium</th></tr>';
+         $checker_is=0;
         //echo json_encode($options);
         foreach ($options as $value_limit_boolean) 
         {
@@ -1350,17 +1420,23 @@ function make_out_patient_medical_view($value_items)
                 if($boolean=="true")
                 {
                     $premium=get_premium_from_medical_option_limit_max_min($minimum,$maximum,$limit,$father_insurance);
-                    $table.='<tr><td>KES. '.number_format($limit).'</td><td>KES. '.number_format($premium).'</td></tr>';
+                    $rows.='<tr><td>KES. '.number_format($limit).'</td><td>KES. '.number_format($premium).'</td></tr>';
                     $fathers_total+=$premium;
+                     $checker_is++;
                 }
                 else
                 {
-                    $table.='<tr><td>KES. '.number_format($limit).'</td><td>KES. '.number_format(0).'</td></tr>';//zero because option is not selected
+                    //$table.='<tr><td>KES. '.number_format($limit).'</td><td>KES. '.number_format(0).'</td></tr>';//zero because option is not selected
                 }
             }
             
         }
-       $table.='</table>';
+        if($checker_is>0)
+        {
+            //echo $checker_is.$table;
+          $table.='<h4>Minimum: '.$minimum.' Maximum: '.$maximum.'</h4><table><tr><th>Limit</th><th>Premium</th></tr>'.$rows.'</table>';
+        }
+       //$table.='</table>';
     }
     
      //total   
@@ -1372,7 +1448,7 @@ function make_out_patient_medical_view($value_items)
     
     
     $mothers_total=0;
-    
+    $rows='';
     foreach ($mothers_array as $key => $value) 
     {
         
@@ -1380,9 +1456,10 @@ function make_out_patient_medical_view($value_items)
         $maximum=$value['maximum'];
         $options=array($value['options']);
         
-        $table.='<h4>Minimum: '.$minimum.' Maximum: '.$maximum.'</h4>';
-        $table.='<table><tr><th>Limit</th><th>Premium</th></tr>';
+        //$table.='<h4>Minimum: '.$minimum.' Maximum: '.$maximum.'</h4>';
+       // $table.='<table><tr><th>Limit</th><th>Premium</th></tr>';
         //echo json_encode($options);
+         $checker_is=0;
         foreach ($options as $value_limit_boolean) 
         {
             //$limit=$key_limit_boolean;//limit
@@ -1393,17 +1470,23 @@ function make_out_patient_medical_view($value_items)
                 if($boolean=="true")
                 {
                     $premium=get_premium_from_medical_option_limit_max_min($minimum,$maximum,$limit,$mother_insurance);
-                    $table.='<tr><td>KES. '.number_format($limit).'</td><td>KES. '.number_format($premium).'</td></tr>';
+                    $rows.='<tr><td>KES. '.number_format($limit).'</td><td>KES. '.number_format($premium).'</td></tr>';
                     $mothers_total+=$premium;
+                     $checker_is++;
                 }
                 else
                 {
-                    $table.='<tr><td>KES. '.number_format($limit).'</td><td>KES. '.number_format(0).'</td></tr>';//zero because option is not selected
+                    //$table.='<tr><td>KES. '.number_format($limit).'</td><td>KES. '.number_format(0).'</td></tr>';//zero because option is not selected
                 }
             }
             
         }
-       $table.='</table>';
+        if($checker_is>0)
+        {
+            //echo $checker_is.$table;
+          $table.='<h4>Minimum: '.$minimum.' Maximum: '.$maximum.'</h4><table><tr><th>Limit</th><th>Premium</th></tr>'.$rows.'</table>';
+        }
+       //$table.='</table>';
     }
     
      //total   
@@ -1415,7 +1498,7 @@ function make_out_patient_medical_view($value_items)
     
     
     $childrens_total=0;
-    
+    $rows='';
     foreach ($childrens_array as $key => $value) 
     {
         
@@ -1425,9 +1508,10 @@ function make_out_patient_medical_view($value_items)
         $number_of_children=$value['number_of_children'];
         $number_of_children=$number_of_children==''?0:$number_of_children;//if blank make zero
         
-        $table.='<h4>Minimum: '.$minimum.' Maximum: '.$maximum.' Number of children: '.$number_of_children.' </h4>';
-        $table.='<table><tr><th>Limit</th><th>Premium</th></tr>';
+        //$table.='<h4>Minimum: '.$minimum.' Maximum: '.$maximum.' Number of children: '.$number_of_children.' </h4>';
+       //$table.='<table><tr><th>Limit</th><th>Premium</th></tr>';
         //echo json_encode($options);
+         $checker_is=0;
         foreach ($options as $value_limit_boolean) 
         {
             //$limit=$key_limit_boolean;//limit
@@ -1438,17 +1522,23 @@ function make_out_patient_medical_view($value_items)
                 if($boolean=="true" && $number_of_children >0)
                 {
                     $premium=get_premium_from_medical_option_limit_max_min($minimum,$maximum,$limit,$children_insurance);
-                    $table.='<tr><td>KES. '.number_format($limit).'</td><td>KES. '.number_format($premium).'</td></tr>';
+                    $rows.='<tr><td>KES. '.number_format($limit).'</td><td>KES. '.number_format($premium).'</td></tr>';
                     $childrens_total+=($premium*$number_of_children);
+                    $checker_is++;
                 }
                 else
                 {
-                    $table.='<tr><td>KES. '.number_format($limit).'</td><td>KES. '.number_format(0).'</td></tr>';//zero because option is not selected
+                   // $table.='<tr><td>KES. '.number_format($limit).'</td><td>KES. '.number_format(0).'</td></tr>';//zero because option is not selected
                 }
             }
             
         }
-       $table.='</table>';
+        if($checker_is>0)
+        {
+            //echo $checker_is.$table;
+          $table.='<h4>Minimum: '.$minimum.' Maximum: '.$maximum.' Number of children: '.$number_of_children.' </h4><table><tr><th>Limit</th><th>Premium</th></tr>'.$rows.'</table>';
+        }
+       //$table.='</table>';
     }
     
     $seconds_in_a_day=3600*24;
@@ -1555,7 +1645,7 @@ function make_shoping_kart_for_maternity_medical($kart_item_array)
                     }
                     else//if not selected
                     {
-                         $table.='<tr><td>'.$key.'</td><td>KES. '.number_format(0).'</td></tr>';
+                         //$table.='<tr><td>'.$key.'</td><td>KES. '.number_format(0).'</td></tr>';
                     }
                 }
             }
@@ -1612,7 +1702,7 @@ function make_shoping_kart_for_dental_medical($kart_item_array)
                     }
                     else//if not selected
                     {
-                         $table.='<tr><td>'.$key.'</td><td>KES. '.number_format(0).'</td></tr>';
+                         //$table.='<tr><td>'.$key.'</td><td>KES. '.number_format(0).'</td></tr>';
                     }
                 }
             }
@@ -1668,7 +1758,7 @@ function make_shoping_kart_for_optical_medical($kart_item_array)
                     }
                     else//if not selected
                     {
-                         $table.='<tr><td>'.$key.'</td><td>KES. '.number_format(0).'</td></tr>';
+                        // $table.='<tr><td>'.$key.'</td><td>KES. '.number_format(0).'</td></tr>';
                     }
                 }
             }
@@ -2477,7 +2567,7 @@ function make_shoping_kart_for_accident($kart_item_array)
                     }
                     else//if not selected
                     {
-                         $table.='<tr><td>'.$key.'</td><td>KES. '.number_format(0).'</td></tr>';
+                         //$table.='<tr><td>'.$key.'</td><td>KES. '.number_format(0).'</td></tr>';
                     }
                 }
             }
@@ -2534,7 +2624,7 @@ function make_accident_policy_view($value_items)
                     }
                     else//if not selected
                     {
-                         $table.='<tr><td>'.$key.'</td><td>KES. '.number_format(0).'</td></tr>';
+                        // $table.='<tr><td>'.$key.'</td><td>KES. '.number_format(0).'</td></tr>';
                     }
                 }
             }
@@ -2605,7 +2695,7 @@ function make_maternity_policy_view($value_items)
                     }
                     else//if not selected
                     {
-                         $table.='<tr><td>'.$key.'</td><td>KES. '.number_format(0).'</td></tr>';
+                         //$table.='<tr><td>'.$key.'</td><td>KES. '.number_format(0).'</td></tr>';
                     }
                 }
             }
@@ -2676,7 +2766,7 @@ function make_dental_policy_view($value_items)
                     }
                     else//if not selected
                     {
-                         $table.='<tr><td>'.$key.'</td><td>KES. '.number_format(0).'</td></tr>';
+                        // $table.='<tr><td>'.$key.'</td><td>KES. '.number_format(0).'</td></tr>';
                     }
                 }
             }
@@ -2747,7 +2837,7 @@ function make_optical_policy_view($value_items)
                     }
                     else//if not selected
                     {
-                         $table.='<tr><td>'.$key.'</td><td>KES. '.number_format(0).'</td></tr>';
+                         //$table.='<tr><td>'.$key.'</td><td>KES. '.number_format(0).'</td></tr>';
                     }
                 }
             }
