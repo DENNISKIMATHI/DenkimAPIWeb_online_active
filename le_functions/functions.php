@@ -5537,7 +5537,1017 @@ function count_the_cart($shoping_cart)
 
 
 //function to get aggregate totals of payments
-function get_aggregate_totals_payments_client($session_key,$cookie)
+function get_aggregate_totals_payments_client($type,$session_key,$cookie,$origin,$email_address)
 {
+    
+    
+    $returned_json_decoded= fetch_policy_user_type($type,$email_address,$session_key,$cookie,'Origin:'.$origin);
+
+    $check_is=$returned_json_decoded["check"];//check
+
+    $message_is=$returned_json_decoded["message"];//message
+    
+    $total=0;
+    $payment=0;
+    $balance=0;
+            if($check_is==true)//if check is true
+            {//if($check_is==true)//if check is true
+
+                foreach ($message_is as $value) 
+                {//foreach ($message_is as $value) 
+                   //echo json_encode($value).'<hr>';
+                    
+                    $policy_number=$value['policy_number'];
+                    
+                    $policy_info= fetch_policy_type_specific($type,$policy_number,'/client/console/view_user_motor_insurance.php');
+                    $policy_infocheck_is=$policy_info["check"];//check
+                    $policy_infomessage_is=$policy_info["message"];//message
+                    
+                    $array_to_print=array();
+                    //handle if policy check s true
+                    if($policy_infocheck_is==true)
+                    {//if($policy_infocheck_is==true)
+                         //echo json_encode($policy_infomessage_is).'<hr>';
+                            $policy_id=$value['_id']['$oid'];
+                           
+                            switch ($type) 
+                            {//switch ($type) 
+                                    case 1://case 1:
+                                            $array_to_print['policy_id']=$policy_id;
+                                            $array_to_print['policy_number']=$policy_number;
+                                            $array_to_print['insured_item_value']=$value['insured_item_value'];
+                                            $array_to_print['excess_protector_percentage_is_boolean']=$value['selected_benefits']['excess_protector_percentage'];
+                                            $array_to_print['political_risk_terrorism_percentage_is_boolean']=$value['selected_benefits']['political_risk_terrorism_percentage'];
+                                            $array_to_print['aa_membership_is_boolean']=$value['selected_benefits']['aa_membership'];
+                                            $array_to_print['active_status']=$value['active_status'];
+                                            $array_to_print['selected_policy_time_stamp']=$value['time_stamp'];
+                                            $array_to_print['company_name']=$policy_infomessage_is['company_name'];
+                                            $array_to_print['premium_percentage']=$policy_infomessage_is['premium_percentage'];
+                                            $array_to_print['excess_protector_percentage']=$policy_infomessage_is['excess_protector_percentage'];
+                                            $array_to_print['political_risk_terrorism_percentage']=$policy_infomessage_is['political_risk_terrorism_percentage '];
+                                            $array_to_print['aa_membership']=$policy_infomessage_is['aa_membership'];
+                                            $array_to_print['expiry_duration_days']=$policy_infomessage_is['expiry_duration_days'];
+                                            $array_to_print['logo_url']=$policy_infomessage_is['logo_url'];
+                                            $array_to_print['html_url']=$policy_infomessage_is['html_url'];
+                                            $array_to_print['company_time_stamp']=$policy_infomessage_is['time_stamp'];
+
+                                            $returned_array=make_motor_policy_view($array_to_print);
+
+                                            $total+=$returned_array['total'];
+
+                                    break;//break;
+                                    
+                                    case 2://case 2:
+                                           
+                                           $array_to_print['policy_id']=$policy_id;
+                                            $array_to_print['policy_number']=$policy_number;
+                                            $array_to_print['fathers_array']=$value['selected_father_insurance'];
+                                            $array_to_print['mothers_array']=$value['selected_mother_insurance'];
+                                            $array_to_print['childrens_array']=$value['selected_children_insurance'];
+                                            $array_to_print['active_status']=$value['active_status'];
+                                            $array_to_print['selected_policy_time_stamp']=$value['time_stamp'];
+                                            $array_to_print['company_name']=$policy_infomessage_is['company_name'];
+                                            $array_to_print['father_insurance']=$policy_infomessage_is['father_insurance'];
+                                            $array_to_print['mother_insurance']=$policy_infomessage_is['mother_insurance'];
+                                            $array_to_print['children_insurance']=$policy_infomessage_is['children_insurance '];
+                                            $array_to_print['expiry_duration_days']=$policy_infomessage_is['expiry_duration_days'];
+                                            $array_to_print['logo_url']=$policy_infomessage_is['logo_url'];
+                                            $array_to_print['html_url']=$policy_infomessage_is['html_url'];
+                                            $array_to_print['company_time_stamp']=$policy_infomessage_is['time_stamp'];
+
+
+
+                                            $returned_array=make_in_patient_medical_view($array_to_print);
+                                            $total+=$returned_array['total'];
+
+                                    break;//break;
+                                    
+                                    case 3://case 3:
+                                           
+                                            
+                                            $array_to_print['policy_id']=$policy_id;
+                                            $array_to_print['policy_number']=$policy_number;
+
+                                            $array_to_print['selected_options']=$value['selected_options'];
+                                            $array_to_print['active_status']=$value['active_status'];
+                                            $array_to_print['selected_policy_time_stamp']=$value['time_stamp'];
+                                            $array_to_print['company_name']=$policy_infomessage_is['company_name'];
+
+                                            $array_to_print['options']=$policy_infomessage_is['options'];
+
+
+                                            $array_to_print['expiry_duration_days']=$policy_infomessage_is['expiry_duration_days'];
+                                            $array_to_print['logo_url']=$policy_infomessage_is['logo_url'];
+                                            $array_to_print['company_time_stamp']=$policy_infomessage_is['time_stamp'];
+
+
+
+                                            $returned_array=make_accident_policy_view($array_to_print);
+                                            $total+=$returned_array['total'];
+
+                                    break;//break;
+                                    
+                                    case 4://case 4:
+                                           
+                                            $array_to_print['policy_id']=$policy_id;
+                                            $array_to_print['policy_number']=$policy_number;
+                                            $array_to_print['contract_price']=$value['contract_price'];
+                                            $array_to_print['active_status']=$value['active_status'];
+                                            $array_to_print['selected_policy_time_stamp']=$value['time_stamp'];
+                                            $array_to_print['company_name']=$policy_infomessage_is['company_name'];
+
+                                            $array_to_print['contract_price_multiplier']=$policy_infomessage_is['contract_price_multiplier'];
+
+                                            $array_to_print['expiry_duration_days']=$policy_infomessage_is['expiry_duration_days'];
+                                            $array_to_print['logo_url']=$policy_infomessage_is['logo_url'];
+                                            $array_to_print['html_url']=$policy_infomessage_is['html_url'];
+                                            $array_to_print['company_time_stamp']=$policy_infomessage_is['time_stamp'];
+
+
+
+                                            $returned_array=make_contractors_all_risk_view($array_to_print);
+                                            $total+=$returned_array['total'];
+
+                                    break;//break;
+                                    
+                                    case 5://case 5:
+                                           $array_to_print['policy_id']=$policy_id;
+                                            $array_to_print['policy_number']=$policy_number;
+
+                                            $array_to_print['contract_price']=$value['contract_price'];
+
+                                            $array_to_print['active_status']=$value['active_status'];
+                                            $array_to_print['selected_policy_time_stamp']=$value['time_stamp'];
+                                            $array_to_print['company_name']=$policy_infomessage_is['company_name'];
+
+                                            $array_to_print['contract_price_multiplier']=$policy_infomessage_is['contract_price_multiplier'];
+                                            $array_to_print['w_multiplier']=$policy_infomessage_is['w_multiplier'];
+
+                                            $array_to_print['expiry_duration_days']=$policy_infomessage_is['expiry_duration_days'];
+                                            $array_to_print['logo_url']=$policy_infomessage_is['logo_url'];
+                                            $array_to_print['html_url']=$policy_infomessage_is['html_url'];
+                                            $array_to_print['company_time_stamp']=$policy_infomessage_is['time_stamp'];
+
+
+
+                                            $returned_array=make_performance_bond_insurance_view($array_to_print);
+                                            
+                                            $total+=$returned_array['total'];
+
+                                    break;//break;
+                                    
+                                    case 6://case 6:
+                                           $array_to_print['policy_id']=$policy_id;
+                                            $array_to_print['policy_number']=$policy_number;
+
+                                            $array_to_print['fire_price']=$value['fire_price'];
+                                            $array_to_print['burglary_price']=$value['burglary_price'];
+                                            $array_to_print['all_risk_price']=$value['all_risk_price'];
+
+
+                                            $array_to_print['active_status']=$value['active_status'];
+                                            $array_to_print['selected_policy_time_stamp']=$value['time_stamp'];
+                                            $array_to_print['company_name']=$policy_infomessage_is['company_name'];
+
+                                            $array_to_print['fire_multiplier']=$policy_infomessage_is['fire_multiplier'];
+                                            $array_to_print['fire_html_url']=$policy_infomessage_is['fire_html_url'];
+                                            $array_to_print['burglary_multiplier']=$policy_infomessage_is['burglary_multiplier'];
+                                            $array_to_print['burglary_html_url']=$policy_infomessage_is['burglary_html_url'];
+                                            $array_to_print['all_risk_multiplier']=$policy_infomessage_is['all_risk_multiplier'];
+                                            $array_to_print['all_risk_html_url']=$policy_infomessage_is['all_risk_html_url'];
+
+                                            $array_to_print['expiry_duration_days']=$policy_infomessage_is['expiry_duration_days'];
+                                            $array_to_print['logo_url']=$policy_infomessage_is['logo_url'];
+                                            $array_to_print['html_url']=$policy_infomessage_is['html_url'];
+                                            $array_to_print['company_time_stamp']=$policy_infomessage_is['time_stamp'];
+
+
+
+                                            $returned_array=make_fire_burglary_theft_insurance_view($array_to_print);
+
+                                            $total+=$returned_array['total'];
+
+                                    break;//break;
+                                    
+                                    case 7://case 7:
+                                            $array_to_print['policy_id']=$policy_id;
+                                            $array_to_print['policy_number']=$policy_number;
+
+                                            $array_to_print['building_value']=$value['building_value'];
+                                            $array_to_print['content_value']=$value['content_value'];
+                                            $array_to_print['electronics_value']=$value['electronics_value'];
+
+                                            $array_to_print['active_status']=$value['active_status'];
+                                            $array_to_print['selected_policy_time_stamp']=$value['time_stamp'];
+                                            $array_to_print['company_name']=$policy_infomessage_is['company_name'];
+
+                                            $array_to_print['building_multiplier']=$policy_infomessage_is['building_multiplier'];
+                                            $array_to_print['content_multiplier']=$policy_infomessage_is['content_multiplier'];
+                                            $array_to_print['electronics_multiplier']=$policy_infomessage_is['electronics_multiplier'];
+
+                                            $array_to_print['expiry_duration_days']=$policy_infomessage_is['expiry_duration_days'];
+                                            $array_to_print['logo_url']=$policy_infomessage_is['logo_url'];
+                                            $array_to_print['html_url']=$policy_infomessage_is['html_url'];
+                                            $array_to_print['company_time_stamp']=$policy_infomessage_is['time_stamp'];
+
+
+
+                                            $returned_array=make_home_insurance_view($array_to_print);
+
+                                            $total+=$returned_array['total'];
+
+                                    break;//break;
+                                    
+                                    case 8://case 8:
+                                           
+                                        $array_to_print['policy_id']=$policy_id;
+                                        $array_to_print['policy_number']=$policy_number;
+
+                                        $array_to_print['selected_options']=$value['selected_options'];
+                                        $array_to_print['active_status']=$value['active_status'];
+                                        $array_to_print['selected_policy_time_stamp']=$value['time_stamp'];
+                                        $array_to_print['company_name']=$policy_infomessage_is['company_name'];
+
+                                        $array_to_print['options']=$policy_infomessage_is['options'];
+
+
+                                        $array_to_print['expiry_duration_days']=$policy_infomessage_is['expiry_duration_days'];
+                                        $array_to_print['logo_url']=$policy_infomessage_is['logo_url'];
+                                        $array_to_print['company_time_stamp']=$policy_infomessage_is['time_stamp'];
+
+
+
+                                        $returned_array=  make_maternity_policy_view($array_to_print);
+                                            $total+=$returned_array['total'];
+
+                                    break;//break;
+                                    
+                                    case 9://case 9:
+                                            $array_to_print['policy_id']=$policy_id;
+                                            $array_to_print['policy_number']=$policy_number;
+
+                                            $array_to_print['selected_options']=$value['selected_options'];
+                                            $array_to_print['active_status']=$value['active_status'];
+                                            $array_to_print['selected_policy_time_stamp']=$value['time_stamp'];
+                                            $array_to_print['company_name']=$policy_infomessage_is['company_name'];
+
+                                            $array_to_print['options']=$policy_infomessage_is['options'];
+
+
+                                            $array_to_print['expiry_duration_days']=$policy_infomessage_is['expiry_duration_days'];
+                                            $array_to_print['logo_url']=$policy_infomessage_is['logo_url'];
+                                            $array_to_print['company_time_stamp']=$policy_infomessage_is['time_stamp'];
+
+
+
+                                            $returned_array= make_dental_policy_view($array_to_print);
+
+                                            $total+=$returned_array['total'];
+
+                                    break;//break;
+                                    
+                                    case 10://case 10:
+                                           
+                                            $array_to_print['policy_id']=$policy_id;
+                                            $array_to_print['policy_number']=$policy_number;
+
+                                            $array_to_print['selected_options']=$value['selected_options'];
+                                            $array_to_print['active_status']=$value['active_status'];
+                                            $array_to_print['selected_policy_time_stamp']=$value['time_stamp'];
+                                            $array_to_print['company_name']=$policy_infomessage_is['company_name'];
+
+                                            $array_to_print['options']=$policy_infomessage_is['options'];
+
+
+                                            $array_to_print['expiry_duration_days']=$policy_infomessage_is['expiry_duration_days'];
+                                            $array_to_print['logo_url']=$policy_infomessage_is['logo_url'];
+                                            $array_to_print['company_time_stamp']=$policy_infomessage_is['time_stamp'];
+
+
+
+                                            $returned_array= make_optical_policy_view($array_to_print);
+                                            $total+=$returned_array['total'];
+
+                                    break;//break;
+                                    
+                                    case 11://case 11:
+                                            $array_to_print['policy_id']=$policy_id;
+                                            $array_to_print['policy_number']=$policy_number;
+                                            $array_to_print['fathers_array']=$value['selected_father_insurance'];
+                                            $array_to_print['mothers_array']=$value['selected_mother_insurance'];
+                                            $array_to_print['childrens_array']=$value['selected_children_insurance'];
+                                            $array_to_print['active_status']=$value['active_status'];
+                                            $array_to_print['selected_policy_time_stamp']=$value['time_stamp'];
+                                            $array_to_print['company_name']=$policy_infomessage_is['company_name'];
+                                            $array_to_print['father_insurance']=$policy_infomessage_is['father_insurance'];
+                                            $array_to_print['mother_insurance']=$policy_infomessage_is['mother_insurance'];
+                                            $array_to_print['children_insurance']=$policy_infomessage_is['children_insurance '];
+                                            $array_to_print['expiry_duration_days']=$policy_infomessage_is['expiry_duration_days'];
+                                            $array_to_print['logo_url']=$policy_infomessage_is['logo_url'];
+                                            $array_to_print['html_url']=$policy_infomessage_is['html_url'];
+                                            $array_to_print['company_time_stamp']=$policy_infomessage_is['time_stamp'];
+
+
+
+                                            $returned_array=make_out_patient_medical_view($array_to_print);
+
+                                            $total+=$returned_array['total'];
+
+                                    break;//break;
+                                    
+                                    case 12://case 12:
+                                            $array_to_print['policy_id']=$policy_id;
+                                            $array_to_print['policy_number']=$policy_number;
+                                            $array_to_print['limit']=$value['limit'];
+                                            $array_to_print['active_status']=$value['active_status'];
+                                            $array_to_print['selected_policy_time_stamp']=$value['time_stamp'];
+
+                                            $array_to_print['company_name']=$policy_infomessage_is['company_name'];
+                                            $array_to_print['premium_percentage']=$policy_infomessage_is['premium_percentage'];
+                                            $array_to_print['minimum']=$policy_infomessage_is['minimum'];
+                                            $array_to_print['expiry_duration_days']=$policy_infomessage_is['expiry_duration_days'];
+                                            $array_to_print['logo_url']=$policy_infomessage_is['logo_url'];
+                                            $array_to_print['html_url']=$policy_infomessage_is['html_url'];
+                                            $array_to_print['company_time_stamp']=$policy_infomessage_is['time_stamp'];
+
+
+
+
+                                            $returned_array=make_public_liability_policy_view($array_to_print);
+
+                                            $total+=$returned_array['total'];
+
+                                    break;//break;
+                                    
+                                    case 13://case 13:
+                                           
+                           
+                                            $array_to_print['policy_id']=$policy_id;
+                                            $array_to_print['policy_number']=$policy_number;
+                                            $array_to_print['estimated_carry_on_any_trip']=$value['estimated_carry_on_any_trip'];
+                                            $array_to_print['total_annual_estimated_carry_all_trips']=$value['total_annual_estimated_carry_all_trips'];
+                                            $array_to_print['geographical_area']=$value['geographical_area'];
+                                            $array_to_print['types_of_goods']=$value['types_of_goods'];
+                                            $array_to_print['mode_of_transport']=$value['mode_of_transport'];
+                                            $array_to_print['active_status']=$value['active_status'];
+                                            $array_to_print['selected_policy_time_stamp']=$value['time_stamp'];
+
+                                            $array_to_print['company_name']=$policy_infomessage_is['company_name'];
+                                            $array_to_print['a_percentage']=$policy_infomessage_is['a_percentage'];
+                                            $array_to_print['b_percentage']=$policy_infomessage_is['b_percentage'];
+                                            $array_to_print['expiry_duration_days']=$policy_infomessage_is['expiry_duration_days'];
+                                            $array_to_print['logo_url']=$policy_infomessage_is['logo_url'];
+                                            $array_to_print['html_url']=$policy_infomessage_is['html_url'];
+                                            $array_to_print['company_time_stamp']=$policy_infomessage_is['time_stamp'];
+
+
+
+
+                                            $returned_array=make_goods_in_transit_policy_view($array_to_print);
+
+                                            $total+=$returned_array['total'];
+
+                                    break;//break;
+                                    
+                                    case 14://case 14:
+                                           
+                                             $array_to_print['policy_id']=$policy_id;
+                                            $array_to_print['policy_number']=$policy_number;
+                                            $array_to_print['limit']=$value['limit'];
+                                            $array_to_print['types_of_goods']=$value['types_of_goods'];
+                                            $array_to_print['product_type']=$value['product_type'];
+                                            $array_to_print['active_status']=$value['active_status'];
+                                            $array_to_print['selected_policy_time_stamp']=$value['time_stamp'];
+
+                                            $array_to_print['company_name']=$policy_infomessage_is['company_name'];
+                                            $array_to_print['premium_percentage']=$policy_infomessage_is['premium_percentage'];
+                                            $array_to_print['minimum']=$policy_infomessage_is['minimum'];
+                                            $array_to_print['policy_number']=$policy_infomessage_is['policy_number'];
+                                            $array_to_print['expiry_duration_days']=$policy_infomessage_is['expiry_duration_days'];
+                                            $array_to_print['logo_url']=$policy_infomessage_is['logo_url'];
+                                            $array_to_print['html_url']=$policy_infomessage_is['html_url'];
+                                            $array_to_print['company_time_stamp']=$policy_infomessage_is['time_stamp'];
+
+
+
+
+                                            $returned_array=make_product_liability_policy_view($array_to_print);
+                                            $total+=$returned_array['total'];
+
+                                    break;//break;
+                                    
+                                    case 15://case 15:
+                                            $array_to_print['policy_id']=$policy_id;
+                                            $array_to_print['policy_number']=$policy_number;
+                                            $array_to_print['vehicle_value']=$value['vehicle_value'];
+                                            $array_to_print['vehicle_registration_details']=$value['vehicle_registration_details'];
+                                            $array_to_print['number_of_passengers']=$value['number_of_passengers'];
+                                            $array_to_print['excess_protector_percentage']=$value['excess_protector_percentage'];
+                                            $array_to_print['political_risk_terrorism_percentage']=$value['political_risk_terrorism_percentage'];
+                                            $array_to_print['aa_membership']=$value['aa_membership'];
+                                            $array_to_print['active_status']=$value['active_status'];
+                                            $array_to_print['selected_policy_time_stamp']=$value['time_stamp'];
+
+                                            $array_to_print['company_name']=$policy_infomessage_is['company_name'];
+                                            $array_to_print['v_percentage']=$policy_infomessage_is['v_percentage'];
+                                            $array_to_print['n_percentage']=$policy_infomessage_is['n_percentage'];
+                                            $array_to_print['minimum_excess_protector']=$policy_infomessage_is['minimum_excess_protector'];
+                                            $array_to_print['minimum_political_violence']=$policy_infomessage_is['minimum_political_violence'];
+                                            $array_to_print['excess_protector_multiplier']=$policy_infomessage_is['excess_protector_multiplier'];
+                                            $array_to_print['political_violence_multiplier']=$policy_infomessage_is['political_violence_multiplier'];
+                                            $array_to_print['aa_constant']=$policy_infomessage_is['aa_constant'];
+
+                                            $array_to_print['expiry_duration_days']=$policy_infomessage_is['expiry_duration_days'];
+                                            $array_to_print['logo_url']=$policy_infomessage_is['logo_url'];
+                                            $array_to_print['html_url']=$policy_infomessage_is['html_url'];
+                                            $array_to_print['company_time_stamp']=$policy_infomessage_is['time_stamp'];
+
+
+
+
+                                            $returned_array=make_motor_psv_insurance_for_uber_policy_view($array_to_print);
+
+                                            $total+=$returned_array['total'];
+
+                                    break;//break;
+                                    
+                                    case 16://case 16:
+                                           
+                                            $array_to_print['policy_id']=$policy_id;
+                                            $array_to_print['policy_number']=$policy_number;
+                                            $array_to_print['selected_employee_categories']=$value['selected_employee_categories'];
+                                            $array_to_print['elected_empoloyee_liability_option']=$value['elected_empoloyee_liability_option'];
+                                            $array_to_print['active_status']=$value['active_status'];
+                                            $array_to_print['selected_policy_time_stamp']=$value['time_stamp'];
+
+                                            $array_to_print['company_name']=$policy_infomessage_is['company_name'];
+                                            $array_to_print['wiba_categories']=$policy_infomessage_is['wiba_categories'];
+                                            $array_to_print['employee_liability_options']=$policy_infomessage_is['employee_liability_options'];
+
+                                            $array_to_print['expiry_duration_days']=$policy_infomessage_is['expiry_duration_days'];
+                                            $array_to_print['logo_url']=$policy_infomessage_is['logo_url'];
+                                            $array_to_print['html_url']=$policy_infomessage_is['html_url'];
+                                            $array_to_print['company_time_stamp']=$policy_infomessage_is['time_stamp'];
+
+
+
+
+                                            $returned_array=make_wiba_and_employers_liability_policy_view($array_to_print);
+                                            
+                                            $total+=$returned_array['total'];
+
+                                    break;//break;
+                                
+                                    default:
+                                    break;
+                            }//switch ($type) 
+                            
+                            
+                            //fetch
+                            $url_is=the_api_authentication_api_url_is()."denkimAPILogic/MainPackages.FetchUserPayments";
+
+                            $myvars='session_key='.$session_key.'&email_address='.$email_address.'&policy_id='.$policy_id;
+
+                            $header_array= array('Cookie:'.$cookie,'Authorization:'.api_key_is(),'Origin:'.$origin);
+
+                            $returned_json=send_curl_post($url_is,$myvars,$header_array);//cap output
+
+                            $returned_json_decoded= json_decode($returned_json,true);//decode
+
+                            $check_is_2=$returned_json_decoded["check"];//check
+                            
+                           // echo $check_is_2.'=='.$policy_id.'<br>';
+                            if($check_is_2==true)//if check is true
+                            {//if($check_is_2==true)//if check is true
+                                 $message_is_now=$returned_json_decoded["message"];//message
+                                 
+                                                 $total_payments=0;
+                                                 foreach ($message_is_now as $value_is) 
+                                                 {//start of foreach $message_is as $value
+                                                        $amount_paid=$value_is['amount_paid'];
+                                                       $total_payments+=$amount_paid;//add to total payments
+                                                      
+                                                 }//end of foreach $message_is as $value
+                                                 
+                                                 $payment+=$total_payments;
+
+                                                 $balance_is=get_balance_for_polices($returned_array['total'],$total_payments,$returned_array['policy_date'],$policy_infomessage_is['expiry_duration_days']);//get balance
+
+                                                 $balance+=$balance_is['balance'];
+                                                
+                            }//if($check_is_2==true)//if check is true
+                            
+                    }//if($policy_infocheck_is==true)
+                    
+                   
+                    
+                }//foreach ($message_is as $value) 
+                         
+
+
+            }//if($check_is==true)//if check is true
+        
+    return array(
+        'total'=>$total,
+        'payment'=>$payment,
+        'balance'=>$balance
+    );
+}
+
+
+//function to get aggregate totals of payments full json
+function get_aggregate_totals_payments_client_full_json($array)
+{
+    $total=0;
+    $payment=0;
+    $balance=0;
+    
+    for ($index = 0; $index < count($array); $index++) 
+    {//for ($index = 0; $index < count($array); $index++)
+        $type=$index+1;
+        
+       
+        for ($index1 = 0; $index1 < count($array[$index]); $index1++) 
+        {//for ($index1 = 0; $index1 < count($array[$index]); $index1++) 
+           
+            
+            $value=$array[$index][$index1]['selected_policy_is'];
+            $policy_infomessage_is=$array[$index][$index1]['created_policy_is'];
+            $message_is_now=$array[$index][$index1]['created_payments_is'];
+        
+           // echo json_encode($value).'<hr>';
+            //echo $value['policy_number'].'<hr>';
+            
+                    
+                           $policy_number=$value['policy_number'];
+                           $policy_id=$value['_id']['$oid'];
+                           $type=$value['type'];
+
+                                       switch ($type) 
+                                       {//switch ($type) 
+                                               case 1://case 1:
+                                                       $array_to_print['policy_id']=$policy_id;
+                                                       $array_to_print['policy_number']=$policy_number;
+                                                       $array_to_print['insured_item_value']=$value['insured_item_value'];
+                                                       $array_to_print['excess_protector_percentage_is_boolean']=$value['selected_benefits']['excess_protector_percentage'];
+                                                       $array_to_print['political_risk_terrorism_percentage_is_boolean']=$value['selected_benefits']['political_risk_terrorism_percentage'];
+                                                       $array_to_print['aa_membership_is_boolean']=$value['selected_benefits']['aa_membership'];
+                                                       $array_to_print['active_status']=$value['active_status'];
+                                                       $array_to_print['selected_policy_time_stamp']=$value['time_stamp'];
+                                                       $array_to_print['company_name']=$policy_infomessage_is['company_name'];
+                                                       $array_to_print['premium_percentage']=$policy_infomessage_is['premium_percentage'];
+                                                       $array_to_print['excess_protector_percentage']=$policy_infomessage_is['excess_protector_percentage'];
+                                                       $array_to_print['political_risk_terrorism_percentage']=$policy_infomessage_is['political_risk_terrorism_percentage '];
+                                                       $array_to_print['aa_membership']=$policy_infomessage_is['aa_membership'];
+                                                       $array_to_print['expiry_duration_days']=$policy_infomessage_is['expiry_duration_days'];
+                                                       $array_to_print['logo_url']=$policy_infomessage_is['logo_url'];
+                                                       $array_to_print['html_url']=$policy_infomessage_is['html_url'];
+                                                       $array_to_print['company_time_stamp']=$policy_infomessage_is['time_stamp'];
+
+                                                       $returned_array=make_motor_policy_view($array_to_print);
+
+                                                       $total+=$returned_array['total'];
+
+                                               break;//break;
+
+                                               case 2://case 2:
+
+                                                      $array_to_print['policy_id']=$policy_id;
+                                                       $array_to_print['policy_number']=$policy_number;
+                                                       $array_to_print['fathers_array']=$value['selected_father_insurance'];
+                                                       $array_to_print['mothers_array']=$value['selected_mother_insurance'];
+                                                       $array_to_print['childrens_array']=$value['selected_children_insurance'];
+                                                       $array_to_print['active_status']=$value['active_status'];
+                                                       $array_to_print['selected_policy_time_stamp']=$value['time_stamp'];
+                                                       $array_to_print['company_name']=$policy_infomessage_is['company_name'];
+                                                       $array_to_print['father_insurance']=$policy_infomessage_is['father_insurance'];
+                                                       $array_to_print['mother_insurance']=$policy_infomessage_is['mother_insurance'];
+                                                       $array_to_print['children_insurance']=$policy_infomessage_is['children_insurance '];
+                                                       $array_to_print['expiry_duration_days']=$policy_infomessage_is['expiry_duration_days'];
+                                                       $array_to_print['logo_url']=$policy_infomessage_is['logo_url'];
+                                                       $array_to_print['html_url']=$policy_infomessage_is['html_url'];
+                                                       $array_to_print['company_time_stamp']=$policy_infomessage_is['time_stamp'];
+
+
+
+                                                       $returned_array=make_in_patient_medical_view($array_to_print);
+                                                       $total+=$returned_array['total'];
+
+                                               break;//break;
+
+                                               case 3://case 3:
+
+
+                                                       $array_to_print['policy_id']=$policy_id;
+                                                       $array_to_print['policy_number']=$policy_number;
+
+                                                       $array_to_print['selected_options']=$value['selected_options'];
+                                                       $array_to_print['active_status']=$value['active_status'];
+                                                       $array_to_print['selected_policy_time_stamp']=$value['time_stamp'];
+                                                       $array_to_print['company_name']=$policy_infomessage_is['company_name'];
+
+                                                       $array_to_print['options']=$policy_infomessage_is['options'];
+
+
+                                                       $array_to_print['expiry_duration_days']=$policy_infomessage_is['expiry_duration_days'];
+                                                       $array_to_print['logo_url']=$policy_infomessage_is['logo_url'];
+                                                       $array_to_print['company_time_stamp']=$policy_infomessage_is['time_stamp'];
+
+
+
+                                                       $returned_array=make_accident_policy_view($array_to_print);
+                                                       $total+=$returned_array['total'];
+
+                                               break;//break;
+
+                                               case 4://case 4:
+
+                                                       $array_to_print['policy_id']=$policy_id;
+                                                       $array_to_print['policy_number']=$policy_number;
+                                                       $array_to_print['contract_price']=$value['contract_price'];
+                                                       $array_to_print['active_status']=$value['active_status'];
+                                                       $array_to_print['selected_policy_time_stamp']=$value['time_stamp'];
+                                                       $array_to_print['company_name']=$policy_infomessage_is['company_name'];
+
+                                                       $array_to_print['contract_price_multiplier']=$policy_infomessage_is['contract_price_multiplier'];
+
+                                                       $array_to_print['expiry_duration_days']=$policy_infomessage_is['expiry_duration_days'];
+                                                       $array_to_print['logo_url']=$policy_infomessage_is['logo_url'];
+                                                       $array_to_print['html_url']=$policy_infomessage_is['html_url'];
+                                                       $array_to_print['company_time_stamp']=$policy_infomessage_is['time_stamp'];
+
+
+
+                                                       $returned_array=make_contractors_all_risk_view($array_to_print);
+                                                       $total+=$returned_array['total'];
+
+                                               break;//break;
+
+                                               case 5://case 5:
+                                                      $array_to_print['policy_id']=$policy_id;
+                                                       $array_to_print['policy_number']=$policy_number;
+
+                                                       $array_to_print['contract_price']=$value['contract_price'];
+
+                                                       $array_to_print['active_status']=$value['active_status'];
+                                                       $array_to_print['selected_policy_time_stamp']=$value['time_stamp'];
+                                                       $array_to_print['company_name']=$policy_infomessage_is['company_name'];
+
+                                                       $array_to_print['contract_price_multiplier']=$policy_infomessage_is['contract_price_multiplier'];
+                                                       $array_to_print['w_multiplier']=$policy_infomessage_is['w_multiplier'];
+
+                                                       $array_to_print['expiry_duration_days']=$policy_infomessage_is['expiry_duration_days'];
+                                                       $array_to_print['logo_url']=$policy_infomessage_is['logo_url'];
+                                                       $array_to_print['html_url']=$policy_infomessage_is['html_url'];
+                                                       $array_to_print['company_time_stamp']=$policy_infomessage_is['time_stamp'];
+
+
+
+                                                       $returned_array=make_performance_bond_insurance_view($array_to_print);
+
+                                                       $total+=$returned_array['total'];
+
+                                               break;//break;
+
+                                               case 6://case 6:
+                                                      $array_to_print['policy_id']=$policy_id;
+                                                       $array_to_print['policy_number']=$policy_number;
+
+                                                       $array_to_print['fire_price']=$value['fire_price'];
+                                                       $array_to_print['burglary_price']=$value['burglary_price'];
+                                                       $array_to_print['all_risk_price']=$value['all_risk_price'];
+
+
+                                                       $array_to_print['active_status']=$value['active_status'];
+                                                       $array_to_print['selected_policy_time_stamp']=$value['time_stamp'];
+                                                       $array_to_print['company_name']=$policy_infomessage_is['company_name'];
+
+                                                       $array_to_print['fire_multiplier']=$policy_infomessage_is['fire_multiplier'];
+                                                       $array_to_print['fire_html_url']=$policy_infomessage_is['fire_html_url'];
+                                                       $array_to_print['burglary_multiplier']=$policy_infomessage_is['burglary_multiplier'];
+                                                       $array_to_print['burglary_html_url']=$policy_infomessage_is['burglary_html_url'];
+                                                       $array_to_print['all_risk_multiplier']=$policy_infomessage_is['all_risk_multiplier'];
+                                                       $array_to_print['all_risk_html_url']=$policy_infomessage_is['all_risk_html_url'];
+
+                                                       $array_to_print['expiry_duration_days']=$policy_infomessage_is['expiry_duration_days'];
+                                                       $array_to_print['logo_url']=$policy_infomessage_is['logo_url'];
+                                                       $array_to_print['html_url']=$policy_infomessage_is['html_url'];
+                                                       $array_to_print['company_time_stamp']=$policy_infomessage_is['time_stamp'];
+
+
+
+                                                       $returned_array=make_fire_burglary_theft_insurance_view($array_to_print);
+
+                                                       $total+=$returned_array['total'];
+
+                                               break;//break;
+
+                                               case 7://case 7:
+                                                       $array_to_print['policy_id']=$policy_id;
+                                                       $array_to_print['policy_number']=$policy_number;
+
+                                                       $array_to_print['building_value']=$value['building_value'];
+                                                       $array_to_print['content_value']=$value['content_value'];
+                                                       $array_to_print['electronics_value']=$value['electronics_value'];
+
+                                                       $array_to_print['active_status']=$value['active_status'];
+                                                       $array_to_print['selected_policy_time_stamp']=$value['time_stamp'];
+                                                       $array_to_print['company_name']=$policy_infomessage_is['company_name'];
+
+                                                       $array_to_print['building_multiplier']=$policy_infomessage_is['building_multiplier'];
+                                                       $array_to_print['content_multiplier']=$policy_infomessage_is['content_multiplier'];
+                                                       $array_to_print['electronics_multiplier']=$policy_infomessage_is['electronics_multiplier'];
+
+                                                       $array_to_print['expiry_duration_days']=$policy_infomessage_is['expiry_duration_days'];
+                                                       $array_to_print['logo_url']=$policy_infomessage_is['logo_url'];
+                                                       $array_to_print['html_url']=$policy_infomessage_is['html_url'];
+                                                       $array_to_print['company_time_stamp']=$policy_infomessage_is['time_stamp'];
+
+
+
+                                                       $returned_array=make_home_insurance_view($array_to_print);
+
+                                                       $total+=$returned_array['total'];
+
+                                               break;//break;
+
+                                               case 8://case 8:
+
+                                                   $array_to_print['policy_id']=$policy_id;
+                                                   $array_to_print['policy_number']=$policy_number;
+
+                                                   $array_to_print['selected_options']=$value['selected_options'];
+                                                   $array_to_print['active_status']=$value['active_status'];
+                                                   $array_to_print['selected_policy_time_stamp']=$value['time_stamp'];
+                                                   $array_to_print['company_name']=$policy_infomessage_is['company_name'];
+
+                                                   $array_to_print['options']=$policy_infomessage_is['options'];
+
+
+                                                   $array_to_print['expiry_duration_days']=$policy_infomessage_is['expiry_duration_days'];
+                                                   $array_to_print['logo_url']=$policy_infomessage_is['logo_url'];
+                                                   $array_to_print['company_time_stamp']=$policy_infomessage_is['time_stamp'];
+
+
+
+                                                   $returned_array=  make_maternity_policy_view($array_to_print);
+                                                       $total+=$returned_array['total'];
+
+                                               break;//break;
+
+                                               case 9://case 9:
+                                                       $array_to_print['policy_id']=$policy_id;
+                                                       $array_to_print['policy_number']=$policy_number;
+
+                                                       $array_to_print['selected_options']=$value['selected_options'];
+                                                       $array_to_print['active_status']=$value['active_status'];
+                                                       $array_to_print['selected_policy_time_stamp']=$value['time_stamp'];
+                                                       $array_to_print['company_name']=$policy_infomessage_is['company_name'];
+
+                                                       $array_to_print['options']=$policy_infomessage_is['options'];
+
+
+                                                       $array_to_print['expiry_duration_days']=$policy_infomessage_is['expiry_duration_days'];
+                                                       $array_to_print['logo_url']=$policy_infomessage_is['logo_url'];
+                                                       $array_to_print['company_time_stamp']=$policy_infomessage_is['time_stamp'];
+
+
+
+                                                       $returned_array= make_dental_policy_view($array_to_print);
+
+                                                       $total+=$returned_array['total'];
+
+                                               break;//break;
+
+                                               case 10://case 10:
+
+                                                       $array_to_print['policy_id']=$policy_id;
+                                                       $array_to_print['policy_number']=$policy_number;
+
+                                                       $array_to_print['selected_options']=$value['selected_options'];
+                                                       $array_to_print['active_status']=$value['active_status'];
+                                                       $array_to_print['selected_policy_time_stamp']=$value['time_stamp'];
+                                                       $array_to_print['company_name']=$policy_infomessage_is['company_name'];
+
+                                                       $array_to_print['options']=$policy_infomessage_is['options'];
+
+
+                                                       $array_to_print['expiry_duration_days']=$policy_infomessage_is['expiry_duration_days'];
+                                                       $array_to_print['logo_url']=$policy_infomessage_is['logo_url'];
+                                                       $array_to_print['company_time_stamp']=$policy_infomessage_is['time_stamp'];
+
+
+
+                                                       $returned_array= make_optical_policy_view($array_to_print);
+                                                       $total+=$returned_array['total'];
+
+                                               break;//break;
+
+                                               case 11://case 11:
+                                                       $array_to_print['policy_id']=$policy_id;
+                                                       $array_to_print['policy_number']=$policy_number;
+                                                       $array_to_print['fathers_array']=$value['selected_father_insurance'];
+                                                       $array_to_print['mothers_array']=$value['selected_mother_insurance'];
+                                                       $array_to_print['childrens_array']=$value['selected_children_insurance'];
+                                                       $array_to_print['active_status']=$value['active_status'];
+                                                       $array_to_print['selected_policy_time_stamp']=$value['time_stamp'];
+                                                       $array_to_print['company_name']=$policy_infomessage_is['company_name'];
+                                                       $array_to_print['father_insurance']=$policy_infomessage_is['father_insurance'];
+                                                       $array_to_print['mother_insurance']=$policy_infomessage_is['mother_insurance'];
+                                                       $array_to_print['children_insurance']=$policy_infomessage_is['children_insurance '];
+                                                       $array_to_print['expiry_duration_days']=$policy_infomessage_is['expiry_duration_days'];
+                                                       $array_to_print['logo_url']=$policy_infomessage_is['logo_url'];
+                                                       $array_to_print['html_url']=$policy_infomessage_is['html_url'];
+                                                       $array_to_print['company_time_stamp']=$policy_infomessage_is['time_stamp'];
+
+
+
+                                                       $returned_array=make_out_patient_medical_view($array_to_print);
+
+                                                       $total+=$returned_array['total'];
+
+                                               break;//break;
+
+                                               case 12://case 12:
+                                                       $array_to_print['policy_id']=$policy_id;
+                                                       $array_to_print['policy_number']=$policy_number;
+                                                       $array_to_print['limit']=$value['limit'];
+                                                       $array_to_print['active_status']=$value['active_status'];
+                                                       $array_to_print['selected_policy_time_stamp']=$value['time_stamp'];
+
+                                                       $array_to_print['company_name']=$policy_infomessage_is['company_name'];
+                                                       $array_to_print['premium_percentage']=$policy_infomessage_is['premium_percentage'];
+                                                       $array_to_print['minimum']=$policy_infomessage_is['minimum'];
+                                                       $array_to_print['expiry_duration_days']=$policy_infomessage_is['expiry_duration_days'];
+                                                       $array_to_print['logo_url']=$policy_infomessage_is['logo_url'];
+                                                       $array_to_print['html_url']=$policy_infomessage_is['html_url'];
+                                                       $array_to_print['company_time_stamp']=$policy_infomessage_is['time_stamp'];
+
+
+
+
+                                                       $returned_array=make_public_liability_policy_view($array_to_print);
+
+                                                       $total+=$returned_array['total'];
+
+                                               break;//break;
+
+                                               case 13://case 13:
+
+
+                                                       $array_to_print['policy_id']=$policy_id;
+                                                       $array_to_print['policy_number']=$policy_number;
+                                                       $array_to_print['estimated_carry_on_any_trip']=$value['estimated_carry_on_any_trip'];
+                                                       $array_to_print['total_annual_estimated_carry_all_trips']=$value['total_annual_estimated_carry_all_trips'];
+                                                       $array_to_print['geographical_area']=$value['geographical_area'];
+                                                       $array_to_print['types_of_goods']=$value['types_of_goods'];
+                                                       $array_to_print['mode_of_transport']=$value['mode_of_transport'];
+                                                       $array_to_print['active_status']=$value['active_status'];
+                                                       $array_to_print['selected_policy_time_stamp']=$value['time_stamp'];
+
+                                                       $array_to_print['company_name']=$policy_infomessage_is['company_name'];
+                                                       $array_to_print['a_percentage']=$policy_infomessage_is['a_percentage'];
+                                                       $array_to_print['b_percentage']=$policy_infomessage_is['b_percentage'];
+                                                       $array_to_print['expiry_duration_days']=$policy_infomessage_is['expiry_duration_days'];
+                                                       $array_to_print['logo_url']=$policy_infomessage_is['logo_url'];
+                                                       $array_to_print['html_url']=$policy_infomessage_is['html_url'];
+                                                       $array_to_print['company_time_stamp']=$policy_infomessage_is['time_stamp'];
+
+
+
+
+                                                       $returned_array=make_goods_in_transit_policy_view($array_to_print);
+
+                                                       $total+=$returned_array['total'];
+
+                                               break;//break;
+
+                                               case 14://case 14:
+
+                                                        $array_to_print['policy_id']=$policy_id;
+                                                       $array_to_print['policy_number']=$policy_number;
+                                                       $array_to_print['limit']=$value['limit'];
+                                                       $array_to_print['types_of_goods']=$value['types_of_goods'];
+                                                       $array_to_print['product_type']=$value['product_type'];
+                                                       $array_to_print['active_status']=$value['active_status'];
+                                                       $array_to_print['selected_policy_time_stamp']=$value['time_stamp'];
+
+                                                       $array_to_print['company_name']=$policy_infomessage_is['company_name'];
+                                                       $array_to_print['premium_percentage']=$policy_infomessage_is['premium_percentage'];
+                                                       $array_to_print['minimum']=$policy_infomessage_is['minimum'];
+                                                       $array_to_print['policy_number']=$policy_infomessage_is['policy_number'];
+                                                       $array_to_print['expiry_duration_days']=$policy_infomessage_is['expiry_duration_days'];
+                                                       $array_to_print['logo_url']=$policy_infomessage_is['logo_url'];
+                                                       $array_to_print['html_url']=$policy_infomessage_is['html_url'];
+                                                       $array_to_print['company_time_stamp']=$policy_infomessage_is['time_stamp'];
+
+
+
+
+                                                       $returned_array=make_product_liability_policy_view($array_to_print);
+                                                       $total+=$returned_array['total'];
+
+                                               break;//break;
+
+                                               case 15://case 15:
+                                                       $array_to_print['policy_id']=$policy_id;
+                                                       $array_to_print['policy_number']=$policy_number;
+                                                       $array_to_print['vehicle_value']=$value['vehicle_value'];
+                                                       $array_to_print['vehicle_registration_details']=$value['vehicle_registration_details'];
+                                                       $array_to_print['number_of_passengers']=$value['number_of_passengers'];
+                                                       $array_to_print['excess_protector_percentage']=$value['excess_protector_percentage'];
+                                                       $array_to_print['political_risk_terrorism_percentage']=$value['political_risk_terrorism_percentage'];
+                                                       $array_to_print['aa_membership']=$value['aa_membership'];
+                                                       $array_to_print['active_status']=$value['active_status'];
+                                                       $array_to_print['selected_policy_time_stamp']=$value['time_stamp'];
+
+                                                       $array_to_print['company_name']=$policy_infomessage_is['company_name'];
+                                                       $array_to_print['v_percentage']=$policy_infomessage_is['v_percentage'];
+                                                       $array_to_print['n_percentage']=$policy_infomessage_is['n_percentage'];
+                                                       $array_to_print['minimum_excess_protector']=$policy_infomessage_is['minimum_excess_protector'];
+                                                       $array_to_print['minimum_political_violence']=$policy_infomessage_is['minimum_political_violence'];
+                                                       $array_to_print['excess_protector_multiplier']=$policy_infomessage_is['excess_protector_multiplier'];
+                                                       $array_to_print['political_violence_multiplier']=$policy_infomessage_is['political_violence_multiplier'];
+                                                       $array_to_print['aa_constant']=$policy_infomessage_is['aa_constant'];
+
+                                                       $array_to_print['expiry_duration_days']=$policy_infomessage_is['expiry_duration_days'];
+                                                       $array_to_print['logo_url']=$policy_infomessage_is['logo_url'];
+                                                       $array_to_print['html_url']=$policy_infomessage_is['html_url'];
+                                                       $array_to_print['company_time_stamp']=$policy_infomessage_is['time_stamp'];
+
+
+
+
+                                                       $returned_array=make_motor_psv_insurance_for_uber_policy_view($array_to_print);
+
+                                                       $total+=$returned_array['total'];
+
+                                               break;//break;
+
+                                               case 16://case 16:
+
+                                                       $array_to_print['policy_id']=$policy_id;
+                                                       $array_to_print['policy_number']=$policy_number;
+                                                       $array_to_print['selected_employee_categories']=$value['selected_employee_categories'];
+                                                       $array_to_print['elected_empoloyee_liability_option']=$value['elected_empoloyee_liability_option'];
+                                                       $array_to_print['active_status']=$value['active_status'];
+                                                       $array_to_print['selected_policy_time_stamp']=$value['time_stamp'];
+
+                                                       $array_to_print['company_name']=$policy_infomessage_is['company_name'];
+                                                       $array_to_print['wiba_categories']=$policy_infomessage_is['wiba_categories'];
+                                                       $array_to_print['employee_liability_options']=$policy_infomessage_is['employee_liability_options'];
+
+                                                       $array_to_print['expiry_duration_days']=$policy_infomessage_is['expiry_duration_days'];
+                                                       $array_to_print['logo_url']=$policy_infomessage_is['logo_url'];
+                                                       $array_to_print['html_url']=$policy_infomessage_is['html_url'];
+                                                       $array_to_print['company_time_stamp']=$policy_infomessage_is['time_stamp'];
+
+
+
+
+                                                       $returned_array=make_wiba_and_employers_liability_policy_view($array_to_print);
+
+                                                       $total+=$returned_array['total'];
+
+                                               break;//break;
+
+                                               default:
+                                               break;
+                                       }//switch ($type) 
+
+                                    $total_payments=0;
+                                                            foreach ($message_is_now as $value_is) 
+                                                            {//start of foreach $message_is as $value
+                                                                   $amount_paid=$value_is['amount_paid'];
+                                                                  $total_payments+=$amount_paid;//add to total payments
+                                                                  
+                                                                  //echo $type.'::::'.$amount_paid.'<hr>';
+                                                            }//end of foreach $message_is as $value
+
+                                                            $payment+=$total_payments;
+
+                                                            $balance_is=get_balance_for_polices($returned_array['total'],$total_payments,$returned_array['policy_date'],$policy_infomessage_is['expiry_duration_days']);//get balance
+
+                                                            $balance+=$balance_is['balance'];
+
+                  
+                   
+        }//for ($index1 = 0; $index1 < count($array[$index]); $index1++) 
+       
+        
+        
+        
+        
+        
+        
+       
+        
+    }//for ($index = 0; $index < count($array); $index++)
+    
+    
+    return array(
+        'total'=>$total,
+        'payment'=>$payment,
+        'balance'=>$balance);
     
 }
