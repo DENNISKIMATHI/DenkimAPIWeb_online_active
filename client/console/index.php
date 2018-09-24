@@ -186,16 +186,34 @@ header('location: ../ ');
                      * 
                      */
                              ?>
-                        <table>
+                        <table style="font-size: 9px">
                 <tr>
-                    <th>Total</th><td style="text-align: right;">KES. <?php echo number_format($total);?></td>
+                    <th>Total premium charged</th><td style="text-align: right;">KES. <?php echo number_format($total);?></td>
                 </tr>
                 <tr>
-                <th>Payments</th><td style="text-align: right;">KES. <?php echo number_format($payment);?></td>
+                <th>Total premium paid</th><td style="text-align: right;">KES. <?php echo number_format($payment);?></td>
                 </tr>
-                <tr>
-                <th>Balance</th><td style="text-align: right;">KES. <?php echo number_format($balance);?></td>
-                </tr>
+                <?php
+                $credit=0;
+                $show_balance=$balance;
+                if($balance<0)
+                {
+                    $credit=$balance;
+                    $show_balance=0;
+                }
+                
+                        ?>
+                         <tr>
+                        <th>Total outstanding balance</th><td style="text-align: right;">KES. <?php echo number_format($show_balance);?></td>
+                        </tr>
+
+                         <tr>
+                        <th>Credit on account</th><td style="text-align: right;">KES. <?php echo number_format($credit);?></td>
+                        </tr>
+                        <?php
+                
+                ?>
+               
                 
             
         </table>
