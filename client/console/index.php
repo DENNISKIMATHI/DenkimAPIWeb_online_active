@@ -14,9 +14,7 @@ header('location: ../ ');
 }
 
 //check login
-//fetch email
-        $personal_details_array=fetch_personal_details(3,$_SESSION['session_key'],$_SESSION['cookie'],'/client/console/index.php');
-        $email_address=$personal_details_array['email_address'];
+
         
         
         
@@ -139,7 +137,11 @@ header('location: ../ ');
                     </li>
                     
                     <li>
-                        <?php 
+                        <?php  
+                        //fetch email
+                        $personal_details_array=fetch_personal_details(3,$_SESSION['session_key'],$_SESSION['cookie'],'/client/console/index.php');
+                        $email_address=$personal_details_array['email_address'];
+        
                         $total=0;
                         $payment=0;
                         $balance=0;
