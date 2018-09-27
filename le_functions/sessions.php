@@ -1,4 +1,8 @@
 <?php
+// server should keep session data for AT LEAST 1 hour
+ini_set('session.gc_maxlifetime', 86400);
+// each client should remember their session id for EXACTLY 1 hour
+session_set_cookie_params(86400);
 ob_start();//output buffer for the
 session_start();// initiating session
 //$current_file=$_SERVER['SCRIPT_NAME'];
