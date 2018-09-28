@@ -218,6 +218,13 @@ h2{
                             <span>Insurance Policies</span>
                         </a>
                     </li>
+                    
+                     <li>
+                        <a href="wallet.php?l=10&s=0&re=10" title="Add money to wallet">
+                            <i class="material-icons">money</i>
+                            <span>Wallet</span>
+                        </a>
+                    </li>
 					<a href="claims.php?l=10&s=0&re=10" title="View claims">
                            <i class="material-icons">attachment</i>
                             <span>Claims</span>
