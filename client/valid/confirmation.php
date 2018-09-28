@@ -55,8 +55,7 @@ if($result)
                         break;
                         
                         case 'wallet'://
-                                $myvars='mode_of_payment=MPESA
-                                &amount_paid='.str_replace(',', '', $TransAmount).
+                                $myvars='mode_of_payment=MPESA&amount_paid='.str_replace(',', '', $TransAmount).
                                 '&particulars='.$BillRefNumber.
                                 '&time_date_of_payment='.storable_datetime_function(time()).
                                 '&transaction_code='.$TransID.
