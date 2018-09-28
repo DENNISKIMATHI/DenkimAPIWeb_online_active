@@ -70,6 +70,15 @@ function return_date_function($time)
 }
 
 
+function return_simple_date_function($time)
+{
+    $time=$time/1000;//remove in php 7
+            date_default_timezone_set('Africa/Nairobi');//make time kenyan
+            //$my_date= date('[d-m-y]-[H-i-s]',$t);
+           $my_date= date('d/M/Y',$time);
+            return $my_date;
+}
+
 function return_date_actual_function($time)
 {
     $time=$time/1000;//remove in php 7
