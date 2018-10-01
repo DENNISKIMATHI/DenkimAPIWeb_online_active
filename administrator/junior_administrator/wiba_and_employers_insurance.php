@@ -384,6 +384,7 @@ else//else failed
                            <script type="text/javascript" src="../../javascript/jquery-1.11.1.min.js"></script>
                            <script type="text/javascript" src="../../javascript/highlight.js"></script>
                            <script type="text/javascript" src="../../javascript/wiba.js"></script>
+                           <script type="text/javascript" src="../../javascript/keep_alive.js"></script>
 		 
                         </div>
                     </div>

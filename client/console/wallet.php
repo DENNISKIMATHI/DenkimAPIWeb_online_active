@@ -151,10 +151,12 @@ if(isset($_GET['l']) && is_numeric($_GET['l']) && ( $_GET['s']==0 || is_numeric(
                          <th>#</th>
                              <th><a href="#"onmouseover="hover_link(\'mode_of_payment_td\',\''.$total_for_table_rows.'\');" onmouseout="out_link(\'mode_of_payment_td\',\''.$total_for_table_rows.'\');" >Mode of payment</a></th>
                             <th><a href="#"onmouseover="hover_link(\'camount_paid_td\',\''.$total_for_table_rows.'\');" onmouseout="out_link(\'camount_paid_td\',\''.$total_for_table_rows.'\');" >Amount(KES)</a></th>
-                            <th><a href="#" onmouseover="hover_link(\'particulars_td\',\''.$total_for_table_rows.'\');" onmouseout="out_link(\'particulars_td\',\''.$total_for_table_rows.'\');" >Particulars</a></th>
+                            
                             <th><a href="#" onmouseover="hover_link(\'transaction_code_td\',\''.$total_for_table_rows.'\');" onmouseout="out_link(\'transaction_code_td\',\''.$total_for_table_rows.'\');" >Transaction code</a></th>
                              <th><a href="#"onmouseover="hover_link(\'use_date_td\',\''.$total_for_table_rows.'\');" onmouseout="out_link(\'use_date_td\',\''.$total_for_table_rows.'\');" >Use date</a></th>
                            <th><a href="#"onmouseover="hover_link(\'time_date_of_payment_td\',\''.$total_for_table_rows.'\');" onmouseout="out_link(\'time_date_of_payment_td\',\''.$total_for_table_rows.'\');" >Date of payment</a></th>
+                           <th><a href="#"onmouseover="hover_link(\'action_td\',\''.$total_for_table_rows.'\');" onmouseout="out_link(\'action_td\',\''.$total_for_table_rows.'\');" >Action</a></th>
+                           <th><a href="#"onmouseover="hover_link(\'message_td\',\''.$total_for_table_rows.'\');" onmouseout="out_link(\'message_td\',\''.$total_for_table_rows.'\');" >Message</a></th>
                            
                             
                             </tr>';
@@ -172,19 +174,35 @@ if(isset($_GET['l']) && is_numeric($_GET['l']) && ( $_GET['s']==0 || is_numeric(
                   $time_stamp=$value['time_stamp'];
                   $debit=$value['debit'];
                   
-                  $seen_status_is=$seen_status==0? 'unseen' : 'seen'; 
+                  
                   $row_color=$count%2;
                   $row_color=$row_color==0?'odd':'even';
-                                                         
+                  
+                  
+                  $withdraw_message=count($debit)==0? '<a href="#">Withdraw</a>':'Debited';
+                   
+                  $debit_message='Awaiting action';
+                  if(count($debit)>0)
+                  {
+                      if($debit['method']=='policy')
+                      {
+                           $debit_message='Paid policy';
+                      }
+                      else
+                      {
+                          $debit_message='Withdrew';
+                      }
+                  }
                   $table=$table.'<tr class="'.$row_color.'" id="row_data">
                                                 <td>'.($count+1).'</td>  
                                                                 <td id="mode_of_payment_td'.$count.'" >'.$mode_of_payment.'</td>
                                                                 <td id="camount_paid_td'.$count.'" >'.number_format($amount_paid).'</td>
-                                                                <td id="particulars_td'.$count.'" >'.$particulars.'</td>  
+                                                               
                                                                 <td id="transaction_code_td'.$count.'" >'.$transaction_code.'</td>
                                                                 <td id="use_date_td'.$count.'" >'.return_simple_date_function(strtotime($use_date)*1000).'</td>
-                                                                <td id="time_date_of_payment_td'.$count.'" >'.$time_date_of_payment.'</td>   
-                                                                
+                                                                <td id="time_date_of_payment_td'.$count.'" >'.$time_date_of_payment.'</td>
+                                                                <td id="action_td'.$count.'" >'.$withdraw_message.'</td>
+                                                                <td id="message_td'.$count.'" >'. $debit_message.'</td>
                                                 </tr>';
                   $table=$from_one_counter%$rows_every==0?$table.$table_head:$table;//if rows to add header is reached then add header
                   

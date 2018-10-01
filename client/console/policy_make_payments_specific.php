@@ -11,7 +11,7 @@ else
 session_destroy();		
 header('location: ../ ');	
 }
-
+//echo return_mpesa_date_function( (time()*1000) );
 
 //setting edit message
 if(isset($_GET['message']) && !empty($_GET['message']) && isset($_GET['type']) && !empty($_GET['type']))
@@ -58,6 +58,63 @@ if(
                 $payments_link='policy_view_payments_specific.php?s='.$source.'&t='.$type.'&pi='.$policy_id.'&pn='.$policy_name.'&cn='.$company_name.'&pd='.$policy_date.'&edd='.$expiry_duration_days.'&t='.$policy_total;
                             
                  
+                //pay with wallet
+                if(isset($_GET['mode_of_payment']) && !empty($_GET['mode_of_payment']) &&
+                isset($_GET['credit_id']) && !empty($_GET['credit_id']) &&
+                isset($_GET['transaction_code']) && !empty($_GET['transaction_code']) &&
+                isset($_GET['msidn']) && !empty($_GET['msidn']) &&
+                isset($_GET['amount_paid']) && !empty($_GET['amount_paid']) &&
+                isset($_GET['particulars']) && !empty($_GET['particulars']) &&
+                isset($_GET['transaction_code']) && !empty($_GET['transaction_code']))
+                {
+                       
+                        //debit wallet first
+                        $url_is_debit=the_api_authentication_api_url_is()."denkimAPILogic/MainPackages.CreateWalletDebitPaymentPolicy";
+
+                        $myvars_debit='session_key='.$_SESSION['session_key'].'&credit_id='.$_GET['credit_id'].'&policy_id='.$policy_id.'&policy_type='.$type.'&policy_number='.$policy_name.'&company_name='.$company_name;
+
+                        $header_array_debit= array('Cookie:'.$_SESSION['cookie'],'Authorization:'.api_key_is(),'Origin:/client/console/policy_view_payments_specific.php');
+
+                        $returned_json_debit=send_curl_post($url_is_debit,$myvars_debit,$header_array_debit);//cap output
+
+                        $returned_json_decoded_debit= json_decode($returned_json_debit,true);//decode
+
+                        $check_is_debit=$returned_json_decoded_debit["check"];//check
+                        
+                        $message_is_debit=$returned_json_decoded_debit["message"];//message
+                        
+                        //draw
+                        if($check_is_debit==true)//if check is true
+                        {
+                            //pay policy
+                            $url_is_pay_policy=the_api_authentication_api_url_is()."denkimAPILogic/MainPackages.CreateDirectPayment";
+
+                            $myvars_pay_policy='mode_of_payment='.$_GET['mode_of_payment'].'&amount_paid='.str_replace(',', '', $_GET['amount_paid']).'&particulars='.$_GET['particulars'].'&time_date_of_payment='.return_mpesa_date_function(time()*1000).'&transaction_code='.$_GET['transaction_code'].'&msidn='.$_GET['msidn'].'&email_address='.$email_address.'&policy_id='.$policy_id;
+
+                            $header_array_pay_policy= array('Authorization:'.api_key_is(),'Origin:/client/console/policy_view_payments_specific.php');
+
+                            $returned_json_pay_policy=send_curl_post($url_is_pay_policy,$myvars_pay_policy,$header_array_pay_policy);//cap output
+
+                            $returned_json_decoded_pay_policy= json_decode($returned_json_pay_policy,true);//decode
+
+                            $check_is_pay_policy=$returned_json_decoded_pay_policy["check"];//check
+                            $message_is_pay_policy=$returned_json_decoded_pay_policy["message"];//message
+                            
+                            if($check_is_pay_policy==true)
+                            {
+                                 header('location: '.$payments_link.'&message='.$message_is_pay_policy.'&type=1');
+                            }
+                            else
+                            {
+                                header('location: '.$action_page.'&message='.$message_is_pay_policy.'&type=2');
+                            }
+                        }
+                        else
+                        {
+                            header('location: '.$action_page.'&message='.$message_is_debit.'&type=2');
+                        }
+                }
+                
                     
                //fetch
        //fetch
@@ -142,7 +199,11 @@ if(
                      $message='<span id="'.$good_bad_id.'">Check payment amount</span>';
                 }
             }
+            
+            
+            
                 
+             
 }               
 
 
@@ -403,8 +464,90 @@ if(
                          <a href="<?php echo $payments_link;?>">Confirm payment</a>
                          
                      </ol>
-                   
-              
+                   <br>
+                   <h3>Pay with wallet</h3>
+                <?php 
+                        //form submission
+       
+                        //fetch
+                        $url_is=the_api_authentication_api_url_is()."denkimAPILogic/MainPackages.FetchUserWallet";
+
+                        $myvars='session_key='.$_SESSION['session_key'].'&limit=999&skip=0&email_address='.$email_address;
+
+                        $header_array= array('Cookie:'.$_SESSION['cookie'],'Authorization:'.api_key_is(),'Origin:/client/console/wallet.php');
+
+                        $returned_json=send_curl_post($url_is,$myvars,$header_array);//cap output
+
+                        $returned_json_decoded= json_decode($returned_json,true);//decode
+
+                        $check_is=$returned_json_decoded["check"];//check
+
+                        //draw
+                            if($check_is==true)//if check is true
+                            {
+
+                                $message_is=$returned_json_decoded["message"];//message
+
+                                $count=0;//make count skipped rows
+
+                                $total_for_table_rows=0+999;//total for table highlight js function
+                                $table_head='<tr bgcolor="white">
+                                             <th>#</th>
+                                                 <th><a href="#"onmouseover="hover_link(\'mode_of_payment_td\',\''.$total_for_table_rows.'\');" onmouseout="out_link(\'mode_of_payment_td\',\''.$total_for_table_rows.'\');" >Mode of payment</a></th>
+                                                <th><a href="#"onmouseover="hover_link(\'camount_paid_td\',\''.$total_for_table_rows.'\');" onmouseout="out_link(\'camount_paid_td\',\''.$total_for_table_rows.'\');" >Amount(KES)</a></th>
+
+                                                <th><a href="#" onmouseover="hover_link(\'transaction_code_td\',\''.$total_for_table_rows.'\');" onmouseout="out_link(\'transaction_code_td\',\''.$total_for_table_rows.'\');" >Transaction code</a></th>
+                                                 <th><a href="#"onmouseover="hover_link(\'use_date_td\',\''.$total_for_table_rows.'\');" onmouseout="out_link(\'use_date_td\',\''.$total_for_table_rows.'\');" >Use date</a></th>
+                                               <th><a href="#"onmouseover="hover_link(\'time_date_of_payment_td\',\''.$total_for_table_rows.'\');" onmouseout="out_link(\'time_date_of_payment_td\',\''.$total_for_table_rows.'\');" >Date of payment</a></th>
+                                               <th><a href="#"onmouseover="hover_link(\'action_td\',\''.$total_for_table_rows.'\');" onmouseout="out_link(\'action_td\',\''.$total_for_table_rows.'\');" >Action</a></th>
+                                               
+
+                                                </tr>';
+                                $from_one_counter=1;//used to know how many rows are printed from one so as to append table head
+                               $rows_every=10;
+                                 foreach ($message_is as $value) 
+                                {//start of foreach $message_is as $value
+                                      $_id=$value['_id']['$oid'];
+
+                                      $mode_of_payment=$value['mode_of_payment'];
+                                      $amount_paid=$value['amount_paid'];
+                                      $particulars=$value['particulars'];
+                                      $time_date_of_payment=$value['time_date_of_payment'];
+                                      $transaction_code=$value['transaction_code'];
+                                      $use_date=$value['use_date'];
+                                      $time_stamp=$value['time_stamp'];
+                                      $debit=$value['debit'];
+                                       $msidn=$value['msidn'];
+                                      
+                                      if(count($debit)==0)
+                                      {//if(count($debit)==0)
+                                           
+                                            $row_color=$count%2;
+                                            $row_color=$row_color==0?'odd':'even';
+
+                                            $table=$table.'<tr class="'.$row_color.'" id="row_data">
+                                                                          <td>'.($count+1).'</td>  
+                                                                                          <td id="mode_of_payment_td'.$count.'" >'.$mode_of_payment.'</td>
+                                                                                          <td id="camount_paid_td'.$count.'" >'.number_format($amount_paid).'</td>
+
+                                                                                          <td id="transaction_code_td'.$count.'" >'.$transaction_code.'</td>
+                                                                                          <td id="use_date_td'.$count.'" >'.return_simple_date_function(strtotime($use_date)*1000).'</td>
+                                                                                          <td id="time_date_of_payment_td'.$count.'" >'.$time_date_of_payment.'</td>
+                                                                                          <td id="action_td'.$count.'" ><a href="'.$action_page.'&mode_of_payment='.$mode_of_payment.'&credit_id='.$_id.'&transaction_code='.$transaction_code.'&msidn='.$msidn.'&amount_paid='.$amount_paid.'&particulars='.$particulars.'&transaction_code='.$transaction_code.'">Pay</a></td>
+                                                                          </tr>';
+                                            $table=$from_one_counter%$rows_every==0?$table.$table_head:$table;//if rows to add header is reached then add header
+
+                                            $count++;
+                                            $from_one_counter++;
+                                      }//if(count($debit)==0)
+                                      
+                                }//end of foreach $message_is as $value
+                                echo    $table='<table>'.$table_head.$table.'
+                                                 </table>';
+                                }
+                        
+                
+                ?><br>
               <script type="text/javascript" src="../../javascript/jquery-1.11.1.min.js"></script>
                            <script type="text/javascript" src="../../javascript/highlight.js"></script>
 		 
