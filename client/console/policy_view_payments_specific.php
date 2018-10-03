@@ -32,7 +32,7 @@ if(
         isset($_GET['cn']) && !empty($_GET['cn']) &&
         isset($_GET['pd']) && !empty($_GET['pd']) &&
         isset($_GET['edd']) && !empty($_GET['edd']) &&
-        isset($_GET['t']) && !empty($_GET['t']) 
+        isset($_GET['pt']) && !empty($_GET['pt']) 
         
         )
 {
@@ -47,7 +47,7 @@ if(
                 $company_name=trim($_GET['cn']);
                 $policy_date=trim($_GET['pd']);
                 $expiry_duration_days=trim($_GET['edd']);
-                $policy_total=trim($_GET['t']);
+                $policy_total=trim($_GET['pt']);
                 
                //$action_page='policy_view_payments_specific.php?s='.$source.'&t='.$type.'&pi='.$policy_id.'&pn='.$policy_name.'&cn='.$company_name.'&pd='.$policy_date.'&edd='.$expiry_duration_days.'&t='.$policy_total;
                 $return_link=$source;
@@ -153,7 +153,7 @@ if(
             }
         }
                 
-         $payments_link='policy_make_payments_specific.php?s='.$source.'&t='.$type.'&pi='.$policy_id.'&pn='.$policy_name.'&cn='.$company_name.'&pd='.$policy_date.'&edd='.$expiry_duration_days.'&t='.$balance_is['balance'];
+         $payments_link='policy_make_payments_specific.php?s='.$source.'&t='.$type.'&pi='.$policy_id.'&pn='.$policy_name.'&cn='.$company_name.'&pd='.$policy_date.'&edd='.$expiry_duration_days.'&pt='.$balance_is['balance'];
                  $full_make_payments_link='<a style="background-color:green" href="'.$payments_link.'" title="Make '.$policy_name.' payments" class="btn btn-block btn-lg btn-warning waves-effect">Make payment</a>';
                                    
                 
@@ -268,7 +268,7 @@ if(
                     </li>
                     
                      <li>
-                        <a href="wallet.php?l=10&s=0&re=10" title="Add money to wallet">
+                        <a href="wallet_first.php" title="Add money to wallet">
                             <i class="material-icons">money</i>
                             <span>Wallet</span>
                         </a>

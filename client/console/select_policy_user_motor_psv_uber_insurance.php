@@ -251,7 +251,7 @@ if(isset($_GET['pn']) && !empty($_GET['pn']) )
                     </li>
                     
                      <li>
-                        <a href="wallet.php?l=10&s=0&re=10" title="Add money to wallet">
+                        <a href="wallet_first.php" title="Add money to wallet">
                             <i class="material-icons">money</i>
                             <span>Wallet</span>
                         </a>

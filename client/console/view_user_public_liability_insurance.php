@@ -78,8 +78,8 @@ if(isset($_GET['message']) && !empty($_GET['message']) && isset($_GET['type']) &
                             
                             $returned_array=make_public_liability_policy_view($array_to_print);
                            
-                            $payments_link='policy_view_payments_specific.php?s=view_user_public_liability_insurance.php&t='.$type.'&pi='.$returned_array['policy_id'].'&pn='.$returned_array['policy_number'].'&cn='.$returned_array['company_name'].'&pd='.$returned_array['policy_date'].'&edd='.$returned_array['expiry_duration_days'].'&t='.$returned_array['total'];
-                            $make_payments_link='policy_make_payments_specific.php?s=view_user_public_liability_insurance.php&t='.$type.'&pi='.$returned_array['policy_id'].'&pn='.$returned_array['policy_number'].'&cn='.$returned_array['company_name'].'&pd='.$returned_array['policy_date'].'&edd='.$returned_array['expiry_duration_days'].'&t='.$returned_array['total'];
+                            $payments_link='policy_view_payments_specific.php?s=view_user_public_liability_insurance.php&t='.$type.'&pi='.$returned_array['policy_id'].'&pn='.$returned_array['policy_number'].'&cn='.$returned_array['company_name'].'&pd='.$returned_array['policy_date'].'&edd='.$returned_array['expiry_duration_days'].'&pt='.$returned_array['total'];
+                            $make_payments_link='policy_make_payments_specific.php?s=view_user_public_liability_insurance.php&t='.$type.'&pi='.$returned_array['policy_id'].'&pn='.$returned_array['policy_number'].'&cn='.$returned_array['company_name'].'&pd='.$returned_array['policy_date'].'&edd='.$returned_array['expiry_duration_days'].'&pt='.$returned_array['total'];
                             
                             
                             $full_payments_link='<a href="'.$payments_link.'" title="View '.$returned_array['policy_number'].' payments" class="btn btn-block btn-lg btn-warning waves-effect">View payments</a>';
@@ -218,7 +218,7 @@ if(isset($_GET['message']) && !empty($_GET['message']) && isset($_GET['type']) &
                     </li>
                     
                      <li>
-                        <a href="wallet.php?l=10&s=0&re=10" title="Add money to wallet">
+                        <a href="wallet_first.php" title="Add money to wallet">
                             <i class="material-icons">money</i>
                             <span>Wallet</span>
                         </a>

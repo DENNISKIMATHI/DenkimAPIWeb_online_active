@@ -22,90 +22,77 @@ if(isset($_GET['message']) && !empty($_GET['message']) && isset($_GET['type']) &
 	 $message='<span id="'.$good_bad_id.'">'.$message.'</span>';
 }
 
+	
+        
+       
+        
+            $account_number=0;
+                $personal_details_array=fetch_personal_details(3,$_SESSION['session_key'],$_SESSION['cookie'],'/client/console/view_user_accident_insurance.php');
+                $email_address=$personal_details_array['email_address'];
+                $phone_number=$personal_details_array['phone_number'];
 
+           
+            
+        
+            $limit=9999;
+            $skip=0;
+             //fetch
+        $url_is=the_api_authentication_api_url_is()."denkimAPILogic/MainPackages.FetchUserWallet";
 
+        $myvars='session_key='.$_SESSION['session_key'].'&limit='.$limit.'&skip='.$skip.'&email_address='.$email_address;
 
-               //fetch email
-        $personal_details_array=fetch_personal_details(3,$_SESSION['session_key'],$_SESSION['cookie'],'/client/console/view_user_optical_insurance.php');
-        $email_address=$personal_details_array['email_address'];
-                $type=10;
-                //fetch
-            $returned_json_decoded= fetch_policy_user_type($type,$email_address,$_SESSION['session_key'],$_SESSION['cookie'],'/client/console/view_user_optical_insurance.php');
+        $header_array= array('Cookie:'.$_SESSION['cookie'],'Authorization:'.api_key_is(),'Origin:/client/console/wallet.php');
 
-            $check_is=$returned_json_decoded["check"];//check
-
+        $returned_json=send_curl_post($url_is,$myvars,$header_array);//cap output
+        
+        $returned_json_decoded= json_decode($returned_json,true);//decode
+        
+        $check_is=$returned_json_decoded["check"];//check
+        
+        $total_amount_unused=0;
+        
+        //draw
+        if($check_is==true)//if check is true
+        {
+            
             $message_is=$returned_json_decoded["message"];//message
-
-
-            if($check_is==true)//if check is true
-            {
-
-                foreach ($message_is as $value) 
-                {
-                    //echo json_encode($value).'<hr>';
-                    
-                    $policy_number=$value['policy_number'];
-                    
-                    $policy_info= fetch_policy_type_specific($type,$policy_number,'/client/console/view_user_optical_insurance.php');
-                    $policy_infocheck_is=$policy_info["check"];//check
-                    $policy_infomessage_is=$policy_info["message"];//message
-                    
-                    $array_to_print=array();
-                    
-                    //handle if policy check s true
-                    if($policy_infocheck_is==true)
-                    {
-                            $policy_id=$value['_id']['$oid'];
-                           
-                            $array_to_print['policy_id']=$policy_id;
-                            $array_to_print['policy_number']=$policy_number;
-                            
-                            $array_to_print['selected_options']=$value['selected_options'];
-                            $array_to_print['active_status']=$value['active_status'];
-                            $array_to_print['selected_policy_time_stamp']=$value['time_stamp'];
-                            $array_to_print['company_name']=$policy_infomessage_is['company_name'];
-                            
-                            $array_to_print['options']=$policy_infomessage_is['options'];
-                           
-                            
-                            $array_to_print['expiry_duration_days']=$policy_infomessage_is['expiry_duration_days'];
-                            $array_to_print['logo_url']=$policy_infomessage_is['logo_url'];
-                            $array_to_print['company_time_stamp']=$policy_infomessage_is['time_stamp'];
-                            
-                            
-                
-                            $returned_array= make_optical_policy_view($array_to_print);
-                            
-                            //
-                            $payments_link='policy_view_payments_specific.php?s=view_user_optical_insurance.php&t='.$type.'&pi='.$returned_array['policy_id'].'&pn='.$returned_array['policy_number'].'&cn='.$returned_array['company_name'].'&pd='.$returned_array['policy_date'].'&edd='.$returned_array['expiry_duration_days'].'&pt='.$returned_array['total'];
-                             $make_payments_link='policy_make_payments_specific.php?s=view_user_optical_insurance.php&t='.$type.'&pi='.$returned_array['policy_id'].'&pn='.$returned_array['policy_number'].'&cn='.$returned_array['company_name'].'&pd='.$returned_array['policy_date'].'&edd='.$returned_array['expiry_duration_days'].'&pt='.$returned_array['total'];
-                            
-                            $full_payments_link='<a href="'.$payments_link.'" title="View '.$returned_array['policy_number'].' payments"class="btn btn-block btn-lg btn-warning waves-effect">Payments</a>';
-                          $full_make_payments_link='<a style="background-color:green" href="'.$make_payments_link.'" title="Make '.$returned_array['policy_number'].' payments" class="btn btn-block btn-lg btn-warning waves-effect">Make payment</a>';
-                            
-                            $list.=$returned_array['html'].'<br>'.$full_payments_link.'<br><br>'.$full_make_payments_link;
-                    }
-                        
-                }
-                         
-
-
-            }
-            else//else failed
-            {
-
-                    if($message_is=='')
-                    {
-                        header('location: ../logout.php?message=Your session has expired, please log in again!&type=2');
-                    }
-                    else
-                    {
-                         $message='<span id="bad_upload_message">'.$message_is.'</span>';
-                    }
-
-            } 
+            
+          
+            $total_amount_unused=0;
+            
+            foreach ($message_is as $value) 
+            {//start of foreach $message_is as $value
+                  $_id=$value['_id']['$oid'];
+                  
+                  $mode_of_payment=$value['mode_of_payment'];
+                  $amount_paid=$value['amount_paid'];
+                  $particulars=$value['particulars'];
+                  $time_date_of_payment=$value['time_date_of_payment'];
+                  $transaction_code=$value['transaction_code'];
+                  $use_date=$value['use_date'];
+                  $time_stamp=$value['time_stamp'];
+                  $debit=$value['debit'];
+                  
+                  
+                 
+                  if(count($debit)==0)
+                  {
+                      $total_amount_unused+=$amount_paid;
+                  }
+ 
+                  
+                  
+                  
+                  
+            }//end of foreach $message_is as $value
+            
+           
+        }
         
 
+
+
+            
 
 
 ?>
@@ -114,7 +101,7 @@ if(isset($_GET['message']) && !empty($_GET['message']) && isset($_GET['type']) &
 <head>
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-          <title>View optical insurance</title>
+         <title>Wallet view</title>
     <!-- Favicon-->
     <link rel="icon" href="../../favicon.ico" type="image/x-icon">
 
@@ -219,6 +206,7 @@ if(isset($_GET['message']) && !empty($_GET['message']) && isset($_GET['type']) &
                             <span>Wallet</span>
                         </a>
                     </li>
+                    
 					<a href="claims.php?l=10&s=0&re=10" title="View claims">
                            <i class="material-icons">attachment</i>
                             <span>Claims</span>
@@ -344,21 +332,37 @@ if(isset($_GET['message']) && !empty($_GET['message']) && isset($_GET['type']) &
                         <div class="header">
                             <div class="row clearfix">
                                 <div class="col-xs-12 col-sm-6">
-                                    
-									<h2></h2>
+                                    <h2><?php echo $policy_name;?></h2>
+									<h2><?php echo $company_name;?></h2>
                                 </div>
                                </div>
                          </div>
                         <div class="body">
-			  <?php echo $message;?><br>  
-        <?php echo $list;?><br>
-               
+		   <?php echo $message;?><br>
+		     
+                     
+                    
+                   
+               <div class="container-fluid">
+                    <div class="block-header">
+           
+                        <a href="./wallet_deposit.php" title="Deposit money from your M-PESA" class="btn btn-block btn-lg btn-warning waves-effect"> Deposit money from your M-PESA</a>
+                        <h4>Available balance is KES. <?php echo number_format($total_amount_unused)?></h4>
+                        <a href="./wallet_withdraw.php?l=10&s=0&re=10" title="Withdraw Money to your M-PESA" class="btn btn-block btn-lg btn-warning waves-effect"> Withdraw Money to your M-PESA</a>
+                        <a href="./insurance_policies.php" title="Pay for your insurance premium" class="btn btn-block btn-lg btn-warning waves-effect"> Pay for your insurance premium</a>
+                        <a href="./wallet_statement.php?l=10&s=0&re=10" title="Deposit money from your M-PESA" class="btn btn-block btn-lg btn-warning waves-effect"> View Statement</a>
+                    </div>
+                </div>
+                           
+              <script type="text/javascript" src="../../javascript/jquery-1.11.1.min.js"></script>
+                           <script type="text/javascript" src="../../javascript/highlight.js"></script>
+		 
                         </div>
                     </div>
                 </div>
             </div>
             <!-- #END# -->
-	<a href="../../client/console/" title="Go to the main page" class="btn btn-primary m-t-15 waves-effect"> <i class="material-icons">arrow_back</i>Back </a><br><br>		  
+			  <a href="../../client/console/" title="Go to the main page" class="btn btn-primary m-t-15 waves-effect"> <i class="material-icons">arrow_back</i>Back </a><br><br>
             </div>
         </div>
     </section>
