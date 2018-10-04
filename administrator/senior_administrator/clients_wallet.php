@@ -31,27 +31,28 @@ if(isset($_GET['message']) && !empty($_GET['message']) && isset($_GET['type']) &
 
 
 
-if( isset($_GET['l']) && is_numeric($_GET['l']) && ( $_GET['s']==0 || is_numeric($_GET['s']) ) &&  isset($_GET['sc']) && !empty($_GET['sc']) && isset($_GET['so']) && !empty($_GET['so']) && isset($_GET['re']) && !empty($_GET['re']))
+if(  isset($_GET['l']) && is_numeric($_GET['l']) && ( $_GET['s']==0 || is_numeric($_GET['s']) ) &&  isset($_GET['sc']) && !empty($_GET['sc']) && isset($_GET['so']) && !empty($_GET['so']) && isset($_GET['re']) && !empty($_GET['re']) && isset($_GET['e']) && !empty($_GET['e']) && isset($_GET['f']) && !empty($_GET['f']) && isset($_GET['p']) && !empty($_GET['p']))
 {
-	
-        $limit=trim($_GET['l']);
+	$limit=trim($_GET['l']);
         $skip=trim($_GET['s']);
         $sort_column=trim($_GET['sc']);
         $sort_order=trim($_GET['so']);
         $rows_every=trim($_GET['re']);
+        $email_address=trim($_GET['e']);
+        $full_names=trim($_GET['f']);
+        $phone_number=trim($_GET['p']);
         
         
-        $full_link="clients.php?l=".$limit."&s=".$skip."&sc=".$sort_column."&so=".$sort_order."&re=".$rows_every;//for form submission
-        $link_without_sort_column_sort_order="clients.php?l=".$limit."&s=".$skip."&re=".$rows_every;//for headers sorting
-        $link_without_limit_skip_rows_every="clients.php?sc=".$sort_column."&so=".$sort_order;//for browsing
-        $delete_link="clients_delete.php?l=".$limit."&s=".$skip."&sc=".$sort_column."&so=".$sort_order."&re=".$rows_every;//for form submission
-        $clients_insurance="clients_insurance.php?l=".$limit."&s=".$skip."&sc=".$sort_column."&so=".$sort_order."&re=".$rows_every;//for form submission
-        $clients_wallet="clients_wallet.php?l=".$limit."&s=".$skip."&sc=".$sort_column."&so=".$sort_order."&re=".$rows_every;//for form submission
-        $claims="claims.php?l=10&s=0&re=10";//for form submission
+        $action_page="clients_wallet.php?l=".$limit."&s=".$skip."&sc=".$sort_column."&so=".$sort_order."&re=".$rows_every."&e=".$email_address."&f=".$full_names."&p=".$phone_number;//for form submission
+        $full_link="clients_wallet.php?l=".$limit."&s=".$skip."&sc=".$sort_column."&so=".$sort_order."&re=".$rows_every."&e=".$email_address."&f=".$full_names."&p=".$phone_number;//for form submission
+        
+        //$link_without_sort_column_sort_order="clients_wallet.php?l=".$limit."&s=".$skip."&re=".$rows_every."&e=".$email_address."&f=".$full_names."&p=".$phone_number;//for form submission
+        $link_without_limit_skip_rows_every="clients_wallet.php?e=".$email_address."&f=".$full_names."&p=".$phone_number."&so=".$sort_order."&sc=".$sort_column;//for form submission
+        
+        //$return_link="clients_wallet.php?l=".$limit."&s=".$skip."&sc=".$sort_column."&so=".$sort_order."&re=".$rows_every;//for form submission1
+        //$view_argument="?e=".$email_address."&f=".$full_names."&p=".$phone_number;
        
-      
-        
-        //form submission
+          //form submission
         if(isset($_POST['headers_is']) && !empty($_POST['headers_is']) &&
                  is_numeric($_POST['headers_is']) && 
                 isset($_POST['limit_is']) && !empty($_POST['limit_is']) && 
@@ -64,13 +65,12 @@ if( isset($_GET['l']) && is_numeric($_GET['l']) && ( $_GET['s']==0 || is_numeric
             
              header('location: '.$link_without_limit_skip_rows_every.'&l='.$new_limit.'&s='.$new_skip.'&re='.$new_rows_every.' ');//redirect back to form correctly
         }
-        
-        //fetch
-        $url_is=the_api_authentication_api_url_is()."denkimAPILogic/MainPackages.AdministratorFetchClientDetails";
+             //fetch
+        $url_is=the_api_authentication_api_url_is()."denkimAPILogic/MainPackages.FetchUserWallet";
 
-        $myvars='session_key='.$_SESSION['session_key'].'&limit='.$limit.'&skip='.$skip.'&sort_column='.$sort_column.'&sort_order='.$sort_order;
+        $myvars='session_key='.$_SESSION['session_key'].'&limit='.$limit.'&skip='.$skip.'&email_address='.$email_address;
 
-        $header_array= array('Cookie:'.$_SESSION['cookie'],'Authorization:'.api_key_is(),'Origin:/senior_administrator/clients.php');
+        $header_array= array('Cookie:'.$_SESSION['cookie'],'Authorization:'.api_key_is(),'Origin:/client/console/wallet.php');
 
         $returned_json=send_curl_post($url_is,$myvars,$header_array);//cap output
         
@@ -90,57 +90,86 @@ if( isset($_GET['l']) && is_numeric($_GET['l']) && ( $_GET['s']==0 || is_numeric
             $total_for_table_rows=$skip+$limit;//total for table highlight js function
             $table_head='<tr bgcolor="white">
                          <th>#</th>
-                             <th><a href="'.$link_without_sort_column_sort_order.'&sc=full_names&so='.return_script_order($sort_column,$sort_order,"full_names").'"onmouseover="hover_link(\'full_names_td\',\''.$total_for_table_rows.'\');" onmouseout="out_link(\'full_names_td\',\''.$total_for_table_rows.'\');" >Full names</a></th>
-                            <th><a href="'.$link_without_sort_column_sort_order.'&sc=email_address&so='.return_script_order($sort_column,$sort_order,"email_address").'"onmouseover="hover_link(\'email_address_td\',\''.$total_for_table_rows.'\');" onmouseout="out_link(\'email_address_td\',\''.$total_for_table_rows.'\');" >Email address</a></th>
-                             <th><a href="'.$link_without_sort_column_sort_order.'&sc=phone_number&so='.return_script_order($sort_column,$sort_order,"phone_number").'" onmouseover="hover_link(\'phone_number_td\',\''.$total_for_table_rows.'\');" onmouseout="out_link(\'phone_number_td\',\''.$total_for_table_rows.'\');" >Phone number</a></th>
-                            <th><a href="'.$link_without_sort_column_sort_order.'&sc=national_id&so='.return_script_order($sort_column,$sort_order,"national_id").'" onmouseover="hover_link(\'national_id_td\',\''.$total_for_table_rows.'\');" onmouseout="out_link(\'national_id_td\',\''.$total_for_table_rows.'\');" >National id</a></th>
-                            <th><a href="'.$link_without_sort_column_sort_order.'&sc=time_stamp&so='.return_script_order($sort_column,$sort_order,"time_stamp").'" onmouseover="hover_link(\'time_stamp_td\',\''.$total_for_table_rows.'\');" onmouseout="out_link(\'time_stamp_td\',\''.$total_for_table_rows.'\');" >Registration date</a></th>
-                            <th><a href="'.$link_without_sort_column_sort_order.'&sc=time_stamp&so='.return_script_order($sort_column,$sort_order,"time_stamp").'" onmouseover="hover_link(\'insurance_policies_td\',\''.$total_for_table_rows.'\');" onmouseout="out_link(\'insurance_policies_td\',\''.$total_for_table_rows.'\');" >Insurance policies</a></th>
-                                <th><a href="'.$link_without_sort_column_sort_order.'&sc=time_stamp&so='.return_script_order($sort_column,$sort_order,"time_stamp").'" onmouseover="hover_link(\'wallet_td\',\''.$total_for_table_rows.'\');" onmouseout="out_link(\'wallet_td\',\''.$total_for_table_rows.'\');" >View wallet</a></th>
-                            <th><a href="'.$link_without_sort_column_sort_order.'&sc=time_stamp&so='.return_script_order($sort_column,$sort_order,"time_stamp").'" onmouseover="hover_link(\'claims_td\',\''.$total_for_table_rows.'\');" onmouseout="out_link(\'claims_td\',\''.$total_for_table_rows.'\');" >Claims</a></th>
-                            <th><a href="'.$link_without_sort_column_sort_order.'&sc=time_stamp&so='.return_script_order($sort_column,$sort_order,"time_stamp").'" onmouseover="hover_link(\'delete_td\',\''.$total_for_table_rows.'\');" onmouseout="out_link(\'delete_td\',\''.$total_for_table_rows.'\');" >Delete</a></th>
+                             <th><a href="#"onmouseover="hover_link(\'transcation_td\',\''.$total_for_table_rows.'\');" onmouseout="out_link(\'transcation_td\',\''.$total_for_table_rows.'\');" >Transaction</a></th>
+                            <th><a href="#"onmouseover="hover_link(\'camount_paid_td\',\''.$total_for_table_rows.'\');" onmouseout="out_link(\'camount_paid_td\',\''.$total_for_table_rows.'\');" >Amount(KES)</a></th>
+                            <th><a href="#"onmouseover="hover_link(\'title_td\',\''.$total_for_table_rows.'\');" onmouseout="out_link(\'title_td\',\''.$total_for_table_rows.'\');" >Particulars</a></th>
+                           <th><a href="#"onmouseover="hover_link(\'info_td\',\''.$total_for_table_rows.'\');" onmouseout="out_link(\'info_td\',\''.$total_for_table_rows.'\');" >Info</a></th>
+                           
+                             <th><a href="#"onmouseover="hover_link(\'date_td\',\''.$total_for_table_rows.'\');" onmouseout="out_link(\'date_td\',\''.$total_for_table_rows.'\');" >Date of transaction</a></th>
+                            
                             
                             </tr>';
             $from_one_counter=1;//used to know how many rows are printed from one so as to append table head
             foreach ($message_is as $value) 
             {//start of foreach $message_is as $value
-                  $full_names=$value['full_names'];
-                  $email_address=$value['email_address'];
-                  $phone_number=$value['phone_number'];
-                  $national_id=$value['national_id'];
+                  $_id=$value['_id']['$oid'];
+                  
+                  $mode_of_payment=$value['mode_of_payment'];
+                  $amount_paid=$value['amount_paid'];
+                  $particulars=$value['particulars'];
+                  $time_date_of_payment=$value['time_date_of_payment'];
+                  $transaction_code=$value['transaction_code'];
+                  $use_date=$value['use_date'];
                   $time_stamp=$value['time_stamp'];
+                  $debit=$value['debit'];
+                  $msidn=$value['msidn'];
                   
                   
                   $row_color=$count%2;
                   $row_color=$row_color==0?'odd':'even';
-                                                         
-                  $table=$table.'<tr class="'.$row_color.'" id="row_data">
+                  
+                  
+                  $withdraw_message=count($debit)==0? '<a href="#">Withdraw</a>':'Debited';
+                   
+                  $debit_message='Awaiting action';
+                  if(count($debit)>0)
+                  {
+                      $debit_message='Awaiting action';
+                        if(count($debit)>0)
+                        {
+                            if($debit['method']=='policy')
+                            {
+                                 $debit_message='Paid policy';
+                            }
+                            else
+                            {
+                                $debit_message='Withdrew';
+                            }
+                        }
+                      $table=$table.'<tr class="'.$row_color.'" id="row_data">
                                                 <td>'.($count+1).'</td>  
-                                                                <td id="full_names_td'.$count.'" >'.$full_names.'</td>
-                                                                <td id="email_address_td'.$count.'" >'.$email_address.'</td>
-                                                                <td id="phone_number_td'.$count.'" >'.$phone_number.'</td>  
-                                                                <td id="national_id_td'.$count.'" >'.$national_id.'</td>   
-                                                                <td id="time_stamp_td'.$count.'" >'.return_date_function($time_stamp).'</td> 
-                                                                <td id="insurance_policies_td'.$count.'" ><a href="'.$clients_insurance.'&e='.$email_address.'&f='.$full_names.'&p='.$phone_number.'" title="View, remove and select policies for '.$full_names.'">View/Delete/Select</a></td>
-                                                                    <td id="wallet_td'.$count.'" ><a href="'.$clients_wallet.'&e='.$email_address.'&f='.$full_names.'&p='.$phone_number.'" title="View wallet statement for '.$full_names.'">View wallet</a></td>
-                                                                <td id="claims_td'.$count.'" ><a href="'.$claims.'&e='.$email_address.'&f='.$full_names.'" title="View, remove and select claims for '.$full_names.'">View/Delete/Select</a></td>   
-                                                                <td id="delete_td'.$count.'" ><span id="red_text_span"><a href="'.$delete_link.'&e='.$email_address.'&f='.$full_names.'" title="Remove '.$full_names.'">Delete</a></span></td>   
+                                                    <td id="transcation_td'.$count.'" >Debit</td>
+                                                                <td id="camount_paid_td'.$count.'" >-'.number_format($amount_paid).'</td>
+                                                                 <td id="title_td'.$count.'" >'. $debit_message.'</td>
+                                                                      <td id="info_td'.$count.'" title="'.$debit['company_name'] .'" >'.$debit['policy_number'] .'</td>
+                                                                <td id="date_td'.$count.'" >'.return_mpesa_date_function($debit['time_stamp']).'</td>
                                                                     
-                                                    </tr>';
+                                                </tr>';
+                  }
+                  else
+                  {
+                       $table=$table.'<tr class="'.$row_color.'" id="row_data">
+                                                <td>'.($count+1).'</td>  
+                                                                <td id="transcation_td'.$count.'" >Credit</td>
+                                                                <td id="camount_paid_td'.$count.'" >'.number_format($amount_paid).'</td>
+                                                               <td id="title_td'.$count.'" >Deposited via M-PESA</td>
+                                                                   <td id="info_td'.$count.'" >'.$transaction_code.'</td>
+                                                                 <td id="date_td'.$count.'" >'.$time_date_of_payment.'</td>
+                                                </tr>';
+                  }
+                 
                   $table=$from_one_counter%$rows_every==0?$table.$table_head:$table;//if rows to add header is reached then add header
                   
                   $count++;
                   $from_one_counter++;
             }//end of foreach $message_is as $value
             
-            $table='<table class="table table-bordered table-hover table-responsive">'.$table_head.$table.'
+            $table='<table>'.$table_head.$table.'
                          </table>';
         }
         else//else failed
         {
             $message_is=$returned_json_decoded["message"];//message
-            // $message=$message_is;
-           // header('location: logs_view.php?c='.$_GET['c'].'&l='.$_GET['l'].'&s='.$_GET['s'].'&message='.$message_is.'&type=2');//
             if($message_is=='')
             {
                 header('location: ../logout.php?message=Your session has expired, please log in again!&type=2');
@@ -149,59 +178,8 @@ if( isset($_GET['l']) && is_numeric($_GET['l']) && ( $_GET['s']==0 || is_numeric
             {
                 $message='<span id="bad_upload_message">'.$message_is.'</span>';
             }
+           // header('location: logs_view.php?c='.$_GET['c'].'&l='.$_GET['l'].'&s='.$_GET['s'].'&message='.$message_is.'&type=2');//
         }
-        
-        
-                    //submit
-                    if(isset($_POST['national_id']) && !empty($_POST['national_id']) && 
-                    isset($_POST['full_names']) && !empty($_POST['full_names']) &&
-                    isset($_POST['email_address']) && !empty($_POST['email_address']) &&
-                    isset($_POST['phone_number']) && !empty($_POST['phone_number']) &&
-                    isset($_POST['antispam']) && !empty($_POST['antispam']) 
-                    )
-                    {  
-                        $national_id=trim($_POST['national_id']);
-                        $full_names=trim($_POST['full_names']);
-                        $email_address=trim($_POST['email_address']);
-                        $phone_number=trim($_POST['phone_number']);
-                        $antispam=trim($_POST['antispam']);
-
-                        if($antispam==$_SESSION['spam'])
-                        {
-                            $url_is=the_api_authentication_api_url_is()."denkimAPILogic/MainPackages.CreateClient";
-
-                            $myvars='national_id='.$national_id.'&full_names='.$full_names.'&email_address='.$email_address.'&phone_number='.$phone_number;
-
-                            $header_array= array('Authorization:'.api_key_is(),'Origin:/senior_administrator/clients.php');
-
-                            $returned_json=send_curl_post($url_is,$myvars,$header_array);//cap output
-
-                            $returned_json_decoded= json_decode($returned_json,true);//decode
-
-                            $check_is=$returned_json_decoded["check"];//check
-
-                            $message_is=$returned_json_decoded["message"];//message
-
-                            if($check_is==true)//if check is true
-                            {
-
-                                  header('location: '.$full_link.'&message='.$message_is.'&type=1');//
-                            }
-                            else//else failed
-                            {
-
-                                header('location: '.$full_link.'&message='.$message_is.'&type=2');//
-                            } 
-                        }
-                        else
-                        {
-                             header('location: '.$full_link.'&message=Failed anti-spam test, please try again&type=2');//
-
-                        }
-
-                    }
-     
-                    
 }
 
     
@@ -212,7 +190,7 @@ if( isset($_GET['l']) && is_numeric($_GET['l']) && ( $_GET['s']==0 || is_numeric
 <head>
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-        <title>Clients</title>
+          <title>Wallet</title>
     <!-- Favicon-->
     <link rel="icon" href="../../favicon.ico" type="image/x-icon">
 
@@ -397,58 +375,27 @@ if( isset($_GET['l']) && is_numeric($_GET['l']) && ( $_GET['s']==0 || is_numeric
                         <div class="header">
                             <div class="row clearfix">
                                 <div class="col-xs-12 col-sm-6">
-                                    <h2>Clients</h2>
+                                    <h2><?php echo $full_names;?></h2>
                                 </div>
                                </div>
                          </div>
                         <div class="body">
-			     <?php echo $message;?><br>
-          <form action="<?php echo $full_link;?>" method="POST">
-            <input type="email" name="email_address" placeholder="email@domain.com"/>
-            <input type="text" name="full_names" placeholder="Full names"/>
-            <input type="number" name="phone_number"  placeholder="254722333444"/>
-            <input type="number" name="national_id"  placeholder="11223366"/>
-            <img src="../../le_functions/_antispam.php" id="are_you_human" /><a href="" onclick="reload_are_you_human('are_you_human');">Reload</a>
-            <input type="text" id="antispam" name="antispam" placeholder="Are you human?"/>
-             <button type="submit" class="btn btn-primary m-t-15 waves-effect">Sign up</button>
-         </form>
-        
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- #END# -->
-			    <!-- innerbody -->
-            <div class="row clearfix">
-                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                    <div class="card">
-                        <div class="header">
-                            <div class="row clearfix">
-                                <div class="col-xs-12 col-sm-6">
-                                    <h2>Edit personal information</h2>
-                                </div>
-                               </div>
-                         </div>
-                        <div class="body">
-		 <form method="POST" action="<?php echo $full_link;?>" id="browse_form">
+			  <?php echo $message;?><br>
+                          <form method="POST" action="<?php echo $full_link;?>" id="browse_form">
                                 Start row: <input type="number" name="skip_is" min="0" value="<?php echo $skip;?>" />  Number of rows: <input type="number" name="limit_is" min="1" value="<?php echo $limit;?>" /> Headers every: <input type="number" name="headers_is" min="10" value="<?php echo $rows_every;?>" /> rows <input type="submit" value="GO"/> 
                             </form><br>
                            <?php echo $table;?><br>
                              <form method="POST" action="<?php echo $full_link;?>" id="browse_form">
                                 Start row: <input type="number" name="skip_is" min="0" value="<?php echo $skip;?>" />  Number of rows: <input type="number" name="limit_is" min="1" value="<?php echo $limit;?>" /> Headers every: <input type="number" name="headers_is" min="10" value="<?php echo $rows_every;?>" /> rows <input type="submit" value="GO"/> 
                             </form>
-
-                           <script type="text/javascript" src="../../javascript/jquery-1.11.1.min.js"></script>
+           <script type="text/javascript" src="../../javascript/jquery-1.11.1.min.js"></script>
                            <script type="text/javascript" src="../../javascript/highlight.js"></script>
-                            <script type="text/javascript" src="../../javascript/are_you_huma_reload.js"></script>
-		
-		 
                         </div>
                     </div>
                 </div>
             </div>
-			 <a href="../senior_administrator/" title="Go to the main page" class="btn btn-primary m-t-15 waves-effect"> <i class="material-icons">arrow_back</i>Back </a><br><br> 
             <!-- #END# -->
+	 <a href="../senior_administrator/" title="Go to the main page" class="btn btn-primary m-t-15 waves-effect"> <i class="material-icons">arrow_back</i>Back </a><br><br> 		   
             </div>
         </div>
     </section>
