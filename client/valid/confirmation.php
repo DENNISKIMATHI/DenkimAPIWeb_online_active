@@ -79,7 +79,15 @@ if($result)
                         break;
                    }// switch ($select) 
                    
-                   
+                   $myvars='mode_of_payment=MPESA&amount_paid='.str_replace(',', '', $TransAmount).'&particulars='.$BillRefNumber.'&time_date_of_payment='.storable_datetime_function(time()).'&transaction_code='.$TransID.'&msidn='.$MSISDN;
+        
+                    $header_array= array('Authorization:'.'944e15799e5955f1d9ba5bc236daffe3ccdff2ebe7467c2a70e82d84eb42c30631e105cb0da98f00ac5ca7c793c03ccb','Origin:Clients/valid/confirmation.php');
+
+                    $returned_json=send_curl_post('http://35.184.46.252:6969/denkimAPILogic/MainPackages.CreateMobilePayment',$myvars,$header_array);//cap output
+
+                         $resp["ResultCode"] = 0;
+                        $resp["ResultDesc"] = 'Confirmation Received successfully';
+                        echo json_encode($resp);
                }
                else
                {
