@@ -1,0 +1,248 @@
+[21-Aug-2018 13:21:29 Europe/London] PHP Warning:  Use of undefined constant policy_id - assumed 'policy_id' (this will throw an Error in a future version of PHP) in /home/denkimin/public_html/client/request_acc_number/index.php on line 30
+[21-Aug-2018 13:21:29 Europe/London] PHP Fatal error:  Uncaught Error: Call to undefined function mysqli_fetch_all() in /home/denkimin/public_html/client/request_acc_number/index.php:108
+Stack trace:
+#0 /home/denkimin/public_html/client/request_acc_number/index.php(30): select_from_table_on_one_condition('temp_acc_info', 'policy_id', '5b30e3675893d10...')
+#1 {main}
+  thrown in /home/denkimin/public_html/client/request_acc_number/index.php on line 108
+[21-Aug-2018 13:22:33 Europe/London] PHP Warning:  Use of undefined constant policy_id - assumed 'policy_id' (this will throw an Error in a future version of PHP) in /home/denkimin/public_html/client/request_acc_number/index.php on line 30
+[21-Aug-2018 13:22:47 Europe/London] PHP Warning:  Use of undefined constant policy_id - assumed 'policy_id' (this will throw an Error in a future version of PHP) in /home/denkimin/public_html/client/request_acc_number/index.php on line 30
+[21-Aug-2018 13:23:03 Europe/London] PHP Warning:  Use of undefined constant policy_id - assumed 'policy_id' (this will throw an Error in a future version of PHP) in /home/denkimin/public_html/client/request_acc_number/index.php on line 30
+[21-Aug-2018 13:23:06 Europe/London] PHP Fatal error:  Uncaught Error: Call to undefined function mysqli_fetch_all() in /home/denkimin/public_html/client/request_acc_number/index.php:108
+Stack trace:
+#0 /home/denkimin/public_html/client/request_acc_number/index.php(30): select_from_table_on_one_condition('temp_acc_info', 'policy_id', '5b30e3675893d10...')
+#1 {main}
+  thrown in /home/denkimin/public_html/client/request_acc_number/index.php on line 108
+[21-Aug-2018 13:23:21 Europe/London] PHP Warning:  Use of undefined constant policy_id - assumed 'policy_id' (this will throw an Error in a future version of PHP) in /home/denkimin/public_html/client/request_acc_number/index.php on line 30
+[21-Aug-2018 13:24:41 Europe/London] PHP Warning:  Use of undefined constant policy_id - assumed 'policy_id' (this will throw an Error in a future version of PHP) in /home/denkimin/public_html/client/request_acc_number/index.php on line 30
+[21-Aug-2018 13:24:48 Europe/London] PHP Warning:  Use of undefined constant policy_id - assumed 'policy_id' (this will throw an Error in a future version of PHP) in /home/denkimin/public_html/client/request_acc_number/index.php on line 30
+[21-Aug-2018 13:25:31 Europe/London] PHP Warning:  Use of undefined constant policy_id - assumed 'policy_id' (this will throw an Error in a future version of PHP) in /home/denkimin/public_html/client/request_acc_number/index.php on line 30
+[21-Aug-2018 13:25:31 Europe/London] PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /home/denkimin/public_html/client/request_acc_number/index.php on line 32
+[21-Aug-2018 13:25:58 Europe/London] PHP Warning:  Use of undefined constant policy_id - assumed 'policy_id' (this will throw an Error in a future version of PHP) in /home/denkimin/public_html/client/request_acc_number/index.php on line 30
+[21-Aug-2018 13:25:58 Europe/London] PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /home/denkimin/public_html/client/request_acc_number/index.php on line 31
+[21-Aug-2018 13:25:58 Europe/London] PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /home/denkimin/public_html/client/request_acc_number/index.php on line 32
+[21-Aug-2018 13:32:26 Europe/London] PHP Warning:  Use of undefined constant policy_id - assumed 'policy_id' (this will throw an Error in a future version of PHP) in /home/denkimin/public_html/client/request_acc_number/index.php on line 30
+[21-Aug-2018 13:32:26 Europe/London] PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /home/denkimin/public_html/client/request_acc_number/index.php on line 32
+[21-Aug-2018 13:32:29 Europe/London] PHP Warning:  Use of undefined constant policy_id - assumed 'policy_id' (this will throw an Error in a future version of PHP) in /home/denkimin/public_html/client/request_acc_number/index.php on line 30
+[21-Aug-2018 13:32:29 Europe/London] PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /home/denkimin/public_html/client/request_acc_number/index.php on line 32
+[21-Aug-2018 13:32:32 Europe/London] PHP Warning:  Use of undefined constant policy_id - assumed 'policy_id' (this will throw an Error in a future version of PHP) in /home/denkimin/public_html/client/request_acc_number/index.php on line 30
+[21-Aug-2018 13:32:32 Europe/London] PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /home/denkimin/public_html/client/request_acc_number/index.php on line 32
+[21-Aug-2018 13:32:35 Europe/London] PHP Warning:  Use of undefined constant policy_id - assumed 'policy_id' (this will throw an Error in a future version of PHP) in /home/denkimin/public_html/client/request_acc_number/index.php on line 30
+[21-Aug-2018 13:32:35 Europe/London] PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /home/denkimin/public_html/client/request_acc_number/index.php on line 32
+[21-Aug-2018 13:35:33 Europe/London] PHP Warning:  Use of undefined constant policy_id - assumed 'policy_id' (this will throw an Error in a future version of PHP) in /home/denkimin/public_html/client/request_acc_number/index.php on line 35
+[21-Aug-2018 13:35:33 Europe/London] PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /home/denkimin/public_html/client/request_acc_number/index.php on line 37
+[21-Aug-2018 13:35:33 Europe/London] PHP Warning:  mysqli_free_result() expects parameter 1 to be mysqli_result, boolean given in /home/denkimin/public_html/client/request_acc_number/index.php on line 168
+[21-Aug-2018 13:36:43 Europe/London] PHP Warning:  Use of undefined constant policy_id - assumed 'policy_id' (this will throw an Error in a future version of PHP) in /home/denkimin/public_html/client/request_acc_number/index.php on line 35
+[21-Aug-2018 13:37:12 Europe/London] PHP Warning:  Use of undefined constant policy_id - assumed 'policy_id' (this will throw an Error in a future version of PHP) in /home/denkimin/public_html/client/request_acc_number/index.php on line 35
+[21-Aug-2018 13:38:43 Europe/London] PHP Warning:  Use of undefined constant policy_id - assumed 'policy_id' (this will throw an Error in a future version of PHP) in /home/denkimin/public_html/client/request_acc_number/index.php on line 35
+[21-Aug-2018 13:39:30 Europe/London] PHP Warning:  Use of undefined constant policy_id - assumed 'policy_id' (this will throw an Error in a future version of PHP) in /home/denkimin/public_html/client/request_acc_number/index.php on line 35
+[21-Aug-2018 13:41:29 Europe/London] PHP Warning:  Use of undefined constant policy_id - assumed 'policy_id' (this will throw an Error in a future version of PHP) in /home/denkimin/public_html/client/request_acc_number/index.php on line 35
+[21-Aug-2018 13:44:17 Europe/London] PHP Warning:  Use of undefined constant policy_id - assumed 'policy_id' (this will throw an Error in a future version of PHP) in /home/denkimin/public_html/client/request_acc_number/index.php on line 35
+[21-Aug-2018 13:46:34 Europe/London] PHP Fatal error:  Uncaught Error: Call to undefined function mysqli_fetch_all() in /home/denkimin/public_html/client/request_acc_number/index.php:142
+Stack trace:
+#0 /home/denkimin/public_html/client/request_acc_number/index.php(35): select_from_table_on_one_condition('temp_acc_info', 'policy_id', '5b30e3675893d10...')
+#1 {main}
+  thrown in /home/denkimin/public_html/client/request_acc_number/index.php on line 142
+[21-Aug-2018 13:47:33 Europe/London] PHP Fatal error:  Uncaught Error: Call to undefined function mysqli_fetch_all() in /home/denkimin/public_html/client/request_acc_number/index.php:142
+Stack trace:
+#0 /home/denkimin/public_html/client/request_acc_number/index.php(35): select_from_table_on_one_condition('temp_acc_info', 'policy_id', '5b30e3675893d10...')
+#1 {main}
+  thrown in /home/denkimin/public_html/client/request_acc_number/index.php on line 142
+[21-Aug-2018 13:47:37 Europe/London] PHP Fatal error:  Uncaught Error: Call to undefined function mysqli_fetch_all() in /home/denkimin/public_html/client/request_acc_number/index.php:142
+Stack trace:
+#0 /home/denkimin/public_html/client/request_acc_number/index.php(35): select_from_table_on_one_condition('temp_acc_info', 'policy_id', '5b30e3675893d10...')
+#1 {main}
+  thrown in /home/denkimin/public_html/client/request_acc_number/index.php on line 142
+[21-Aug-2018 13:50:33 Europe/London] PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /home/denkimin/public_html/client/request_acc_number/index.php on line 38
+[21-Aug-2018 13:50:33 Europe/London] PHP Warning:  mysqli_free_result() expects parameter 1 to be mysqli_result, boolean given in /home/denkimin/public_html/client/request_acc_number/index.php on line 171
+[21-Aug-2018 14:19:29 Europe/London] PHP Notice:  Undefined index: authorization in /home/denkimin/public_html/client/request_acc_number/do_stk_push.php on line 30
+[21-Aug-2018 14:21:16 Europe/London] PHP Notice:  Undefined index: authorization in /home/denkimin/public_html/client/request_acc_number/do_stk_push.php on line 21
+[21-Aug-2018 14:21:43 Europe/London] PHP Notice:  Undefined index: authorization in /home/denkimin/public_html/client/request_acc_number/do_stk_push.php on line 21
+[21-Aug-2018 14:22:05 Europe/London] PHP Notice:  Undefined index: authorization in /home/denkimin/public_html/client/request_acc_number/do_stk_push.php on line 21
+[21-Aug-2018 14:22:21 Europe/London] PHP Notice:  Undefined index: authorization in /home/denkimin/public_html/client/request_acc_number/do_stk_push.php on line 21
+[21-Aug-2018 14:22:36 Europe/London] PHP Notice:  Undefined index: authorization in /home/denkimin/public_html/client/request_acc_number/do_stk_push.php on line 21
+[21-Aug-2018 14:22:57 Europe/London] PHP Notice:  Undefined index: authorization in /home/denkimin/public_html/client/request_acc_number/do_stk_push.php on line 21
+[21-Aug-2018 14:23:32 Europe/London] PHP Notice:  Undefined index: authorization in /home/denkimin/public_html/client/request_acc_number/do_stk_push.php on line 21
+[21-Aug-2018 14:24:12 Europe/London] PHP Notice:  Undefined index: authorization in /home/denkimin/public_html/client/request_acc_number/do_stk_push.php on line 10
+[21-Aug-2018 14:24:34 Europe/London] PHP Notice:  Undefined index: authorization in /home/denkimin/public_html/client/request_acc_number/do_stk_push.php on line 10
+[21-Aug-2018 14:24:54 Europe/London] PHP Notice:  Undefined index: authorization in /home/denkimin/public_html/client/request_acc_number/do_stk_push.php on line 10
+[21-Aug-2018 14:25:18 Europe/London] PHP Notice:  Undefined index: authorization in /home/denkimin/public_html/client/request_acc_number/do_stk_push.php on line 10
+[21-Aug-2018 14:25:46 Europe/London] PHP Notice:  Undefined index: authorization in /home/denkimin/public_html/client/request_acc_number/do_stk_push.php on line 10
+[21-Aug-2018 14:26:16 Europe/London] PHP Notice:  Undefined index: authorization in /home/denkimin/public_html/client/request_acc_number/do_stk_push.php on line 10
+[21-Aug-2018 14:27:14 Europe/London] PHP Notice:  Undefined index: authorization in /home/denkimin/public_html/client/request_acc_number/do_stk_push.php on line 10
+[21-Aug-2018 14:27:14 Europe/London] PHP Notice:  Array to string conversion in /home/denkimin/public_html/client/request_acc_number/do_stk_push.php on line 27
+[21-Aug-2018 14:27:39 Europe/London] PHP Notice:  Undefined index: authorization in /home/denkimin/public_html/client/request_acc_number/do_stk_push.php on line 10
+[21-Aug-2018 14:27:54 Europe/London] PHP Notice:  Undefined index: authorization in /home/denkimin/public_html/client/request_acc_number/do_stk_push.php on line 10
+[21-Aug-2018 14:30:00 Europe/London] PHP Notice:  Undefined index: authorization in /home/denkimin/public_html/client/request_acc_number/do_stk_push.php on line 10
+[21-Aug-2018 15:18:11 Europe/London] PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /home/denkimin/public_html/client/request_acc_number/index.php on line 38
+[21-Aug-2018 15:18:11 Europe/London] PHP Warning:  mysqli_free_result() expects parameter 1 to be mysqli_result, boolean given in /home/denkimin/public_html/client/request_acc_number/index.php on line 171
+[21-Aug-2018 15:54:32 Europe/London] PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /home/denkimin/public_html/client/request_acc_number/index.php on line 38
+[21-Aug-2018 15:54:32 Europe/London] PHP Warning:  mysqli_free_result() expects parameter 1 to be mysqli_result, boolean given in /home/denkimin/public_html/client/request_acc_number/index.php on line 171
+[21-Aug-2018 16:17:49 Europe/London] PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /home/denkimin/public_html/client/request_acc_number/index.php on line 38
+[21-Aug-2018 16:17:49 Europe/London] PHP Warning:  mysqli_free_result() expects parameter 1 to be mysqli_result, boolean given in /home/denkimin/public_html/client/request_acc_number/index.php on line 171
+[21-Aug-2018 16:28:36 Europe/London] PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /home/denkimin/public_html/client/request_acc_number/index.php on line 38
+[21-Aug-2018 16:28:36 Europe/London] PHP Warning:  mysqli_free_result() expects parameter 1 to be mysqli_result, boolean given in /home/denkimin/public_html/client/request_acc_number/index.php on line 171
+[21-Aug-2018 16:30:22 Europe/London] PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /home/denkimin/public_html/client/request_acc_number/index.php on line 38
+[21-Aug-2018 16:30:22 Europe/London] PHP Warning:  mysqli_free_result() expects parameter 1 to be mysqli_result, boolean given in /home/denkimin/public_html/client/request_acc_number/index.php on line 171
+[21-Aug-2018 18:27:57 Europe/London] PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /home/denkimin/public_html/client/request_acc_number/index.php on line 38
+[21-Aug-2018 18:27:57 Europe/London] PHP Warning:  mysqli_free_result() expects parameter 1 to be mysqli_result, boolean given in /home/denkimin/public_html/client/request_acc_number/index.php on line 171
+[21-Aug-2018 18:50:37 Europe/London] PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /home/denkimin/public_html/client/request_acc_number/index.php on line 38
+[21-Aug-2018 18:50:37 Europe/London] PHP Warning:  mysqli_free_result() expects parameter 1 to be mysqli_result, boolean given in /home/denkimin/public_html/client/request_acc_number/index.php on line 171
+[22-Aug-2018 06:49:41 Europe/London] PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /home/denkimin/public_html/client/request_acc_number/index.php on line 38
+[22-Aug-2018 06:49:41 Europe/London] PHP Warning:  mysqli_free_result() expects parameter 1 to be mysqli_result, boolean given in /home/denkimin/public_html/client/request_acc_number/index.php on line 171
+[22-Aug-2018 06:52:19 Europe/London] PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /home/denkimin/public_html/client/request_acc_number/index.php on line 38
+[22-Aug-2018 06:52:20 Europe/London] PHP Warning:  mysqli_free_result() expects parameter 1 to be mysqli_result, boolean given in /home/denkimin/public_html/client/request_acc_number/index.php on line 171
+[22-Aug-2018 06:53:40 Europe/London] PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /home/denkimin/public_html/client/request_acc_number/index.php on line 38
+[22-Aug-2018 06:53:40 Europe/London] PHP Warning:  mysqli_free_result() expects parameter 1 to be mysqli_result, boolean given in /home/denkimin/public_html/client/request_acc_number/index.php on line 171
+[22-Aug-2018 06:56:09 Europe/London] PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /home/denkimin/public_html/client/request_acc_number/index.php on line 38
+[22-Aug-2018 06:56:09 Europe/London] PHP Warning:  mysqli_free_result() expects parameter 1 to be mysqli_result, boolean given in /home/denkimin/public_html/client/request_acc_number/index.php on line 171
+[22-Aug-2018 12:39:11 Europe/London] PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /home/denkimin/public_html/client/request_acc_number/index.php on line 38
+[22-Aug-2018 12:39:11 Europe/London] PHP Warning:  mysqli_free_result() expects parameter 1 to be mysqli_result, boolean given in /home/denkimin/public_html/client/request_acc_number/index.php on line 171
+[22-Aug-2018 12:53:42 Europe/London] PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /home/denkimin/public_html/client/request_acc_number/index.php on line 38
+[22-Aug-2018 12:53:42 Europe/London] PHP Warning:  mysqli_free_result() expects parameter 1 to be mysqli_result, boolean given in /home/denkimin/public_html/client/request_acc_number/index.php on line 171
+[23-Aug-2018 16:29:51 Europe/London] PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /home/denkimin/public_html/client/request_acc_number/index.php on line 38
+[23-Aug-2018 16:29:51 Europe/London] PHP Warning:  mysqli_free_result() expects parameter 1 to be mysqli_result, boolean given in /home/denkimin/public_html/client/request_acc_number/index.php on line 171
+[24-Aug-2018 07:43:56 Europe/London] PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /home/denkimin/public_html/client/request_acc_number/index.php on line 38
+[24-Aug-2018 07:43:56 Europe/London] PHP Warning:  mysqli_free_result() expects parameter 1 to be mysqli_result, boolean given in /home/denkimin/public_html/client/request_acc_number/index.php on line 171
+[24-Aug-2018 11:04:12 Europe/London] PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /home/denkimin/public_html/client/request_acc_number/index.php on line 38
+[24-Aug-2018 11:04:12 Europe/London] PHP Warning:  mysqli_free_result() expects parameter 1 to be mysqli_result, boolean given in /home/denkimin/public_html/client/request_acc_number/index.php on line 171
+[27-Aug-2018 18:10:27 Europe/London] PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /home/denkimin/public_html/client/request_acc_number/index.php on line 38
+[27-Aug-2018 18:10:27 Europe/London] PHP Warning:  mysqli_free_result() expects parameter 1 to be mysqli_result, boolean given in /home/denkimin/public_html/client/request_acc_number/index.php on line 171
+[29-Aug-2018 16:59:56 Europe/London] PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /home/denkimin/public_html/client/request_acc_number/index.php on line 38
+[29-Aug-2018 16:59:56 Europe/London] PHP Warning:  mysqli_free_result() expects parameter 1 to be mysqli_result, boolean given in /home/denkimin/public_html/client/request_acc_number/index.php on line 171
+[29-Aug-2018 17:07:13 Europe/London] PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /home/denkimin/public_html/client/request_acc_number/index.php on line 38
+[29-Aug-2018 17:07:13 Europe/London] PHP Warning:  mysqli_free_result() expects parameter 1 to be mysqli_result, boolean given in /home/denkimin/public_html/client/request_acc_number/index.php on line 171
+[29-Aug-2018 17:10:16 Europe/London] PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /home/denkimin/public_html/client/request_acc_number/index.php on line 38
+[29-Aug-2018 17:10:16 Europe/London] PHP Warning:  mysqli_free_result() expects parameter 1 to be mysqli_result, boolean given in /home/denkimin/public_html/client/request_acc_number/index.php on line 171
+[30-Aug-2018 05:18:12 Europe/London] PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /home/denkimin/public_html/client/request_acc_number/index.php on line 38
+[30-Aug-2018 05:18:12 Europe/London] PHP Warning:  mysqli_free_result() expects parameter 1 to be mysqli_result, boolean given in /home/denkimin/public_html/client/request_acc_number/index.php on line 171
+[30-Aug-2018 05:58:49 Europe/London] PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /home/denkimin/public_html/client/request_acc_number/index.php on line 38
+[30-Aug-2018 05:58:49 Europe/London] PHP Warning:  mysqli_free_result() expects parameter 1 to be mysqli_result, boolean given in /home/denkimin/public_html/client/request_acc_number/index.php on line 171
+[02-Sep-2018 05:32:44 Europe/London] PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /home/denkimin/public_html/client/request_acc_number/index.php on line 38
+[02-Sep-2018 05:32:44 Europe/London] PHP Warning:  mysqli_free_result() expects parameter 1 to be mysqli_result, boolean given in /home/denkimin/public_html/client/request_acc_number/index.php on line 171
+[03-Sep-2018 12:23:43 Europe/London] PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /home/denkimin/public_html/client/request_acc_number/index.php on line 38
+[03-Sep-2018 12:23:43 Europe/London] PHP Warning:  mysqli_free_result() expects parameter 1 to be mysqli_result, boolean given in /home/denkimin/public_html/client/request_acc_number/index.php on line 171
+[04-Sep-2018 13:31:59 Europe/London] PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /home/denkimin/public_html/client/request_acc_number/index.php on line 38
+[04-Sep-2018 13:31:59 Europe/London] PHP Warning:  mysqli_free_result() expects parameter 1 to be mysqli_result, boolean given in /home/denkimin/public_html/client/request_acc_number/index.php on line 171
+[06-Sep-2018 08:08:55 Europe/London] PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /home/denkimin/public_html/client/request_acc_number/index.php on line 38
+[06-Sep-2018 08:08:55 Europe/London] PHP Warning:  mysqli_free_result() expects parameter 1 to be mysqli_result, boolean given in /home/denkimin/public_html/client/request_acc_number/index.php on line 171
+[06-Sep-2018 08:37:24 Europe/London] PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /home/denkimin/public_html/client/request_acc_number/index.php on line 38
+[06-Sep-2018 08:37:24 Europe/London] PHP Warning:  mysqli_free_result() expects parameter 1 to be mysqli_result, boolean given in /home/denkimin/public_html/client/request_acc_number/index.php on line 171
+[06-Sep-2018 10:20:15 Europe/London] PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /home/denkimin/public_html/client/request_acc_number/index.php on line 38
+[06-Sep-2018 10:20:15 Europe/London] PHP Warning:  mysqli_free_result() expects parameter 1 to be mysqli_result, boolean given in /home/denkimin/public_html/client/request_acc_number/index.php on line 171
+[06-Sep-2018 18:34:04 Europe/London] PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /home/denkimin/public_html/client/request_acc_number/index.php on line 38
+[06-Sep-2018 18:34:04 Europe/London] PHP Warning:  mysqli_free_result() expects parameter 1 to be mysqli_result, boolean given in /home/denkimin/public_html/client/request_acc_number/index.php on line 171
+[07-Sep-2018 01:48:14 Europe/London] PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /home/denkimin/public_html/client/request_acc_number/index.php on line 38
+[07-Sep-2018 01:48:14 Europe/London] PHP Warning:  mysqli_free_result() expects parameter 1 to be mysqli_result, boolean given in /home/denkimin/public_html/client/request_acc_number/index.php on line 171
+[09-Sep-2018 09:56:21 Europe/London] PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /home/denkimin/public_html/client/request_acc_number/index.php on line 38
+[09-Sep-2018 09:56:21 Europe/London] PHP Warning:  mysqli_free_result() expects parameter 1 to be mysqli_result, boolean given in /home/denkimin/public_html/client/request_acc_number/index.php on line 171
+[09-Sep-2018 14:46:29 Europe/London] PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /home/denkimin/public_html/client/request_acc_number/index.php on line 38
+[09-Sep-2018 14:46:29 Europe/London] PHP Warning:  mysqli_free_result() expects parameter 1 to be mysqli_result, boolean given in /home/denkimin/public_html/client/request_acc_number/index.php on line 171
+[09-Sep-2018 14:50:17 Europe/London] PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /home/denkimin/public_html/client/request_acc_number/index.php on line 38
+[09-Sep-2018 14:50:17 Europe/London] PHP Warning:  mysqli_free_result() expects parameter 1 to be mysqli_result, boolean given in /home/denkimin/public_html/client/request_acc_number/index.php on line 171
+[10-Sep-2018 21:18:01 Europe/London] PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /home/denkimin/public_html/client/request_acc_number/index.php on line 38
+[10-Sep-2018 21:18:01 Europe/London] PHP Warning:  mysqli_free_result() expects parameter 1 to be mysqli_result, boolean given in /home/denkimin/public_html/client/request_acc_number/index.php on line 171
+[13-Sep-2018 00:48:20 Europe/London] PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /home/denkimin/public_html/client/request_acc_number/index.php on line 38
+[13-Sep-2018 00:48:20 Europe/London] PHP Warning:  mysqli_free_result() expects parameter 1 to be mysqli_result, boolean given in /home/denkimin/public_html/client/request_acc_number/index.php on line 171
+[14-Sep-2018 02:39:07 Europe/London] PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /home/denkimin/public_html/client/request_acc_number/index.php on line 38
+[14-Sep-2018 02:39:07 Europe/London] PHP Warning:  mysqli_free_result() expects parameter 1 to be mysqli_result, boolean given in /home/denkimin/public_html/client/request_acc_number/index.php on line 171
+[15-Sep-2018 16:05:42 Europe/London] PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /home/denkimin/public_html/client/request_acc_number/index.php on line 38
+[15-Sep-2018 16:05:42 Europe/London] PHP Warning:  mysqli_free_result() expects parameter 1 to be mysqli_result, boolean given in /home/denkimin/public_html/client/request_acc_number/index.php on line 171
+[18-Sep-2018 17:34:51 Europe/London] PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /home/denkimin/public_html/client/request_acc_number/index.php on line 38
+[18-Sep-2018 17:34:51 Europe/London] PHP Warning:  mysqli_free_result() expects parameter 1 to be mysqli_result, boolean given in /home/denkimin/public_html/client/request_acc_number/index.php on line 171
+[20-Sep-2018 11:15:49 Europe/London] PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /home/denkimin/public_html/client/request_acc_number/index.php on line 38
+[20-Sep-2018 11:15:49 Europe/London] PHP Warning:  mysqli_free_result() expects parameter 1 to be mysqli_result, boolean given in /home/denkimin/public_html/client/request_acc_number/index.php on line 171
+[20-Sep-2018 11:28:06 Europe/London] PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /home/denkimin/public_html/client/request_acc_number/index.php on line 38
+[20-Sep-2018 11:28:06 Europe/London] PHP Warning:  mysqli_free_result() expects parameter 1 to be mysqli_result, boolean given in /home/denkimin/public_html/client/request_acc_number/index.php on line 171
+[21-Sep-2018 18:12:06 Europe/London] PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /home/denkimin/public_html/client/request_acc_number/index.php on line 38
+[21-Sep-2018 18:12:06 Europe/London] PHP Warning:  mysqli_free_result() expects parameter 1 to be mysqli_result, boolean given in /home/denkimin/public_html/client/request_acc_number/index.php on line 171
+[21-Sep-2018 18:16:54 Europe/London] PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /home/denkimin/public_html/client/request_acc_number/index.php on line 38
+[21-Sep-2018 18:16:54 Europe/London] PHP Warning:  mysqli_free_result() expects parameter 1 to be mysqli_result, boolean given in /home/denkimin/public_html/client/request_acc_number/index.php on line 171
+[22-Sep-2018 14:49:39 Europe/London] PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /home/denkimin/public_html/client/request_acc_number/index.php on line 38
+[22-Sep-2018 14:49:39 Europe/London] PHP Warning:  mysqli_free_result() expects parameter 1 to be mysqli_result, boolean given in /home/denkimin/public_html/client/request_acc_number/index.php on line 171
+[22-Sep-2018 14:50:32 Europe/London] PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /home/denkimin/public_html/client/request_acc_number/index.php on line 38
+[22-Sep-2018 14:50:32 Europe/London] PHP Warning:  mysqli_free_result() expects parameter 1 to be mysqli_result, boolean given in /home/denkimin/public_html/client/request_acc_number/index.php on line 171
+[22-Sep-2018 16:17:40 Europe/London] PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /home/denkimin/public_html/client/request_acc_number/index.php on line 38
+[22-Sep-2018 16:17:40 Europe/London] PHP Warning:  mysqli_free_result() expects parameter 1 to be mysqli_result, boolean given in /home/denkimin/public_html/client/request_acc_number/index.php on line 171
+[22-Sep-2018 16:22:45 Europe/London] PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /home/denkimin/public_html/client/request_acc_number/index.php on line 38
+[22-Sep-2018 16:22:45 Europe/London] PHP Warning:  mysqli_free_result() expects parameter 1 to be mysqli_result, boolean given in /home/denkimin/public_html/client/request_acc_number/index.php on line 171
+[27-Sep-2018 06:12:41 Europe/London] PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /home/denkimin/public_html/client/request_acc_number/index.php on line 38
+[27-Sep-2018 06:12:41 Europe/London] PHP Warning:  mysqli_free_result() expects parameter 1 to be mysqli_result, boolean given in /home/denkimin/public_html/client/request_acc_number/index.php on line 171
+[27-Sep-2018 11:15:38 Europe/London] PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /home/denkimin/public_html/client/request_acc_number/index.php on line 38
+[27-Sep-2018 11:15:38 Europe/London] PHP Warning:  mysqli_free_result() expects parameter 1 to be mysqli_result, boolean given in /home/denkimin/public_html/client/request_acc_number/index.php on line 171
+[27-Sep-2018 12:19:56 Europe/London] PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /home/denkimin/public_html/client/request_acc_number/index.php on line 38
+[27-Sep-2018 12:21:37 Europe/London] PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /home/denkimin/public_html/client/request_acc_number/index.php on line 38
+[27-Sep-2018 12:21:37 Europe/London] PHP Warning:  mysqli_free_result() expects parameter 1 to be mysqli_result, boolean given in /home/denkimin/public_html/client/request_acc_number/index.php on line 171
+[27-Sep-2018 13:36:02 Europe/London] PHP Notice:  Undefined variable: policy_id in /home/denkimin/public_html/client/request_acc_number/index.php on line 75
+[27-Sep-2018 13:36:02 Europe/London] PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /home/denkimin/public_html/client/request_acc_number/index.php on line 79
+[27-Sep-2018 13:36:02 Europe/London] PHP Notice:  Undefined variable: policy_id in /home/denkimin/public_html/client/request_acc_number/index.php on line 94
+[27-Sep-2018 13:36:02 Europe/London] PHP Warning:  mysqli_free_result() expects parameter 1 to be mysqli_result, boolean given in /home/denkimin/public_html/client/request_acc_number/index.php on line 246
+[27-Sep-2018 13:36:20 Europe/London] PHP Notice:  Undefined variable: policy_id in /home/denkimin/public_html/client/request_acc_number/index.php on line 75
+[27-Sep-2018 13:36:28 Europe/London] PHP Notice:  Undefined variable: policy_id in /home/denkimin/public_html/client/request_acc_number/index.php on line 75
+[27-Sep-2018 13:36:31 Europe/London] PHP Notice:  Undefined variable: policy_id in /home/denkimin/public_html/client/request_acc_number/index.php on line 75
+[27-Sep-2018 13:37:16 Europe/London] PHP Notice:  Undefined variable: policy_id in /home/denkimin/public_html/client/request_acc_number/index.php on line 75
+[27-Sep-2018 13:37:16 Europe/London] PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /home/denkimin/public_html/client/request_acc_number/index.php on line 79
+[27-Sep-2018 13:37:16 Europe/London] PHP Warning:  mysqli_free_result() expects parameter 1 to be mysqli_result, boolean given in /home/denkimin/public_html/client/request_acc_number/index.php on line 246
+[27-Sep-2018 13:48:26 Europe/London] PHP Notice:  Undefined variable: policy_id in /home/denkimin/public_html/client/request_acc_number/index.php on line 75
+[27-Sep-2018 13:48:26 Europe/London] PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /home/denkimin/public_html/client/request_acc_number/index.php on line 79
+[27-Sep-2018 13:48:26 Europe/London] PHP Warning:  mysqli_free_result() expects parameter 1 to be mysqli_result, boolean given in /home/denkimin/public_html/client/request_acc_number/index.php on line 246
+[27-Sep-2018 14:32:02 Europe/London] PHP Notice:  Undefined variable: policy_id in /home/denkimin/public_html/client/request_acc_number/index.php on line 75
+[27-Sep-2018 14:32:02 Europe/London] PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /home/denkimin/public_html/client/request_acc_number/index.php on line 79
+[27-Sep-2018 14:32:02 Europe/London] PHP Warning:  mysqli_free_result() expects parameter 1 to be mysqli_result, boolean given in /home/denkimin/public_html/client/request_acc_number/functions.php on line 123
+[27-Sep-2018 14:32:37 Europe/London] PHP Notice:  Undefined variable: policy_id in /home/denkimin/public_html/client/request_acc_number/index.php on line 75
+[27-Sep-2018 14:32:37 Europe/London] PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /home/denkimin/public_html/client/request_acc_number/index.php on line 79
+[27-Sep-2018 14:32:37 Europe/London] PHP Warning:  mysqli_free_result() expects parameter 1 to be mysqli_result, boolean given in /home/denkimin/public_html/client/request_acc_number/functions.php on line 123
+[27-Sep-2018 14:33:35 Europe/London] PHP Notice:  Undefined variable: policy_id in /home/denkimin/public_html/client/request_acc_number/index.php on line 75
+[27-Sep-2018 14:33:35 Europe/London] PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /home/denkimin/public_html/client/request_acc_number/index.php on line 79
+[27-Sep-2018 14:33:35 Europe/London] PHP Warning:  mysqli_free_result() expects parameter 1 to be mysqli_result, boolean given in /home/denkimin/public_html/client/request_acc_number/functions.php on line 123
+[27-Sep-2018 14:35:49 Europe/London] PHP Notice:  Undefined variable: policy_id in /home/denkimin/public_html/client/request_acc_number/index.php on line 75
+[27-Sep-2018 14:35:49 Europe/London] PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /home/denkimin/public_html/client/request_acc_number/index.php on line 79
+[27-Sep-2018 14:35:49 Europe/London] PHP Warning:  mysqli_free_result() expects parameter 1 to be mysqli_result, boolean given in /home/denkimin/public_html/client/request_acc_number/functions.php on line 123
+[27-Sep-2018 15:12:04 Europe/London] PHP Notice:  Undefined variable: policy_id in /home/denkimin/public_html/client/request_acc_number/index.php on line 75
+[27-Sep-2018 15:12:04 Europe/London] PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /home/denkimin/public_html/client/request_acc_number/index.php on line 79
+[27-Sep-2018 15:12:04 Europe/London] PHP Warning:  mysqli_free_result() expects parameter 1 to be mysqli_result, boolean given in /home/denkimin/public_html/client/request_acc_number/functions.php on line 123
+[27-Sep-2018 15:13:07 Europe/London] PHP Notice:  Undefined variable: policy_id in /home/denkimin/public_html/client/request_acc_number/index.php on line 75
+[27-Sep-2018 15:13:07 Europe/London] PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /home/denkimin/public_html/client/request_acc_number/index.php on line 79
+[27-Sep-2018 15:13:07 Europe/London] PHP Warning:  mysqli_free_result() expects parameter 1 to be mysqli_result, boolean given in /home/denkimin/public_html/client/request_acc_number/functions.php on line 123
+[27-Sep-2018 15:13:31 Europe/London] PHP Notice:  Undefined variable: policy_id in /home/denkimin/public_html/client/request_acc_number/index.php on line 75
+[27-Sep-2018 15:13:31 Europe/London] PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /home/denkimin/public_html/client/request_acc_number/index.php on line 79
+[27-Sep-2018 15:13:31 Europe/London] PHP Warning:  mysqli_free_result() expects parameter 1 to be mysqli_result, boolean given in /home/denkimin/public_html/client/request_acc_number/functions.php on line 123
+[27-Sep-2018 15:15:46 Europe/London] PHP Notice:  Undefined variable: policy_id in /home/denkimin/public_html/client/request_acc_number/index.php on line 75
+[27-Sep-2018 15:15:46 Europe/London] PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /home/denkimin/public_html/client/request_acc_number/index.php on line 79
+[27-Sep-2018 15:15:46 Europe/London] PHP Warning:  mysqli_free_result() expects parameter 1 to be mysqli_result, boolean given in /home/denkimin/public_html/client/request_acc_number/functions.php on line 123
+[27-Sep-2018 15:16:08 Europe/London] PHP Notice:  Undefined variable: policy_id in /home/denkimin/public_html/client/request_acc_number/index.php on line 75
+[27-Sep-2018 15:16:08 Europe/London] PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /home/denkimin/public_html/client/request_acc_number/index.php on line 79
+[27-Sep-2018 15:16:08 Europe/London] PHP Warning:  mysqli_free_result() expects parameter 1 to be mysqli_result, boolean given in /home/denkimin/public_html/client/request_acc_number/functions.php on line 123
+[27-Sep-2018 15:35:59 Europe/London] PHP Notice:  Undefined variable: policy_id in /home/denkimin/public_html/client/request_acc_number/index.php on line 75
+[27-Sep-2018 15:35:59 Europe/London] PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /home/denkimin/public_html/client/request_acc_number/index.php on line 79
+[27-Sep-2018 15:35:59 Europe/London] PHP Warning:  mysqli_free_result() expects parameter 1 to be mysqli_result, boolean given in /home/denkimin/public_html/client/request_acc_number/functions.php on line 123
+[27-Sep-2018 15:36:20 Europe/London] PHP Notice:  Undefined variable: policy_id in /home/denkimin/public_html/client/request_acc_number/index.php on line 75
+[27-Sep-2018 15:36:20 Europe/London] PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /home/denkimin/public_html/client/request_acc_number/index.php on line 79
+[27-Sep-2018 15:36:20 Europe/London] PHP Warning:  mysqli_free_result() expects parameter 1 to be mysqli_result, boolean given in /home/denkimin/public_html/client/request_acc_number/functions.php on line 123
+[27-Sep-2018 15:38:23 Europe/London] PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /home/denkimin/public_html/client/request_acc_number/index.php on line 79
+[27-Sep-2018 15:38:23 Europe/London] PHP Warning:  mysqli_free_result() expects parameter 1 to be mysqli_result, boolean given in /home/denkimin/public_html/client/request_acc_number/functions.php on line 123
+[27-Sep-2018 15:59:04 Europe/London] PHP Notice:  Undefined offset: 0 in /home/denkimin/public_html/client/request_acc_number/functions.php on line 69
+[27-Sep-2018 15:59:04 Europe/London] PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /home/denkimin/public_html/client/request_acc_number/index.php on line 39
+[27-Sep-2018 15:59:04 Europe/London] PHP Warning:  mysqli_free_result() expects parameter 1 to be mysqli_result, boolean given in /home/denkimin/public_html/client/request_acc_number/functions.php on line 123
+[27-Sep-2018 15:59:13 Europe/London] PHP Notice:  Undefined offset: 0 in /home/denkimin/public_html/client/request_acc_number/functions.php on line 69
+[27-Sep-2018 15:59:13 Europe/London] PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /home/denkimin/public_html/client/request_acc_number/index.php on line 39
+[27-Sep-2018 15:59:13 Europe/London] PHP Warning:  mysqli_free_result() expects parameter 1 to be mysqli_result, boolean given in /home/denkimin/public_html/client/request_acc_number/functions.php on line 123
+[27-Sep-2018 16:01:55 Europe/London] PHP Notice:  Undefined offset: 0 in /home/denkimin/public_html/client/request_acc_number/functions.php on line 69
+[27-Sep-2018 16:01:55 Europe/London] PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /home/denkimin/public_html/client/request_acc_number/index.php on line 39
+[27-Sep-2018 16:01:55 Europe/London] PHP Warning:  mysqli_free_result() expects parameter 1 to be mysqli_result, boolean given in /home/denkimin/public_html/client/request_acc_number/functions.php on line 123
+[27-Sep-2018 16:02:51 Europe/London] PHP Notice:  Undefined offset: 0 in /home/denkimin/public_html/client/request_acc_number/functions.php on line 69
+[27-Sep-2018 16:02:51 Europe/London] PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /home/denkimin/public_html/client/request_acc_number/index.php on line 39
+[27-Sep-2018 16:02:51 Europe/London] PHP Warning:  mysqli_free_result() expects parameter 1 to be mysqli_result, boolean given in /home/denkimin/public_html/client/request_acc_number/functions.php on line 123
+[27-Sep-2018 16:05:54 Europe/London] PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /home/denkimin/public_html/client/request_acc_number/index.php on line 39
+[27-Sep-2018 16:05:54 Europe/London] PHP Warning:  mysqli_free_result() expects parameter 1 to be mysqli_result, boolean given in /home/denkimin/public_html/client/request_acc_number/functions.php on line 123
+[29-Sep-2018 08:40:26 Europe/London] PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /home/denkimin/public_html/client/request_acc_number/index.php on line 73
+[29-Sep-2018 08:40:26 Europe/London] PHP Warning:  mysqli_free_result() expects parameter 1 to be mysqli_result, boolean given in /home/denkimin/public_html/client/request_acc_number/functions.php on line 130
+[01-Oct-2018 05:08:04 Europe/London] PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /home/denkimin/public_html/client/request_acc_number/index.php on line 33
+[01-Oct-2018 05:08:04 Europe/London] PHP Warning:  mysqli_free_result() expects parameter 1 to be mysqli_result, boolean given in /home/denkimin/public_html/client/request_acc_number/functions.php on line 130
+[03-Oct-2018 08:59:43 Europe/London] PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /home/denkimin/public_html/client/request_acc_number/index.php on line 33
+[03-Oct-2018 08:59:43 Europe/London] PHP Warning:  mysqli_free_result() expects parameter 1 to be mysqli_result, boolean given in /home/denkimin/public_html/client/request_acc_number/functions.php on line 130
+[04-Oct-2018 08:00:58 Europe/London] PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /home/denkimin/public_html/client/request_acc_number/index.php on line 33
+[04-Oct-2018 08:00:58 Europe/London] PHP Warning:  mysqli_free_result() expects parameter 1 to be mysqli_result, boolean given in /home/denkimin/public_html/client/request_acc_number/functions.php on line 130
+[08-Oct-2018 17:49:08 Europe/London] PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /home/denkimin/public_html/client/request_acc_number/index.php on line 33
+[08-Oct-2018 17:49:08 Europe/London] PHP Warning:  mysqli_free_result() expects parameter 1 to be mysqli_result, boolean given in /home/denkimin/public_html/client/request_acc_number/functions.php on line 130
+[08-Oct-2018 18:00:16 Europe/London] PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /home/denkimin/public_html/client/request_acc_number/index.php on line 33
+[08-Oct-2018 18:00:16 Europe/London] PHP Warning:  mysqli_free_result() expects parameter 1 to be mysqli_result, boolean given in /home/denkimin/public_html/client/request_acc_number/functions.php on line 130
