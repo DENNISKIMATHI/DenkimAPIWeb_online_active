@@ -392,88 +392,30 @@ if(isset($_GET['pn']) && !empty($_GET['pn']) )
                         <?php echo get_inbox_count_function($_SESSION['session_key'],$_SESSION['cookie'],'/client/console/*');?></a>
                     </li>
                     <li>
-                        <?php  
-                        //fetch email
-                        $personal_details_array=fetch_personal_details(3,$_SESSION['session_key'],$_SESSION['cookie'],'/client/console/index.php');
-                        $email_address=$personal_details_array['email_address'];
-        
-                        $total=0;
-                        $payment=0;
-                        $balance=0;
+                        <script src="../../javascript/jquery-1.11.1.min.js"></script>
+                        <script src="../../javascript/combined_totals.js"></script>
+                        <script type="text/javascript">
+                            send_combined_and_get_aggregate_totals();
+                            
+                            </script>
+                            
+                                    <table style="font-size: 9px" >
+                            <tr>
+                                <th>Total premium charged</th><td style="text-align: right;" id="total_th">Loading...</td>
+                            </tr>
+                            <tr>
+                            <th>Total premium paid</th><td style="text-align: right;" id="payment_th" >Loading...</td>
+                            </tr>
 
-                        //get payment combined
-                //fetch
+                                     <tr>
+                                    <th>Total outstanding balance</th><td style="text-align: right;" id="show_balance_th" >Loading...</td>
+                                    </tr>
 
-                                    $url_is=the_api_authentication_api_url_is()."denkimAPILogic/MainPackages.PolicyFetchCombinedAll";
-
-                                    $myvars='session_key='.$_SESSION['session_key'].'&email='.$email_address;
-
-                                    $header_array= array('Cookie:'.$_SESSION['cookie'],'Authorization:'.api_key_is(),'Origin:/client/console/index.php');
-
-                                    $returned_json=send_curl_post($url_is,$myvars,$header_array);//cap output
-
-                                    $returned_json_decoded= json_decode($returned_json,true);//decode
-
-                                    $check_is_2=$returned_json_decoded["check"];//check
-
-                                   // echo $check_is_2.'=='.$policy_id.'<br>';
-                                    if($check_is_2==true)//if check is true
-                                    {//if($check_is_2==true)//if check is true
-                                         $message_is_now=$returned_json_decoded["message"];//message
-                                         $totals_info=get_aggregate_totals_payments_client_full_json($message_is_now);
-
-                                         $total=$totals_info['total'];
-                                        $payment=$totals_info['payment'];
-                                        $balance=$totals_info['balance']==0?$totals_info['total']:$totals_info['balance'];
-
-
-                                    }//if($check_is_2==true)//if check is true
-                                    
-
-                    /*
-                                for ($index = 1; $index < 17; $index++) 
-                                {
-                                        $totals_info=get_aggregate_totals_payments_client($index,$_SESSION['session_key'],$_SESSION['cookie'],'/client/console/index.php',$email_address);
-
-                                        $total+=$totals_info['total'];
-                                        $payment+=$totals_info['payment'];
-                                        $balance+=$totals_info['balance']==0?$totals_info['total']:$totals_info['balance'];
-                                            //echo json_encode($totals_info).'<br>';
-                                }
-                     * 
-                     */
-                             ?>
-                        <table style="font-size: 9px">
-                <tr>
-                    <th>Total premium charged</th><td style="text-align: right;">KES. <?php echo number_format($total);?></td>
-                </tr>
-                <tr>
-                <th>Total premium paid</th><td style="text-align: right;">KES. <?php echo number_format($payment);?></td>
-                </tr>
-                <?php
-                $credit=0;
-                $show_balance=$balance;
-                if($balance<0)
-                {
-                    $credit=$balance;
-                    $show_balance=0;
-                }
-                
-                        ?>
-                         <tr>
-                        <th>Total outstanding balance</th><td style="text-align: right;">KES. <?php echo number_format($show_balance);?></td>
-                        </tr>
-
-                         <tr>
-                        <th>Credit on account</th><td style="text-align: right;">KES. <?php echo number_format($credit);?></td>
-                        </tr>
-                        <?php
-                
-                ?>
-               
-                
-            
-        </table>
+                                     <tr>
+                                    <th>Credit on account</th><td style="text-align: right;" id="credit_th" >Loading...</td>
+                                    </tr>
+                    </table>
+                        
                         </li>
                   <!--   <li class="header">LABELS</li>
                     <li>
