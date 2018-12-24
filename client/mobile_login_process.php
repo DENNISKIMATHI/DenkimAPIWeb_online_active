@@ -53,102 +53,52 @@ if(isset($_GET['message']) && !empty($_GET['message']) && isset($_GET['type']) &
 
 
 ?>
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="en" class="fullscreen-bg">
 
 <head>
-    <meta charset="UTF-8">
-    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    <title>OTP Sign In | denkim</title>
-    <!-- Favicon-->
-    <link rel="icon" href="../favicon.ico" type="image/x-icon">
-
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&subset=latin,cyrillic-ext" rel="stylesheet" type="text/css">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" type="text/css">
-
-    <!-- Bootstrap Core Css -->
-    <link href="../plugins/bootstrap/css/bootstrap.css" rel="stylesheet">
-
-    <!-- Waves Effect Css -->
-    <link href="../plugins/node-waves/waves.css" rel="stylesheet" />
-
-    <!-- Animation Css -->
-    <link href="../plugins/animate-css/animate.css" rel="stylesheet" />
-
-    <!-- Custom Css -->
-    <link href="../css/style.css" rel="stylesheet">
-	 <link href="../css/main.css" rel="stylesheet">
-	 
-	 <style type="text/css">
-
-   html,body{
-       background:url(../images/bg1.jpg)
-       no-repeat center center fixed;
-       -webkit-background-size:cover;
-       -o-background-size:cover;
-       -moz-background-size:cover;
-       background-size:cover;
-       height: 100%;
-		}
-
-
-
-</style>
-	 
-	 
+	 <title>OTP Sign In | denkim</title>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+	<!-- VENDOR CSS -->
+	<link rel="stylesheet" href="assets/vendor/bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" href="assets/vendor/font-awesome/css/font-awesome.min.css">
+	<link rel="stylesheet" href="assets/vendor/linearicons/style.css">
+	<!-- MAIN CSS -->
+	<link rel="stylesheet" href="assets/css/main.css">
+	<!-- FOR DEMO PURPOSES ONLY. You should remove this in your project -->
+	<link rel="stylesheet" href="assets/css/demo.css">
+	<!-- GOOGLE FONTS -->
+	<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700" rel="stylesheet">
+	<!-- ICONS -->
+	<link rel="apple-touch-icon" sizes="76x76" href="assets/img/apple-icon.png">
+	<link rel="icon" type="image/png" sizes="96x96" href="assets/img/favicon.png">
 </head>
 
-<body class="login-page">
-    <div class="login-box">
-       
-        <div class="card">
-            <div class="body">
-			 <div class="logo">
-               <a href="javascript:void(0);"><img src="../images/logo.png" alt="Denkim insurance"  width="300"></a>
-        </div>
-		   <br>   
-                <form method="POST" action="">
-                    <div class="msg"> <?php echo $message;?></div>
-                    <div class="input-group">
-                        <span class="input-group-addon">
-                            <i class="material-icons">person</i>
-                        </span>
-                        <div class="form-line">
-                            <input type="number" class="form-control" name="otp" placeholder="OTP" required autofocus>
-							 
-                        </div>
-                    </div>
-                   
-                    <div class="row">
-                        <div class="col-xs-8 p-t-5">
-                             <a href="../index.php">Home</a>
-                        </div>
-                        <div class="col-xs-4">
-                            <button class="btn btn-block bg-pink waves-effect" type="submit" value="login">SIGN IN</button>
-                        </div>
-                    </div>
-                   
-                </form>
-            </div>
-        </div>
-    </div>
-
-    <!-- Jquery Core Js -->
-    <script src="../plugins/jquery/jquery.min.js"></script>
-
-    <!-- Bootstrap Core Js -->
-    <script src="../plugins/bootstrap/js/bootstrap.js"></script>
-
-    <!-- Waves Effect Plugin Js -->
-    <script src="../plugins/node-waves/waves.js"></script>
-
-    <!-- Validation Plugin Js -->
-    <script src="../plugins/jquery-validation/jquery.validate.js"></script>
-
-    <!-- Custom Js -->
-    <script src="../js/admin.js"></script>
-    <script src="../js/pages/examples/sign-in.js"></script>
+<body>
+	<!-- WRAPPER -->
+	<div id="wrapper">
+		<div class="vertical-align-wrap">
+			<div class="vertical-align-middle">
+				<div class="auth-box lockscreen clearfix">
+					<div class="content">
+						<h1 class="sr-only">Denkim</h1>
+						<div class="logo text-center"><img src="assets/img/denkim.png" alt="denkim logo"></div>
+						
+						 <form method="POST" action="">
+							<div class="form-group">
+							<?php echo $message;?>
+								<input type="number" class="form-control" name="otp" placeholder="Enter OTP" required autofocus> <br><br>
+								<button type="submit" class="btn btn-primary btn-lg btn-block" style="text-align:centre;">Proceed</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- END WRAPPER -->
 </body>
 
 </html>

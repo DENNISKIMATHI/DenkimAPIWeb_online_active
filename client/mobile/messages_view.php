@@ -10,7 +10,7 @@ if(loggedin() && !empty($_SESSION['session_key']) && !empty($_SESSION['cookie'])
 else
 {
 session_destroy();		
-header('location: ../ ');	
+header('location: ../mobile_login.php?message=Your%20login%20link%20has%20expired!&type=2 ');	
 }
 
 //setting edit message
@@ -117,7 +117,7 @@ if( isset($_GET['l']) && is_numeric($_GET['l']) && ( $_GET['s']==0 || is_numeric
                     $me_or_Other_id=$sent_by=="me"? "sent_by_me": "sent_by_Other";
                     $list.='<li id="'.$me_or_Other_id.'">
                             <header_item>'.strtoupper($header).'</header_item><br>
-                            <message_item>'.$content_is.'</message_item><br>
+                            <span id="message_item">'.$content_is.'</span><br>
                             <attachment_item>'.$attachment_is.'</attachment_item><br> 
                                 <date_item>'.return_date_function($time_stamp).'</date_item><br> 
                                        </li>';
@@ -231,54 +231,49 @@ if( isset($_GET['l']) && is_numeric($_GET['l']) && ( $_GET['s']==0 || is_numeric
     
 //check login
 ?>
+<!DOCTYPE html>
 <html>
 
 <head>
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    <title>Messages view</title>
+     <title>Messages view</title>
     <!-- Favicon-->
-    <link rel="icon" href="../../favicon.ico" type="image/x-icon">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
 
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&subset=latin,cyrillic-ext" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" type="text/css">
-	
-	<link rel="stylesheet" type="text/css" href="../../css/main.css" />
-	
+
     <!-- Bootstrap Core Css -->
-    <link href="../../plugins/bootstrap/css/bootstrap.css" rel="stylesheet">
+    <link href="plugins/bootstrap/css/bootstrap.css" rel="stylesheet">
 
     <!-- Waves Effect Css -->
-    <link href="../../plugins/node-waves/waves.css" rel="stylesheet" />
+    <link href="plugins/node-waves/waves.css" rel="stylesheet" />
 
     <!-- Animation Css -->
-    <link href="../../plugins/animate-css/animate.css" rel="stylesheet" />
+    <link href="plugins/animate-css/animate.css" rel="stylesheet" />
+
+    <!-- Bootstrap Material Datetime Picker Css -->
+    <link href="plugins/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css" rel="stylesheet" />
+
+    <!-- Wait Me Css -->
+    <link href="plugins/waitme/waitMe.css" rel="stylesheet" />
+
+    <!-- Bootstrap Select Css -->
+    <link href="plugins/bootstrap-select/css/bootstrap-select.css" rel="stylesheet" />
 
     <!-- Custom Css -->
-    <link href="../../css/style.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/main.css" rel="stylesheet">
 
-   
-    <link href="../../css/themes/all-themes.css" rel="stylesheet" />
+    <!-- AdminBSB Themes. You can choose a theme from css/themes instead of get all themes -->
+    <link href="css/themes/all-themes.css" rel="stylesheet" />
 </head>
 
-<body class="theme-orange">
+<body class="theme-deep-orange">
     <!-- Page Loader -->
-    <div class="page-loader-wrapper">
-        <div class="loader">
-            <div class="preloader">
-                <div class="spinner-layer pl-red">
-                    <div class="circle-clipper left">
-                        <div class="circle"></div>
-                    </div>
-                    <div class="circle-clipper right">
-                        <div class="circle"></div>
-                    </div>
-                </div>
-            </div>
-            <p>Please wait...</p>
-        </div>
-    </div>
+   
     <!-- #END# Page Loader -->
     <!-- Overlay For Sidebars -->
     <div class="overlay"></div>
@@ -290,70 +285,88 @@ if( isset($_GET['l']) && is_numeric($_GET['l']) && ( $_GET['s']==0 || is_numeric
             <div class="navbar-header">
                
                 <a href="javascript:void(0);" class="bars"></a>
-                <a class="navbar-brand" href="../console/" title="Go to the main page"><img src="../../images/logo.png" alt="Denkim insurance" height="50" width="200"></a>
-             </div>
-            
+                <a class="navbar-brand" href="../../client/mobile/"> &nbsp DENKIM INSURANCE</a>
+            </div>
+           
         </div>
     </nav>
     <!-- #Top Bar -->
     <section>
-        <!-- Left Sidebar -->
+         <!-- Left Sidebar -->
         <aside id="leftsidebar" class="sidebar">
+            <!-- User Info -->
             <!-- User Info -->
             <div class="user-info">
                 <div class="image">
                     <img src="../../images/user.png" width="48" height="48" alt="User" />
                 </div>
                 <div class="info-container">
-                       
+                    <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-weight:700;" >User</div>
                     <div class="btn-group user-helper-dropdown">
-                        <i class="material-icons" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">keyboard_arrow_down</i>
+                        <i class="material-icons" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">settings</i>
                         <ul class="dropdown-menu pull-right">
-                            <li><a href="personal_information.php" title="Edit your name, phone number and national ID"><i class="material-icons">account_box</i>View Profile</a></li>
+                            <li><a href="personal_information.php" title="Edit your name, phone number and national ID"><i class="material-icons col-deep-orange">person</i>View Profile</a></li>
                            <li role="seperator" class="divider"></li>
-                            <li><a href="../mobile_logout.php" Title="Click here to sign out" id="logout_link"><i class="material-icons">input</i>Sign Out</a></li>
+                            <li><a href="../logout.php" Title="Click here to sign out" id="logout_link"><i class="material-icons col-deep-orange">input</i>Sign Out</a></li>
                         </ul>
                     </div>
                 </div>
             </div>
             <!-- #User Info -->
+		 
             <!-- Menu -->
-            <div class="menu">
+             <div class="menu">
                 <ul class="list">
-                    <li class="header">MAIN NAVIGATION</li>
-                    <li class="active">
-                        <a href="../../client/console/" title="Go to the main page">
-                            <i class="material-icons">home</i>
+				
+                    <li >
+                        <a href="../../client/mobile/" title="Go to the main page">
+						<i class="material-icons ">home</i>
+                            
                             <span>Home</span>
                         </a>
                     </li>
                 
 					 <li>
                         <a href="insurance_policies.php" title="Add and delete insurance policies">
-                            <i class="material-icons">accessible</i>
+                            <i class="material-icons ">accessible</i>
                             <span>Insurance Policies</span>
                         </a>
                     </li>
                     
                      <li>
                         <a href="wallet_first.php" title="Add money to wallet">
-                            <i class="material-icons">money</i>
+                            <i class="material-icons ">payment</i>
                             <span>Wallet</span>
                         </a>
                     </li>
 					<a href="claims.php?l=10&s=0&re=10" title="View claims">
-                           <i class="material-icons">attachment</i>
+                           <i class="material-icons ">attachment</i>
                             <span>Claims</span>
 							<?php echo get_claims_count_function($_SESSION['session_key'],$_SESSION['cookie'],'/client/console/*');?>
                         </a>
                     </li> 
                    <li>
                        <a href="messages.php" title="Send and get messages">
-                            <i class="material-icons">message</i>
+                            <i class="material-icons ">message</i>
                             <span>Messages </span>
                         <?php echo get_inbox_count_function($_SESSION['session_key'],$_SESSION['cookie'],'/client/console/*');?></a>
                     </li>
-                    <li>
+                   
+				   <li>
+                       <a href="how.php" title="Send and get messages">
+                            <i class="material-icons ">work</i>
+                            <span>How it Works</span>
+                        </a>
+                    </li>
+                   
+                                     
+                  <li>
+				      <a href="javascript:void(0);" class="menu-toggle">
+                            <i class="material-icons col-deep-orange">widgets</i>
+                            <span>Account Summary</span>
+                        </a>
+                        <ul class="ml-menu">
+                                <li>
                         <script src="../../javascript/jquery-1.11.1.min.js"></script>
                         <script src="../../javascript/combined_totals.js"></script>
                         <script type="text/javascript">
@@ -361,7 +374,7 @@ if( isset($_GET['l']) && is_numeric($_GET['l']) && ( $_GET['s']==0 || is_numeric
                             
                             </script>
                             
-                                    <table style="font-size: 9px" >
+                                    <table class="table table-bordered table-hover table-responsive" style="font-size:12px;">
                             <tr>
                                 <th>Total premium charged</th><td style="text-align: right;" id="total_th">Loading...</td>
                             </tr>
@@ -379,112 +392,128 @@ if( isset($_GET['l']) && is_numeric($_GET['l']) && ( $_GET['s']==0 || is_numeric
                     </table>
                         
                         </li>
-                  <!--   <li class="header">LABELS</li>
-                    <li>
-                        <a href="javascript:void(0);">
-                            <i class="material-icons col-red">donut_large</i>
-                            <span>Important</span>
-                        </a>
-                    </li> -->
+                         
+                        </ul>
+                    </li>
+                   
+                  
                  
+                    
+                
+                
                 </ul>
             </div>
             <!-- #Menu -->
             <!-- Footer -->
-            <div class="legal"></div>
+             <!--<div class="legal">
+                <div class="copyright">
+                    &copy; 2018 <a href="#"> Denkim Insurance </a>.
+                </div>
+                <div class="version">
+                    <b>Version: </b> 1.1.0
+                </div>
+            </div>
             <!-- #Footer -->
         </aside>
         <!-- #END# Left Sidebar -->
-      
+        
     </section>
+
 
     <section class="content">
         <div class="container-fluid">
-            <div class="block-header">
-           
-	     
-		    
-		   
-            <div class="row clearfix">
-                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                    <div class="card">
-                        <div class="header">
-                            <div class="row clearfix">
-                                <div class="col-xs-12 col-sm-6">
-                                    <h2><?php echo $recipient_name;?></h2>
-                                </div>
-                               </div>
-                         </div>
-                        <div class="body">
-		 <form method="POST" action="<?php echo $full_link;?>" id="browse_form">
+          <!-- #END# Select -->
+		  
+		    <div class="row clearfix">
+		  
+				<div class="col-xs-12 ol-sm-12 col-md-12 col-lg-12">
+                                    
+                                    <div class="panel-group" id="accordion_3" role="tablist" aria-multiselectable="true">
+                                        <div class="panel panel-warning">
+                                            <div class="panel-heading" role="tab" id="headingOne_3">
+                                                <h4 class="panel-title">
+                                                    <a role="button" data-toggle="collapse" data-parent="#accordion_3" href="#collapseOne_3" aria-expanded="true" aria-controls="collapseOne_3">
+                                                       <?php echo $recipient_name;?>
+                                                    </a>
+                                                </h4>
+                                            </div>
+                                            <div id="collapseOne_3" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne_3">
+                                                   <div class="panel-body">
+												 <form method="POST" action="<?php echo $full_link;?>" id="browse_form">
                                 Start row: <input type="number" name="skip_is" min="0" value="<?php echo $skip;?>" />  Number of rows: <input type="number" name="limit_is" min="1" value="<?php echo $limit;?>" /><input type="submit" value="GO"/> 
                             </form><br>
                          
-                           <?php echo $list;?><br><br>
-                        </div>
-                    </div>
-                </div>
-            </div>
-			
-			
-		    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                    <div class="card">
-                        <div class="header">
-                            <h2>
-                                Compose a Message
-                                
-                            </h2>
-                           
-                        </div>
-                        <div class="body">
-                           
-				 <?php echo $message;?><br>
+                           <?php echo $list;?>  <br><br>
+												  
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="panel panel-warning">
+                                            <div class="panel-heading" role="tab" id="headingTwo_3">
+                                                <h4 class="panel-title">
+                                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion_3" href="#collapseTwo_3" aria-expanded="false"
+                                                       aria-controls="collapseTwo_3">
+                                                        Compose a Message 
+                                                    </a>
+                                                </h4>
+                                            </div>
+                                            <div id="collapseTwo_3" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo_3">
+                                                    <div class="panel-body">
+												
+									<?php echo $message;?><br>
                                    <form action="" method="POST" enctype="multipart/form-data" >
-                                     <input type="text" name="header" placeholder="subject"/>
-                                     <textarea name="content" cols="20" rows="12" placeholder="Message..." /></textarea>
-                                   <input type="file" name="file"  title="Add attachment"/> 
+                                     <input type="text" class="form-control" name="header" placeholder="subject"/><br>
+                                     <textarea name="content"  class="form-control"cols="20" rows="12" placeholder="Message..." /></textarea><br>
+                                   <input type="file" name="file" class="form-control" title="Add attachment"/> 
                                       <button type="submit" class="btn btn-primary m-t-15 waves-effect">Send</button>
                                  </form>
                           
                            <script type="text/javascript" src="../../javascript/jquery-1.11.1.min.js"></script>
                            <script type="text/javascript" src="../../javascript/highlight.js"></script>
                             <script type="text/javascript" src="../../javascript/are_you_huma_reload.js"></script>
-				  
-				   <br>
-              </form>
-		   
-                        </div>
-                    </div>
-                </div>
+												  
+                                                </div>
+                                            </div>
+                                        </div>
+                                        </div>
+                                        </div>
+                                        </div>
 		  
-		  <a href="../../client/console/" title="Go to the main page" class="btn btn-primary m-t-15 waves-effect"> <i class="material-icons">arrow_back</i>Back </a><br><br>
-            <!-- #END# -->
-			
-			
-            </div>
+		  
+         
+            <!--#END# DateTime Picker -->
         </div>
     </section>
 
     <!-- Jquery Core Js -->
-    <script src="../../plugins/jquery/jquery.min.js"></script>
+    <script src="plugins/jquery/jquery.min.js"></script>
 
     <!-- Bootstrap Core Js -->
-    <script src="../../plugins/bootstrap/js/bootstrap.js"></script>
+    <script src="plugins/bootstrap/js/bootstrap.js"></script>
 
     <!-- Select Plugin Js -->
-    <script src="../../plugins/bootstrap-select/js/bootstrap-select.js"></script>
+    <script src="plugins/bootstrap-select/js/bootstrap-select.js"></script>
 
     <!-- Slimscroll Plugin Js -->
-    <script src="../../plugins/jquery-slimscroll/jquery.slimscroll.js"></script>
+    <script src="plugins/jquery-slimscroll/jquery.slimscroll.js"></script>
 
     <!-- Waves Effect Plugin Js -->
-    <script src="../../plugins/node-waves/waves.js"></script>
+    <script src="plugins/node-waves/waves.js"></script>
+
+    <!-- Autosize Plugin Js -->
+    <script src="plugins/autosize/autosize.js"></script>
+
+    <!-- Moment Plugin Js -->
+    <script src="plugins/momentjs/moment.js"></script>
+
+    <!-- Bootstrap Material Datetime Picker Plugin Js -->
+    <script src="plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js"></script>
 
     <!-- Custom Js -->
-    <script src="../../js/admin.js"></script>
+    <script src="js/admin.js"></script>
+    <script src="js/pages/forms/basic-form-elements.js"></script>
 
     <!-- Demo Js -->
-    <script src="../../js/demo.js"></script>
+    <script src="js/demo.js"></script>
 </body>
-
 </html>

@@ -386,11 +386,22 @@ if(isset($_GET['l']) && is_numeric($_GET['l']) && ( $_GET['s']==0 || is_numeric(
                             <span>Clients</span>
                         </a>
                     </li>
+					<li>
 					<a href="upload_html_logo.php" title="Upload logo and html for your policies to the file server">
                            <i class="material-icons">attachment</i>
                             <span>File Server</span>
                         </a>
                     </li> 
+                    
+                     
+                    
+                    <li>
+                        <a href="tasks.php?l=10&s=0" title="Add and delete tasks">
+                            <i class="material-icons">alarm</i>
+                            <span>Tasks</span>
+                        </a>
+                    </li>
+                    
                  <li>
                         <a href="insurance_policies.php" title="Add and delete insurance policies">
                             <i class="material-icons">accessible</i>

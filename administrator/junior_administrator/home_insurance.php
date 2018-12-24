@@ -271,11 +271,22 @@ else//else failed
                             <span>Insurance Policies</span>
                         </a>
                     </li>
+					<li>
 					<a href="upload_html_logo.php" title="Upload logo and html for your policies to the file server">
                            <i class="material-icons">attachment</i>
                             <span>File Server</span>
                         </a>
                     </li> 
+                    
+                     
+                    
+                    <li>
+                        <a href="tasks.php?l=10&s=0" title="Add and delete tasks">
+                            <i class="material-icons">alarm</i>
+                            <span>Tasks</span>
+                        </a>
+                    </li>
+                    
                    <li>
                        <a href="messages.php" title="Send and get messages">
                             <i class="material-icons">message</i>

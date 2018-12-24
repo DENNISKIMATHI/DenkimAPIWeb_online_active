@@ -11,6 +11,12 @@ function the_api_authentication_files_url_is()
     //return 'http://localhost:8080/';
 }
 
+function the_api_for_php_is_url_is()
+{
+    return 'http://35.184.46.252/denkimAPILogic/requests/';
+    //return 'http://localhost:8080/';
+}
+
 function api_key_is()
 {
     return '944e15799e5955f1d9ba5bc236daffe3ccdff2ebe7467c2a70e82d84eb42c30631e105cb0da98f00ac5ca7c793c03ccb';
@@ -27,6 +33,22 @@ function return_unique_separator_email_name()
     
     return $unique_separator;
 }
+
+function return_task_repeats_array()
+{
+    return $array=array('no'=>'Does not repeat',
+                'daily'=>'Daily at set time',
+                'weekly'=>'Weekly at set time',
+                'monthly'=>'Monthly at set time and date',
+                'yearly'=>'Annualy at set month, date and time',
+        
+    );
+    
+    
+    
+    
+}
+
 function send_curl_post($url,$myvars,$header_array)
 {
    

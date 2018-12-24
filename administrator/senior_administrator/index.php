@@ -156,6 +156,14 @@ header('location: ../ ');
                             <span>File Server</span>
                         </a>
                     </li> 
+                    
+                    <li>
+                        <a href="tasks.php?l=10&s=0" title="Add and delete tasks">
+                            <i class="material-icons">alarm</i>
+                            <span>Tasks</span>
+                        </a>
+                    </li>
+                    
                  <li>
                         <a href="insurance_policies.php" title="Add and delete insurance policies">
                             <i class="material-icons">accessible</i>

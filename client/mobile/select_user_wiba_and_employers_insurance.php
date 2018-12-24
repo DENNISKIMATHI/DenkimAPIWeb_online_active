@@ -9,7 +9,7 @@ if(loggedin() && !empty($_SESSION['session_key']) && !empty($_SESSION['cookie'])
 else
 {
 session_destroy();		
-header('location: ../ ');	
+header('location: ../mobile_login.php?message=Your%20login%20link%20has%20expired!&type=2 ');	
 }
 
 
@@ -53,7 +53,7 @@ if(isset($_GET['message']) && !empty($_GET['message']) && isset($_GET['type']) &
                                         if($is_private==false)
                                         {
                                             //$list_items.='<li><a href="select_policy_user_motor_insurance.php?pn='.$policy_number.'" title="click to view '.$company_name.' motor insurance " class="btn btn-block btn-lg btn-warning waves-effect">'.strtoupper($company_name).'</a><br><br><img src="'.$logo_url.'"/><br><br></li>';
-                                        $list_items.='<li><a href="select_policy_user_wiba_and_employers_insurance.php?pn='.$policy_number.'" title="click to view '.$company_name.' motor insurance " class="btn btn-block btn-lg btn-warning waves-effect">'.strtoupper($company_name).'</a><br><br></li>';
+                                        $list_items.='<a href="select_policy_user_wiba_and_employers_insurance.php?pn='.$policy_number.'" title="click to view '.$company_name.' motor insurance " class="btn btn-block btn-lg btn-warning waves-effect">'.strtoupper($company_name).'</a><br><br>';
 
                                         }
                                        
@@ -63,7 +63,7 @@ if(isset($_GET['message']) && !empty($_GET['message']) && isset($_GET['type']) &
 
                                   }//end of foreach $message_is as $value
 
-                                  $list='<ol id="policies_list_item">'.$list_items.'</ol>';
+                                  $list='<div id="policies_list_item">'.$list_items.'</div>';
 
 
             }
@@ -85,54 +85,48 @@ if(isset($_GET['message']) && !empty($_GET['message']) && isset($_GET['type']) &
 
 
 ?>
+<!DOCTYPE html>
 <html>
 
 <head>
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-              <title>Wiba and employers liability insurance</title>
+       <title>Wiba and employers liability insurance</title>
     <!-- Favicon-->
-    <link rel="icon" href="../../favicon.ico" type="image/x-icon">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
 
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&subset=latin,cyrillic-ext" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" type="text/css">
-	
-	<link rel="stylesheet" type="text/css" href="../../css/main.css" />
-	
+
     <!-- Bootstrap Core Css -->
-    <link href="../../plugins/bootstrap/css/bootstrap.css" rel="stylesheet">
+    <link href="plugins/bootstrap/css/bootstrap.css" rel="stylesheet">
 
     <!-- Waves Effect Css -->
-    <link href="../../plugins/node-waves/waves.css" rel="stylesheet" />
+    <link href="plugins/node-waves/waves.css" rel="stylesheet" />
 
     <!-- Animation Css -->
-    <link href="../../plugins/animate-css/animate.css" rel="stylesheet" />
+    <link href="plugins/animate-css/animate.css" rel="stylesheet" />
+
+    <!-- Bootstrap Material Datetime Picker Css -->
+    <link href="plugins/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css" rel="stylesheet" />
+
+    <!-- Wait Me Css -->
+    <link href="plugins/waitme/waitMe.css" rel="stylesheet" />
+
+    <!-- Bootstrap Select Css -->
+    <link href="plugins/bootstrap-select/css/bootstrap-select.css" rel="stylesheet" />
 
     <!-- Custom Css -->
-    <link href="../../css/style.css" rel="stylesheet">
-
-   
-    <link href="../../css/themes/all-themes.css" rel="stylesheet" />
+    <link href="css/style.css" rel="stylesheet">
+<link href="css/main.css" rel="stylesheet">
+    <!-- AdminBSB Themes. You can choose a theme from css/themes instead of get all themes -->
+    <link href="css/themes/all-themes.css" rel="stylesheet" />
 </head>
 
-<body class="theme-orange">
+<body class="theme-deep-orange">
     <!-- Page Loader -->
-    <div class="page-loader-wrapper">
-        <div class="loader">
-            <div class="preloader">
-                <div class="spinner-layer pl-red">
-                    <div class="circle-clipper left">
-                        <div class="circle"></div>
-                    </div>
-                    <div class="circle-clipper right">
-                        <div class="circle"></div>
-                    </div>
-                </div>
-            </div>
-            <p>Please wait...</p>
-        </div>
-    </div>
+   
     <!-- #END# Page Loader -->
     <!-- Overlay For Sidebars -->
     <div class="overlay"></div>
@@ -144,70 +138,88 @@ if(isset($_GET['message']) && !empty($_GET['message']) && isset($_GET['type']) &
             <div class="navbar-header">
                
                 <a href="javascript:void(0);" class="bars"></a>
-                <a class="navbar-brand" href="../console/" title="Go to the main page"><img src="../../images/logo.png" alt="Denkim insurance" height="50" width="200"></a>
-             </div>
-            
+                <a class="navbar-brand" href="../../client/mobile/"> &nbsp DENKIM INSURANCE</a>
+            </div>
+           
         </div>
     </nav>
     <!-- #Top Bar -->
     <section>
-        <!-- Left Sidebar -->
+         <!-- Left Sidebar -->
         <aside id="leftsidebar" class="sidebar">
+            <!-- User Info -->
             <!-- User Info -->
             <div class="user-info">
                 <div class="image">
                     <img src="../../images/user.png" width="48" height="48" alt="User" />
                 </div>
                 <div class="info-container">
-                       
+                    <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-weight:700;" >User</div>
                     <div class="btn-group user-helper-dropdown">
-                        <i class="material-icons" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">keyboard_arrow_down</i>
+                        <i class="material-icons" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">settings</i>
                         <ul class="dropdown-menu pull-right">
-                            <li><a href="personal_information.php" title="Edit your name, phone number and national ID"><i class="material-icons">account_box</i>View Profile</a></li>
+                            <li><a href="personal_information.php" title="Edit your name, phone number and national ID"><i class="material-icons col-deep-orange">person</i>View Profile</a></li>
                            <li role="seperator" class="divider"></li>
-                            <li><a href="../mobile_logout.php" Title="Click here to sign out" id="logout_link"><i class="material-icons">input</i>Sign Out</a></li>
+                            <li><a href="../logout.php" Title="Click here to sign out" id="logout_link"><i class="material-icons col-deep-orange">input</i>Sign Out</a></li>
                         </ul>
                     </div>
                 </div>
             </div>
             <!-- #User Info -->
+		 
             <!-- Menu -->
-            <div class="menu">
+             <div class="menu">
                 <ul class="list">
-                    <li class="header">MAIN NAVIGATION</li>
-                    <li class="active">
-                        <a href="../../client/console/" title="Go to the main page">
-                            <i class="material-icons">home</i>
+				
+                    <li >
+                        <a href="../../client/mobile/" title="Go to the main page">
+						<i class="material-icons ">home</i>
+                            
                             <span>Home</span>
                         </a>
                     </li>
                 
 					 <li>
                         <a href="insurance_policies.php" title="Add and delete insurance policies">
-                            <i class="material-icons">accessible</i>
+                            <i class="material-icons ">accessible</i>
                             <span>Insurance Policies</span>
                         </a>
                     </li>
                     
                      <li>
                         <a href="wallet_first.php" title="Add money to wallet">
-                            <i class="material-icons">money</i>
+                            <i class="material-icons ">payment</i>
                             <span>Wallet</span>
                         </a>
                     </li>
 					<a href="claims.php?l=10&s=0&re=10" title="View claims">
-                           <i class="material-icons">attachment</i>
+                           <i class="material-icons ">attachment</i>
                             <span>Claims</span>
 							<?php echo get_claims_count_function($_SESSION['session_key'],$_SESSION['cookie'],'/client/console/*');?>
                         </a>
                     </li> 
                    <li>
                        <a href="messages.php" title="Send and get messages">
-                            <i class="material-icons">message</i>
+                            <i class="material-icons ">message</i>
                             <span>Messages </span>
                         <?php echo get_inbox_count_function($_SESSION['session_key'],$_SESSION['cookie'],'/client/console/*');?></a>
                     </li>
-                    <li>
+                   
+				   <li>
+                       <a href="how.php" title="Send and get messages">
+                            <i class="material-icons ">work</i>
+                            <span>How it Works</span>
+                        </a>
+                    </li>
+                   
+                                     
+                  <li>
+				      <a href="javascript:void(0);" class="menu-toggle">
+                            <i class="material-icons col-deep-orange">widgets</i>
+                            <span>Account Summary</span>
+                        </a>
+                        <ul class="ml-menu">
+                                <li>
                         <script src="../../javascript/jquery-1.11.1.min.js"></script>
                         <script src="../../javascript/combined_totals.js"></script>
                         <script type="text/javascript">
@@ -215,7 +227,7 @@ if(isset($_GET['message']) && !empty($_GET['message']) && isset($_GET['type']) &
                             
                             </script>
                             
-                                    <table style="font-size: 9px" >
+                                    <table class="table table-bordered table-hover table-responsive" style="font-size:12px;">
                             <tr>
                                 <th>Total premium charged</th><td style="text-align: right;" id="total_th">Loading...</td>
                             </tr>
@@ -233,74 +245,74 @@ if(isset($_GET['message']) && !empty($_GET['message']) && isset($_GET['type']) &
                     </table>
                         
                         </li>
-                  <!--   <li class="header">LABELS</li>
-                    <li>
-                        <a href="javascript:void(0);">
-                            <i class="material-icons col-red">donut_large</i>
-                            <span>Important</span>
-                        </a>
-                    </li> -->
+                         
+                        </ul>
+                    </li>
+                   
+                  
                  
+                    
+                
+                
                 </ul>
             </div>
             <!-- #Menu -->
             <!-- Footer -->
-            <div class="legal"></div>
+             <!--<div class="legal">
+                <div class="copyright">
+                    &copy; 2018 <a href="#"> Denkim Insurance </a>.
+                </div>
+                <div class="version">
+                    <b>Version: </b> 1.1.0
+                </div>
+            </div>
             <!-- #Footer -->
         </aside>
         <!-- #END# Left Sidebar -->
-      
+        
     </section>
 
     <section class="content">
         <div class="container-fluid">
-            <div class="block-header">
-        <!-- innerbody -->
-            <div class="row clearfix">
-                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                    <div class="card">
-                        <div class="header">
-                            <div class="row clearfix">
-                                <div class="col-xs-12 col-sm-6">
-                                    
-									<h2></h2>
-                                </div>
-                               </div>
-                         </div>
-                        <div class="body">
-			  <?php echo $message;?><br>  
+        
+            <!-- #END# Select -->
+        	<?php echo $message;?><br>  
         <?php echo $list;?><br>
-               
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- #END# -->
-	<a href="../../client/console/" title="Go to the main page" class="btn btn-primary m-t-15 waves-effect"> <i class="material-icons">arrow_back</i>Back </a><br><br>		  
-            </div>
+           
+         
+            <!--#END# DateTime Picker -->
         </div>
     </section>
 
     <!-- Jquery Core Js -->
-    <script src="../../plugins/jquery/jquery.min.js"></script>
+    <script src="plugins/jquery/jquery.min.js"></script>
 
     <!-- Bootstrap Core Js -->
-    <script src="../../plugins/bootstrap/js/bootstrap.js"></script>
+    <script src="plugins/bootstrap/js/bootstrap.js"></script>
 
     <!-- Select Plugin Js -->
-    <script src="../../plugins/bootstrap-select/js/bootstrap-select.js"></script>
+    <script src="plugins/bootstrap-select/js/bootstrap-select.js"></script>
 
     <!-- Slimscroll Plugin Js -->
-    <script src="../../plugins/jquery-slimscroll/jquery.slimscroll.js"></script>
+    <script src="plugins/jquery-slimscroll/jquery.slimscroll.js"></script>
 
     <!-- Waves Effect Plugin Js -->
-    <script src="../../plugins/node-waves/waves.js"></script>
+    <script src="plugins/node-waves/waves.js"></script>
+
+    <!-- Autosize Plugin Js -->
+    <script src="plugins/autosize/autosize.js"></script>
+
+    <!-- Moment Plugin Js -->
+    <script src="plugins/momentjs/moment.js"></script>
+
+    <!-- Bootstrap Material Datetime Picker Plugin Js -->
+    <script src="plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js"></script>
 
     <!-- Custom Js -->
-    <script src="../../js/admin.js"></script>
+    <script src="js/admin.js"></script>
+    <script src="js/pages/forms/basic-form-elements.js"></script>
 
     <!-- Demo Js -->
-    <script src="../../js/demo.js"></script>
+    <script src="js/demo.js"></script>
 </body>
-
 </html>

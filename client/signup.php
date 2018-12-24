@@ -158,7 +158,7 @@ if(isset($_GET['message']) && !empty($_GET['message']) && isset($_GET['type']) &
                     </div>
                     <div class="form-group">
                        <img src="../le_functions/_antispam.php" id="are_you_human" /><a href="" onclick="reload_are_you_human('are_you_human');">Reload</a><br><br>
-					<input type="text" id="antispam" name="antispam" placeholder="Are you human?"/>
+					<input type="text" id="antispam" name="antispam" placeholder="key in the above numbers?"/>
                     </div>
 
                     <button class="btn btn-block btn-lg bg-pink waves-effect" type="submit">SIGN UP</button>
