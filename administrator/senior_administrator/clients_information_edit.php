@@ -31,44 +31,98 @@ if(isset($_GET['message']) && !empty($_GET['message']) && isset($_GET['type']) &
 
 
 
-if(isset($_GET['c']) && !empty($_GET['c']) && isset($_GET['l']) && is_numeric($_GET['l']) && ( $_GET['s']==0 || is_numeric($_GET['s']) ) &&  isset($_GET['sc']) && !empty($_GET['sc']) && isset($_GET['so']) && !empty($_GET['so']) && isset($_GET['re']) && !empty($_GET['re']) && isset($_GET['e']) && !empty($_GET['e']) && isset($_GET['f']) && !empty($_GET['f']))
+if( isset($_GET['l']) && is_numeric($_GET['l']) && ( $_GET['s']==0 || is_numeric($_GET['s']) ) &&  isset($_GET['sc']) && !empty($_GET['sc']) && isset($_GET['so']) && !empty($_GET['so']) && isset($_GET['re']) && !empty($_GET['re'])
+        && isset($_GET['client_name']) && !empty($_GET['client_name'])
+        && isset($_GET['item_type']) && !empty($_GET['item_type'])
+        && isset($_GET['company']) && !empty($_GET['company'])
+        && isset($_GET['class_of_insurance']) && !empty($_GET['class_of_insurance'])
+        && isset($_GET['policy_number']) && !empty($_GET['policy_number'])
+        && isset($_GET['preimium_charged']) && !empty($_GET['preimium_charged'])
+        && isset($_GET['renewal_date']) && !empty($_GET['renewal_date'])
+        && isset($_GET['_id']) && !empty($_GET['_id'])        
+        )
 {
-	$column=trim($_GET['c']);
+	
         $limit=trim($_GET['l']);
         $skip=trim($_GET['s']);
         $sort_column=trim($_GET['sc']);
         $sort_order=trim($_GET['so']);
         $rows_every=trim($_GET['re']);
-        $email_address=trim($_GET['e']);
-        $full_names=trim($_GET['f']);
+        
+        $client_name=trim($_GET['client_name']);
+        $item_type=trim($_GET['item_type']);
+        $company=trim($_GET['company']);
+        $class_of_insurance=trim($_GET['class_of_insurance']);
+        $policy_number=trim($_GET['policy_number']);
+        $preimium_charged=trim($_GET['preimium_charged']);
+        $renewal_date=trim($_GET['renewal_date']);
+        $_id=trim($_GET['_id']);
         
         
-        $full_link="repair_garage_delete.php?c=".$column."&l=".$limit."&s=".$skip."&sc=".$sort_column."&so=".$sort_order."&re=".$rows_every."&e=".$email_address."&f=".$full_names;//for form submission
-        $return_link="repair_garage.php?c=".$column."&l=".$limit."&s=".$skip."&sc=".$sort_column."&so=".$sort_order."&re=".$rows_every;//for form submission
         
-        $statement='Are you sure you want to delete '.strtoupper($full_names).'? <span id="red_text_span"><a href="'.$full_link.'&a=yes">[YES]</a></span>  &nbsp;&nbsp;&nbsp;&nbsp;  <span id="green_text_span"><a href="'.$return_link.'">[NO]</a></span> ';
-     
-        if(isset($_GET['a']) && !empty($_GET['a']) )
-        {
-            $answer=  strtolower(trim($_GET['a']));
-            if($answer=="yes")
-            {
-                //delete
-                            $url_is=the_api_authentication_api_url_is()."denkimAPILogic/MainPackages.AdministratorDeleteRepairGarage";
+        $full_link="clients_information_edit.php?l=".$limit."&s=".$skip."&sc=".$sort_column."&so=".$sort_order."&re=".$rows_every.
+                                    '&client_name='.$client_name.
+                                    '&item_type='.$item_type.
+                                    '&company='.$company.
+                                    '&class_of_insurance='.$class_of_insurance.
+                                    '&policy_number='.$policy_number.
+                                    '&preimium_charged='.$preimium_charged.
+                                    '&renewal_date='.$renewal_date.
+                                    '&_id='.$_id;//for form submission
+        
+        $return_link="clients_information.php?l=".$limit."&s=".$skip."&sc=".$sort_column."&so=".$sort_order."&re=".$rows_every;//for form submission
+       
+       
+      
+        
+       
+        
+        
+                    //submit
+                    if(isset($_POST['client_name']) && !empty($_POST['client_name']) && 
+                    isset($_POST['item_type']) && !empty($_POST['item_type']) &&
+                    isset($_POST['company']) && !empty($_POST['company']) &&
+                    isset($_POST['class_of_insurance']) && !empty($_POST['class_of_insurance']) &&
+                    isset($_POST['policy_number']) && !empty($_POST['policy_number']) &&
+                    isset($_POST['preimium_charged']) && !empty($_POST['preimium_charged']) &&
+                    isset($_POST['renewal_date']) && !empty($_POST['renewal_date']) 
+                    )
+                    {  
+                       
+                        $client_name=trim($_POST['client_name']);
+                        $item_type=trim($_POST['item_type']);
+                        $company=trim($_POST['company']);
+                        $class_of_insurance=trim($_POST['class_of_insurance']);
+                        $policy_number=trim($_POST['policy_number']);
+                        $preimium_charged=trim($_POST['preimium_charged']);
+                        $renewal_date=trim($_POST['renewal_date']);
 
-                            $myvars='session_key='.$_SESSION['session_key'].'&email='.$email_address;
+                        
+                            $url_is=the_api_authentication_api_url_is()."denkimAPILogic/MainPackages.AdministratorEditClientInsuranceInformation";
 
-                             $header_array= array('Cookie:'.$_SESSION['cookie'],'Authorization:'.api_key_is(),'Origin:/senior_administrator/repair_garage_delete.php');
+                            $myvars='session_key='.$_SESSION['session_key'].
+                                    '&_id='.$_id.
+                                    '&client_name='.$client_name.
+                                    '&item_type='.$item_type.
+                                    '&company='.$company.
+                                    '&class_of_insurance='.$class_of_insurance.
+                                    '&policy_number='.$policy_number.
+                                    '&preimium_charged='.$preimium_charged.
+                                    '&renewal_date='.$renewal_date;
+
+                            $header_array= array('Cookie:'.$_SESSION['cookie'],'Authorization:'.api_key_is(),'Origin:/senior_administrator/clients.php');
 
                             $returned_json=send_curl_post($url_is,$myvars,$header_array);//cap output
                             
+                           
                             
                             $returned_json_decoded= json_decode($returned_json,true);//decode
 
                             $check_is=$returned_json_decoded["check"];//check
 
                             $message_is=$returned_json_decoded["message"];//message
-
+                            
+                            
                             if($check_is==true)//if check is true
                             {
 
@@ -77,14 +131,15 @@ if(isset($_GET['c']) && !empty($_GET['c']) && isset($_GET['l']) && is_numeric($_
                             else//else failed
                             {
 
-                                header('location: '.$return_link.'&message='.$message_is.'&type=2');//
+                                header('location: '.$full_link.'&message='.$message_is.'&type=2');//
                             } 
-            }
-            else
-            {
-                 header('location: '.$return_link);//
-            }
-        }
+                        
+
+                    }
+     
+                    
+                    
+                    
 }
 
     
@@ -95,7 +150,7 @@ if(isset($_GET['c']) && !empty($_GET['c']) && isset($_GET['l']) && is_numeric($_
 <head>
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-         <title>Delete repair garage</title>
+        <title>Edit clients information</title>
     <!-- Favicon-->
     <link rel="icon" href="../../favicon.ico" type="image/x-icon">
 
@@ -226,7 +281,7 @@ if(isset($_GET['c']) && !empty($_GET['c']) && isset($_GET['l']) && is_numeric($_
                             <span>Clients</span>
                         </a>
                     </li>
-					<li>
+				<li>
 					<a href="upload_html_logo.php" title="Upload logo and html for your policies to the file server">
                            <i class="material-icons">attachment</i>
                             <span>File Server</span>
@@ -242,13 +297,13 @@ if(isset($_GET['c']) && !empty($_GET['c']) && isset($_GET['l']) && is_numeric($_
                         </a>
                     </li>
                     
-                    
                     <li>
                         <a href="clients_information.php?l=10&s=0&sc=time_stamp&so=dsc&re=100" title="Add and share clients information">
                             <i class="material-icons">share</i>
                             <span>Clients information</span>
                         </a>
                     </li>
+                    
                  <li>
                         <a href="insurance_policies.php" title="Add and delete insurance policies">
                             <i class="material-icons">accessible</i>
@@ -298,22 +353,48 @@ if(isset($_GET['c']) && !empty($_GET['c']) && isset($_GET['l']) && is_numeric($_
                         <div class="header">
                             <div class="row clearfix">
                                 <div class="col-xs-12 col-sm-6">
-                                    <h2></h2>
+                                    <h2>Clients</h2>
                                 </div>
                                </div>
                          </div>
                         <div class="body">
-	  <?php echo $message;?><br>
-          <?php echo $statement;?>
-          
-        
-        
+			     <?php echo $message;?><br>
+         <form action="<?php echo $full_link;?>" method="POST">
+              <input type="text" name="client_name" required placeholder="Client name" value="<?php echo $client_name?>"/>
+            <input type="text" name="item_type" required placeholder="Item type" value="<?php echo $item_type?>"/>
+            <input type="text" name="company" required placeholder="Company name" value="<?php echo $company?>"/>
+            <input type="text" name="class_of_insurance" required  placeholder="Class of insurance" value="<?php echo $class_of_insurance?>"/>
+            <input type="text" name="policy_number" required placeholder="Policy number" value="<?php echo $policy_number?>"/>
+            <input type="number" name="preimium_charged" required placeholder="Premium charged" value="<?php echo $preimium_charged?>"/>
+            <input type="date" name="renewal_date" required placeholder="Renewal date" value="<?php echo $renewal_date?>"/><br>
+              <button type="submit" class="btn btn-primary m-t-15 waves-effect">Update</button>
+        </form>
                         </div>
                     </div>
                 </div>
             </div>
             <!-- #END# -->
-	 <a href="../senior_administrator/" title="Go to the main page" class="btn btn-primary m-t-15 waves-effect"> <i class="material-icons">arrow_back</i>Back </a><br><br> 		
+			    <!-- innerbody -->
+            <div class="row clearfix">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <div class="card">
+                        <div class="header">
+                            <div class="row clearfix">
+                                <div class="col-xs-12 col-sm-6">
+                                    
+                                </div>
+                               </div>
+                         </div>
+                        <div class="body">
+		 
+		
+		 
+                        </div>
+                    </div>
+                </div>
+            </div>
+			 <a href="../senior_administrator/" title="Go to the main page" class="btn btn-primary m-t-15 waves-effect"> <i class="material-icons">arrow_back</i>Back </a><br><br> 
+            <!-- #END# -->
             </div>
         </div>
     </section>

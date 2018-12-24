@@ -28,108 +28,132 @@ if(isset($_GET['message']) && !empty($_GET['message']) && isset($_GET['type']) &
 
 
 
+$personal_details_array=fetch_personal_details(1,$_SESSION['session_key'],$_SESSION['cookie'],$source);
 
 
-
-if( isset($_GET['l']) && is_numeric($_GET['l']) && ( $_GET['s']==0 || is_numeric($_GET['s']) ) && isset($_GET['re']) && !empty($_GET['re']) && isset($_GET['fn']) && !empty($_GET['fn']))
+if( isset($_GET['l']) && is_numeric($_GET['l']) && ( $_GET['s']==0 || is_numeric($_GET['s']) ) &&  isset($_GET['sc']) && !empty($_GET['sc']) && isset($_GET['so']) && !empty($_GET['so']) && isset($_GET['re']) && !empty($_GET['re']))
 {
 	
         $limit=trim($_GET['l']);
         $skip=trim($_GET['s']);
-        $recipient_email=trim($_GET['re']);
-        $recipient_name=trim($_GET['fn']);
+        $sort_column=trim($_GET['sc']);
+        $sort_order=trim($_GET['so']);
+        $rows_every=trim($_GET['re']);
         
-        $source='/junior_administrator/messages_view.php';
-      
         
-        $full_link="messages_view.php?l=".$limit."&s=".$skip."&re=".$recipient_email."&fn=".$recipient_name;//for form submission
-        $link_without_sort_column_sort_order="messages_view.php?l=".$limit."&s=".$skip."&re=".$recipient_email."&fn=".$recipient_name;//for headers sorting
-        $link_without_limit_skip_rows_every="messages_view.php?l=".$limit."&s=".$skip."&re=".$recipient_email."&fn=".$recipient_name;//for browsing
-        
-        //$delete_link="messages_view_delete.php?l=".$limit."&s=".$skip."&re=".$recipient_email."&fn=".$recipient_name;//for form submission
-        $return_link='messages.php';
+        $full_link="clients_information.php?l=".$limit."&s=".$skip."&sc=".$sort_column."&so=".$sort_order."&re=".$rows_every;//for form submission
+        $link_without_sort_column_sort_order="clients_information.php?l=".$limit."&s=".$skip."&re=".$rows_every;//for headers sorting
+        $link_without_limit_skip_rows_every="clients_information.php?sc=".$sort_column."&so=".$sort_order;//for browsing
+        $delete_link="clients_information_delete.php?l=".$limit."&s=".$skip."&sc=".$sort_column."&so=".$sort_order."&re=".$rows_every;//for form submission
+        $edit_link="clients_information_edit.php?l=".$limit."&s=".$skip."&sc=".$sort_column."&so=".$sort_order."&re=".$rows_every;//for form submission
+        $add_remove_link="clients_information_add_remove.php?l=".$limit."&s=".$skip."&sc=".$sort_column."&so=".$sort_order."&re=".$rows_every;//for form submission
        
-        
       
         
         //form submission
-        if(isset($_POST['limit_is']) && !empty($_POST['limit_is']) && 
+        if(isset($_POST['headers_is']) && !empty($_POST['headers_is']) &&
+                 is_numeric($_POST['headers_is']) && 
+                isset($_POST['limit_is']) && !empty($_POST['limit_is']) && 
                 is_numeric($_POST['limit_is']) && 
                 ( $_POST['skip_is']==0 || is_numeric($_POST['skip_is']) ))
         {
             $new_limit=trim($_POST['limit_is']);
             $new_skip=trim($_POST['skip_is']);
-             header('location: '.$link_without_limit_skip_rows_every.'&l='.$new_limit.'&s='.$new_skip.'');//redirect back to form correctly
-        }
-        
-        //make messages read if any
-        if( isset($_GET['um']) && is_numeric($_GET['um']) && $_GET['um']>0)
-        {
+            $new_rows_every=trim($_POST['headers_is']);
             
-                $url_is=the_api_authentication_api_url_is()."denkimAPILogic/MainPackages.FetchMessagesThreadMakeSeen";
-                
-                $header_array= array('Authorization:'.api_key_is(),'Origin:'.$source,'Cookie:'.$_SESSION['cookie']);
-
-                $myvars='session_key='.$_SESSION['session_key'].'&recipient_email='.$recipient_email;
-
-                $returned_json=send_curl_post($url_is,$myvars,$header_array);//cap output
-
-                $returned_json_decoded= json_decode($returned_json,true);//decode
-
-                $check_is=$returned_json_decoded["check"];//check
-
-                $message_is=$returned_json_decoded["message"];//message
+             header('location: '.$link_without_limit_skip_rows_every.'&l='.$new_limit.'&s='.$new_skip.'&re='.$new_rows_every.' ');//redirect back to form correctly
         }
         
-        //fetch thread
-        $url_is=the_api_authentication_api_url_is()."denkimAPILogic/MainPackages.FetchMessagesThread";
-                
-        $header_array= array('Authorization:'.api_key_is(),'Origin:'.$source,'Cookie:'.$_SESSION['cookie']);
+       
+        
+        
+                    
+                    
+                    //fetch
+        $url_is=the_api_authentication_api_url_is()."denkimAPILogic/MainPackages.AdministratorFetchClientInsuranceInformationDetails";
 
-        $myvars='session_key='.$_SESSION['session_key'].'&recipient_email='.$recipient_email.'&limit='.$limit.'&skip='.$skip;
+        $myvars='session_key='.$_SESSION['session_key'].'&limit='.$limit.'&skip='.$skip.'&sort_column='.$sort_column.'&sort_order='.$sort_order;
+
+        $header_array= array('Cookie:'.$_SESSION['cookie'],'Authorization:'.api_key_is(),'Origin:/senior_administrator/clients.php');
 
         $returned_json=send_curl_post($url_is,$myvars,$header_array);//cap output
-
-        $returned_json_decoded= json_decode($returned_json,true);//decode
-
-        $check_is=$returned_json_decoded["check"];//check
-
-        $message_is=$returned_json_decoded["message"];//message
         
-        $list='';
+        $returned_json_decoded= json_decode($returned_json,true);//decode
+        
+        $check_is=$returned_json_decoded["check"];//check
+        
+       
         //draw
         if($check_is==true)//if check is true
         {
-            $count=  count($message_is)-1;
             
-            //read it in a reverse way
-            for ($index = $count; $index >= 0; $index--) 
-            {
-                    $_id=$message_is[$index]['_id']['$oid'];
-                    $header=$message_is[$index]['header'];
-                    $content=$message_is[$index]['content'];
-                    $attachment=$message_is[$index]['attachment'];
-                    $time_stamp=$message_is[$index]['time_stamp'];
-                    $sent_by=strtolower($message_is[$index]['sent_by']);
-                    
-                    $content_is=$content==null? 'No message': $content;
-                    $attachment_is=$attachment==null? 'No attachment': '<a href="'.$attachment.'" title="Click to download in new tab" target="_blank">Attachment</a>';
-                    
-                    $me_or_Other_id=$sent_by=="me"? "sent_by_me": "sent_by_Other";
-                    $list.='<li id="'.$me_or_Other_id.'">
-                            <header_item>'.strtoupper($header).'</header_item><br>
-                            <message_item>'.$content_is.'</message_item><br>
-                            <attachment_item>'.$attachment_is.'</attachment_item><br> 
-                                <date_item>'.return_date_function($time_stamp).'</date_item><br> 
-                                        </li>';
-            }
-           
+            $message_is=$returned_json_decoded["message"];//message
             
-            $list='<ol id="messages_thread_list">'.$list.'</ol>';
+           $count=$skip;//make count skipped rows
+            
+            $total_for_table_rows=$skip+$limit;//total for table highlight js function
+            $table_head='<tr bgcolor="white">
+                         <th>#</th>
+                             <th><a href="'.$link_without_sort_column_sort_order.'&sc=client_name&so='.return_script_order($sort_column,$sort_order,"client_name").'"onmouseover="hover_link(\'client_name_td\',\''.$total_for_table_rows.'\');" onmouseout="out_link(\'client_name_td\',\''.$total_for_table_rows.'\');" >Client name</a></th>
+                            <th><a href="'.$link_without_sort_column_sort_order.'&sc=item_type&so='.return_script_order($sort_column,$sort_order,"item_type").'"onmouseover="hover_link(\'item_type_td\',\''.$total_for_table_rows.'\');" onmouseout="out_link(\'item_type_td\',\''.$total_for_table_rows.'\');" >Item type</a></th>
+                             <th><a href="'.$link_without_sort_column_sort_order.'&sc=company&so='.return_script_order($sort_column,$sort_order,"company").'" onmouseover="hover_link(\'company_td\',\''.$total_for_table_rows.'\');" onmouseout="out_link(\'company_td\',\''.$total_for_table_rows.'\');" >Company</a></th>
+                            <th><a href="'.$link_without_sort_column_sort_order.'&sc=class_of_insurance&so='.return_script_order($sort_column,$sort_order,"class_of_insurance").'" onmouseover="hover_link(\'class_of_insurance_td\',\''.$total_for_table_rows.'\');" onmouseout="out_link(\'class_of_insurance_td\',\''.$total_for_table_rows.'\');" >Insurance class</a></th>
+                            <th><a href="'.$link_without_sort_column_sort_order.'&sc=policy_number&so='.return_script_order($sort_column,$sort_order,"policy_number").'" onmouseover="hover_link(\'policy_number_td\',\''.$total_for_table_rows.'\');" onmouseout="out_link(\'policy_number_td\',\''.$total_for_table_rows.'\');" >Policy number</a></th>
+                            <th><a href="'.$link_without_sort_column_sort_order.'&sc=preimium_charged&so='.return_script_order($sort_column,$sort_order,"preimium_charged").'" onmouseover="hover_link(\'preimium_charged_td\',\''.$total_for_table_rows.'\');" onmouseout="out_link(\'preimium_charged_td\',\''.$total_for_table_rows.'\');" >Premium</a></th>
+                                <th><a href="'.$link_without_sort_column_sort_order.'&sc=renewal_date&so='.return_script_order($sort_column,$sort_order,"renewal_date").'" onmouseover="hover_link(\'renewal_date_td\',\''.$total_for_table_rows.'\');" onmouseout="out_link(\'renewal_date_td\',\''.$total_for_table_rows.'\');" >Renewal date</a></th>
+                            <th><a href="'.$link_without_sort_column_sort_order.'&sc=time_stamp&so='.return_script_order($sort_column,$sort_order,"time_stamp").'" onmouseover="hover_link(\'time_stamp_td\',\''.$total_for_table_rows.'\');" onmouseout="out_link(\'time_stamp_td\',\''.$total_for_table_rows.'\');" >Date</a></th>
+                            
+                            </tr>';
+            $from_one_counter=1;//used to know how many rows are printed from one so as to append table head
+            foreach ($message_is as $value) 
+            {//start of foreach $message_is as $value
+                 $_id=$value['_id']['$oid'];
+                  $client_name=$value['client_name'];
+                  $item_type=$value['item_type'];
+                  $company=$value['company'];
+                  $class_of_insurance=$value['class_of_insurance'];
+                  $policy_number=$value['policy_number'];
+                  $preimium_charged=$value['preimium_charged'];
+                  $renewal_date=$value['renewal_date'];
+                  $shared_with=$value['shared_with'];
+                  $time_stamp=$value['time_stamp'];
+                  
+                  if(count($shared_with)>0 && $shared_with[ltrim(md5($personal_details_array['email_address']),0)]!='')
+                  {
+                                    $row_color=$count%2;
+                                $row_color=$row_color==0?'odd':'even';
+
+                                $explode_renewal_date= explode('-', $renewal_date);
+
+                               
+
+                                $table=$table.'<tr class="'.$row_color.'" id="row_data">
+                                                              <td>'.($count+1).'</td>  
+                                                                              <td id="client_name_td'.$count.'" >'.$client_name.'</td>
+                                                                              <td id="item_type_td'.$count.'" >'.$item_type.'</td>
+                                                                              <td id="company_td'.$count.'" >'.$company.'</td>  
+                                                                              <td id="class_of_insurance_td'.$count.'" >'.$class_of_insurance.'</td>   
+                                                                              <td id="policy_number_td'.$count.'" >'.$policy_number.'</td>   
+                                                                              <td id="preimium_charged_td'.$count.'" >'.number_format($preimium_charged,2).'</td>   
+                                                                              <td id="renewal_date_td'.$count.'" >'.$explode_renewal_date[2].'-'.$explode_renewal_date[1].'-'.$explode_renewal_date[0].'</td> 
+                                                                              <td id="time_stamp_td'.$count.'" >'.return_date_function($time_stamp).'</td> 
+
+                                                                  </tr>';
+                                $table=$from_one_counter%$rows_every==0?$table.$table_head:$table;//if rows to add header is reached then add header
+
+                                $count++;
+                                $from_one_counter++;
+                  }
+                  
+                  
+            }//end of foreach $message_is as $value
+            
+            $table='<table class="table table-bordered table-hover table-responsive">'.$table_head.$table.'
+                         </table>';
         }
         else//else failed
         {
-           
+            $message_is=$returned_json_decoded["message"];//message
             // $message=$message_is;
            // header('location: logs_view.php?c='.$_GET['c'].'&l='.$_GET['l'].'&s='.$_GET['s'].'&message='.$message_is.'&type=2');//
             if($message_is=='')
@@ -141,92 +165,7 @@ if( isset($_GET['l']) && is_numeric($_GET['l']) && ( $_GET['s']==0 || is_numeric
                 $message='<span id="bad_upload_message">'.$message_is.'</span>';
             }
         }
-        
-                        
-                    $name=$_FILES['file']['name'];//file name
-                    $type=$_FILES['file']['type'];//type of file
-                    $temp=$_FILES['file']['tmp_name'];//temprorary location of files when uploaded
-
-                    $file_url='';
-                    //send message
-                    if(isset($_POST['header']) && !empty($_POST['header'])  )
-                    {  
-                                
-                                //upload 
-                                if(!empty($name))
-                                {
-                                    //make dir
-                                    $time_is=  time();
-                                    $dir_is='../../temp_uploads/';
-                                    mkdir($dir_is.$time_is.'/');//making the directory
-                                    $location=$dir_is.$time_is.'/';
-                                    move_uploaded_file($temp, $location.$name);
-
-                                    $file_name_with_full_path = realpath($location.$name);
-
-                                    //curl
-                                     $cfile = new CURLFile($file_name_with_full_path,$type,$name);
-
-                                    //send
-                                    $url_is=the_api_authentication_files_url_is()."denkimAPIFiles/MainPackages.UploadFiles?session_key=".$_SESSION['session_key'];
-
-                                    $myvars=array('file'=> $cfile );
-
-                                    $header_array= array('Cookie:'.$_SESSION['cookie'],'Authorization:'.api_key_is(),'Origin:'.$source);
-
-                                    $returned_json=send_curl_post($url_is,$myvars,$header_array);//cap output
-
-                                    $returned_json_decoded= json_decode($returned_json,true);//decode
-
-                                    $check_is=$returned_json_decoded["check"];//check
-
-                                    $message_is=$returned_json_decoded["message"];//message
-
-                                    $file=$returned_json_decoded["file"];//message
-
-                                    if($check_is==true)//if check is true
-                                    {
-                                            //remove file
-                                            unlink($location.$name);
-                                            rmdir($location);  
-                                            $file_url= $file;
-                                           // header('location: upload_html_logo.php?message='.$message_is.': '.$file.'&type=1');//
-                                    }
-
-                                }
-                                
-                                $messages_recipient_list=trim($_POST['messages_recipient_list']);
-                                $header=trim($_POST['header']);
-
-                                $content=trim($_POST['content']);
-                                
-                            
-                            $url_is=the_api_authentication_api_url_is()."denkimAPILogic/MainPackages.SendMessage";
-
-                             $myvars='session_key='.$_SESSION['session_key'].'&header='.$header.'&content='.$content.'&attachment='.$file_url.'&to='.$recipient_email;
-
-                            $header_array= array('Authorization:'.api_key_is(),'Origin:'.$source,'Cookie:'.$_SESSION['cookie']);
-
-                            $returned_json=send_curl_post($url_is,$myvars,$header_array);//cap output
-
-                            $returned_json_decoded= json_decode($returned_json,true);//decode
-
-                            $check_is=$returned_json_decoded["check"];//check
-
-                            $message_is=$returned_json_decoded["message"];//message
-
-                            if($check_is==true)//if check is true
-                            {
-                                   
-                                  header('location: '.$full_link.'&message='.$message_is.'&type=1');//
-                            }
-                            else//else failed
-                            {
-
-                                header('location: '.$full_link.'&message='.$message_is.'&type=2');//
-                            } 
-                       
-                    }
+                    
 }
 
     
@@ -237,7 +176,7 @@ if( isset($_GET['l']) && is_numeric($_GET['l']) && ( $_GET['s']==0 || is_numeric
 <head>
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-   <title>Messages view</title>
+     <title>Clients information</title>
     <!-- Favicon-->
     <link rel="icon" href="../../favicon.ico" type="image/x-icon">
 
@@ -396,65 +335,38 @@ if( isset($_GET['l']) && is_numeric($_GET['l']) && ( $_GET['s']==0 || is_numeric
     <section class="content">
         <div class="container-fluid">
             <div class="block-header">
-            <!-- innerbody -->
-		   
-		    
-		   
+              <!-- innerbody -->
             <div class="row clearfix">
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                     <div class="card">
                         <div class="header">
                             <div class="row clearfix">
                                 <div class="col-xs-12 col-sm-6">
-                                    <h2><?php echo $recipient_name;?></h2>
+                                    <h2></h2>
                                 </div>
                                </div>
                          </div>
                         <div class="body">
-		 <form method="POST" action="<?php echo $full_link;?>" id="browse_form">
-                                Start row: <input type="number" name="skip_is" min="0" value="<?php echo $skip;?>" />  Number of rows: <input type="number" name="limit_is" min="1" value="<?php echo $limit;?>" /><input type="submit" value="GO"/> 
+		       <?php echo $message;?><br>
+                            <form method="POST" action="<?php echo $full_link;?>" id="browse_form">
+                                Start row: <input type="number" name="skip_is" min="0" value="<?php echo $skip;?>" />  Number of rows: <input type="number" name="limit_is" min="1" value="<?php echo $limit;?>" /> Headers every: <input type="number" name="headers_is" min="10" value="<?php echo $rows_every;?>" /> rows <input type="submit" value="GO"/> 
                             </form><br>
-                         
-                           <?php echo $list;?><br><br>
+                           <?php echo $table;?><br>
+                             <form method="POST" action="<?php echo $full_link;?>" id="browse_form">
+                                Start row: <input type="number" name="skip_is" min="0" value="<?php echo $skip;?>" />  Number of rows: <input type="number" name="limit_is" min="1" value="<?php echo $limit;?>" /> Headers every: <input type="number" name="headers_is" min="10" value="<?php echo $rows_every;?>" /> rows <input type="submit" value="GO"/> 
+                            </form>
+
+                           <script type="text/javascript" src="../../javascript/jquery-1.11.1.min.js"></script>
+                           <script type="text/javascript" src="../../javascript/highlight.js"></script>
+		 
                         </div>
                     </div>
                 </div>
             </div>
-			
-			
-		    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                    <div class="card">
-                        <div class="header">
-                            <h2>
-                                Compose a Message
-                                
-                            </h2>
-                           
-                        </div>
-                        <div class="body">
-                           
-				 <?php echo $message;?><br>
-                                   <form action="" method="POST" enctype="multipart/form-data" >
-                                     <input type="text" name="header" placeholder="subject"/>
-                                     <textarea name="content" cols="20" rows="12" placeholder="Message..." /></textarea>
-                                   <input type="file" name="file"  title="Add attachment"/> 
-                                      <button type="submit" class="btn btn-primary m-t-15 waves-effect">Send</button>
-                                 </form>
-                          
-                           <script type="text/javascript" src="../../javascript/jquery-1.11.1.min.js"></script>
-                           <script type="text/javascript" src="../../javascript/highlight.js"></script>
-                            <script type="text/javascript" src="../../javascript/are_you_huma_reload.js"></script>
-				  
-				   <br>
-              </form>
-		   
-                        </div>
-                    </div>
-                </div>
-		  
-		  
             <!-- #END# -->
-	 <a href="../junior_administrator/" title="Go to the main page" class="btn btn-primary m-t-15 waves-effect"> <i class="material-icons">arrow_back</i>Back </a><br><br> 		  
+			 
+ <a href="../junior_administrator/" title="Go to the main page" class="btn btn-primary m-t-15 waves-effect"> <i class="material-icons">arrow_back</i>Back </a><br><br> 			  
+			  
             </div>
         </div>
     </section>

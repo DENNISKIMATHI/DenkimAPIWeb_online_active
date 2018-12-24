@@ -31,143 +31,93 @@ if(isset($_GET['message']) && !empty($_GET['message']) && isset($_GET['type']) &
 
 
 
-if(isset($_GET['c']) && !empty($_GET['c']) && isset($_GET['l']) && is_numeric($_GET['l']) && ( $_GET['s']==0 || is_numeric($_GET['s']) ) &&  isset($_GET['sc']) && !empty($_GET['sc']) && isset($_GET['so']) && !empty($_GET['so']) && isset($_GET['re']) && !empty($_GET['re']))
+if( isset($_GET['l']) && is_numeric($_GET['l']) && ( $_GET['s']==0 || is_numeric($_GET['s']) ) &&  isset($_GET['sc']) && !empty($_GET['sc']) && isset($_GET['so']) && !empty($_GET['so']) && isset($_GET['re']) && !empty($_GET['re'])
+        && isset($_GET['client_name']) && !empty($_GET['client_name'])
+        && isset($_GET['item_type']) && !empty($_GET['item_type'])
+        && isset($_GET['company']) && !empty($_GET['company'])
+        && isset($_GET['class_of_insurance']) && !empty($_GET['class_of_insurance'])
+        && isset($_GET['policy_number']) && !empty($_GET['policy_number'])
+        && isset($_GET['preimium_charged']) && !empty($_GET['preimium_charged'])
+        && isset($_GET['renewal_date']) && !empty($_GET['renewal_date'])
+        && isset($_GET['_id']) && !empty($_GET['_id'])  
+        && isset($_GET['shared_with']) && !empty($_GET['shared_with'])  
+        )
 {
-	$column=trim($_GET['c']);
+	
         $limit=trim($_GET['l']);
         $skip=trim($_GET['s']);
         $sort_column=trim($_GET['sc']);
         $sort_order=trim($_GET['so']);
         $rows_every=trim($_GET['re']);
         
+        $client_name=trim($_GET['client_name']);
+        $item_type=trim($_GET['item_type']);
+        $company=trim($_GET['company']);
+        $class_of_insurance=trim($_GET['class_of_insurance']);
+        $policy_number=trim($_GET['policy_number']);
+        $preimium_charged=trim($_GET['preimium_charged']);
+        $renewal_date=trim($_GET['renewal_date']);
+        $_id=trim($_GET['_id']);
+        $shared_with= trim($_GET['shared_with']);
         
-        $full_link="junior_administrators.php?c=".$column."&l=".$limit."&s=".$skip."&sc=".$sort_column."&so=".$sort_order."&re=".$rows_every;//for form submission
-        $link_without_sort_column_sort_order="junior_administrators.php?c=".$column."&l=".$limit."&s=".$skip."&re=".$rows_every;//for headers sorting
-        $link_without_limit_skip_rows_every="junior_administrators.php?c=".$column."&sc=".$sort_column."&so=".$sort_order;//for browsing
-        $delete_link="junior_administrators_delete.php?c=".$column."&l=".$limit."&s=".$skip."&sc=".$sort_column."&so=".$sort_order."&re=".$rows_every;//for form submission
+       $shared_with_decoded= base64_decode($shared_with);
+       //$shared_with_array= json_decode($shared_with_decoded,true);
+       
+       $shared_with_array=fetch_specific_shared_info_from_id($_id, $_SESSION['session_key'], $_SESSION['cookie'], '/senior_administrator/clients.php', $limit, $skip, $sort_column, $sort_order);
+       
+       //die(json_encode($shared_with_array));
+       
+       //echo $shared_with_decoded;
         
-        //form submission
-        if(isset($_POST['headers_is']) && !empty($_POST['headers_is']) &&
-                 is_numeric($_POST['headers_is']) && 
-                isset($_POST['limit_is']) && !empty($_POST['limit_is']) && 
-                is_numeric($_POST['limit_is']) && 
-                ( $_POST['skip_is']==0 || is_numeric($_POST['skip_is']) ))
-        {
-            $new_limit=trim($_POST['limit_is']);
-            $new_skip=trim($_POST['skip_is']);
-            $new_rows_every=trim($_POST['headers_is']);
-            
-             header('location: '.$link_without_limit_skip_rows_every.'&l='.$new_limit.'&s='.$new_skip.'&re='.$new_rows_every.' ');//redirect back to form correctly
-        }
+        $full_link="clients_information_add_remove.php?l=".$limit."&s=".$skip."&sc=".$sort_column."&so=".$sort_order."&re=".$rows_every.
+                                    '&client_name='.$client_name.
+                                    '&item_type='.$item_type.
+                                    '&company='.$company.
+                                    '&class_of_insurance='.$class_of_insurance.
+                                    '&policy_number='.$policy_number.
+                                    '&preimium_charged='.$preimium_charged.
+                                    '&renewal_date='.$renewal_date.
+                                    '&_id='.$_id.
+                                    '&shared_with='.$shared_with;//for form submission
         
-        //fetch
-        $url_is=the_api_authentication_api_url_is()."denkimAPILogic/MainPackages.AdministratorFetchJuniorAdministratorsDetails";
-
-        $myvars='session_key='.$_SESSION['session_key'].'&column='.$column.'&limit='.$limit.'&skip='.$skip.'&sort_column='.$sort_column.'&sort_order='.$sort_order;
-
-        $header_array= array('Cookie:'.$_SESSION['cookie'],'Authorization:'.api_key_is(),'Origin:/senior_administrator/junior_administrators.php');
-
-        $returned_json=send_curl_post($url_is,$myvars,$header_array);//cap output
+        $return_link="clients_information.php?l=".$limit."&s=".$skip."&sc=".$sort_column."&so=".$sort_order."&re=".$rows_every;//for form submission
+       
+       
+      
         
-        $returned_json_decoded= json_decode($returned_json,true);//decode
-        
-        $check_is=$returned_json_decoded["check"];//check
-        
-        
-        //draw
-        if($check_is==true)//if check is true
-        {
-            
-            $message_is=$returned_json_decoded["message"];//message
-            
-           $count=$skip;//make count skipped rows
-            
-            $total_for_table_rows=$skip+$limit;//total for table highlight js function
-            $table_head='<tr bgcolor="white">
-                         <th>#</th>
-                             <th><a href="'.$link_without_sort_column_sort_order.'&sc=full_names&so='.return_script_order($sort_column,$sort_order,"full_names").'"onmouseover="hover_link(\'full_names_td\',\''.$total_for_table_rows.'\');" onmouseout="out_link(\'full_names_td\',\''.$total_for_table_rows.'\');" >Full names</a></th>
-                            <th><a href="'.$link_without_sort_column_sort_order.'&sc=email_address&so='.return_script_order($sort_column,$sort_order,"email_address").'"onmouseover="hover_link(\'email_address_td\',\''.$total_for_table_rows.'\');" onmouseout="out_link(\'email_address_td\',\''.$total_for_table_rows.'\');" >Email address</a></th>
-                             <th><a href="'.$link_without_sort_column_sort_order.'&sc=phone_number&so='.return_script_order($sort_column,$sort_order,"phone_number").'" onmouseover="hover_link(\'phone_number_td\',\''.$total_for_table_rows.'\');" onmouseout="out_link(\'phone_number_td\',\''.$total_for_table_rows.'\');" >Phone number</a></th>
-                            <th><a href="'.$link_without_sort_column_sort_order.'&sc=national_id&so='.return_script_order($sort_column,$sort_order,"national_id").'" onmouseover="hover_link(\'national_id_td\',\''.$total_for_table_rows.'\');" onmouseout="out_link(\'national_id_td\',\''.$total_for_table_rows.'\');" >National id</a></th>
-                            <th><a href="'.$link_without_sort_column_sort_order.'&sc=time_stamp&so='.return_script_order($sort_column,$sort_order,"time_stamp").'" onmouseover="hover_link(\'time_stamp_td\',\''.$total_for_table_rows.'\');" onmouseout="out_link(\'time_stamp_td\',\''.$total_for_table_rows.'\');" >Registration date</a></th>
-                            <th><a href="'.$link_without_sort_column_sort_order.'&sc=time_stamp&so='.return_script_order($sort_column,$sort_order,"time_stamp").'" onmouseover="hover_link(\'delete_td\',\''.$total_for_table_rows.'\');" onmouseout="out_link(\'delete_td\',\''.$total_for_table_rows.'\');" >Delete</a></th>
-                            </tr>';
-            $from_one_counter=1;//used to know how many rows are printed from one so as to append table head
-            foreach ($message_is as $value) 
-            {//start of foreach $message_is as $value
-                  $full_names=$value['full_names'];
-                  $email_address=$value['email_address'];
-                  $phone_number=$value['phone_number'];
-                  $national_id=$value['national_id'];
-                  $time_stamp=$value['time_stamp'];
-                  
-                  
-                  $row_color=$count%2;
-                  $row_color=$row_color==0?'odd':'even';
-                                                         
-                  $table=$table.'<tr class="'.$row_color.'" id="row_data">
-                                                <td>'.($count+1).'</td>  
-                                                                <td id="full_names_td'.$count.'" >'.$full_names.'</td>
-                                                                <td id="email_address_td'.$count.'" >'.$email_address.'</td>
-                                                                <td id="phone_number_td'.$count.'" >'.$phone_number.'</td>  
-                                                                <td id="national_id_td'.$count.'" >'.$national_id.'</td>   
-                                                                <td id="time_stamp_td'.$count.'" >'.return_date_function($time_stamp).'</td> 
-                                                                <td id="delete_td'.$count.'" ><span id="red_text_span"><a href="'.$delete_link.'&e='.$email_address.'&f='.$full_names.'" title="Remove '.$full_names.'">Delete</a></span></td>   
-                                              </tr>';
-                  $table=$from_one_counter%$rows_every==0?$table.$table_head:$table;//if rows to add header is reached then add header
-                  
-                  $count++;
-                  $from_one_counter++;
-            }//end of foreach $message_is as $value
-            
-            $table='<table class="table table-bordered table-hover table-responsive">'.$table_head.$table.'
-                         </table>';
-        }
-        else//else failed
-        {
-            $message_is=$returned_json_decoded["message"];//message
-            if($message_is=='')
-            {
-                header('location: ../logout.php?message=Your session has expired, please log in again!&type=2');
-            }
-            else
-            {
-                $message='<span id="bad_upload_message">'.$message_is.'</span>';
-            }
-           // header('location: logs_view.php?c='.$_GET['c'].'&l='.$_GET['l'].'&s='.$_GET['s'].'&message='.$message_is.'&type=2');//
-        }
+       
         
         
                     //submit
-                    if(isset($_POST['national_id']) && !empty($_POST['national_id']) && 
-                    isset($_POST['full_names']) && !empty($_POST['full_names']) &&
-                    isset($_POST['email_address']) && !empty($_POST['email_address']) &&
-                    isset($_POST['phone_number']) && !empty($_POST['phone_number']) &&
-                    isset($_POST['antispam']) && !empty($_POST['antispam']) 
+                    if(isset($_POST['email_address']) && !empty($_POST['email_address']) 
                     )
                     {  
-                        $national_id=trim($_POST['national_id']);
-                        $full_names=trim($_POST['full_names']);
+                       
                         $email_address=trim($_POST['email_address']);
-                        $phone_number=trim($_POST['phone_number']);
-                        $antispam=trim($_POST['antispam']);
 
-                        if($antispam==$_SESSION['spam'])
-                        {
-                            $url_is=the_api_authentication_api_url_is()."denkimAPILogic/MainPackages.AdministratorCreateJuniorAdministrator";
+                        $explode= explode('youwillneverwritethisneverneverhapana', $email_address);
+                        
+                        
+                            $url_is=the_api_authentication_api_url_is()."denkimAPILogic/MainPackages.AdministratorAddSharedWithtoClientInsuranceInformation";
 
-                            $myvars='session_key='.$_SESSION['session_key'].'&national_id='.$national_id.'&full_names='.$full_names.'&email_address='.$email_address.'&phone_number='.$phone_number;
+                            $myvars='session_key='.$_SESSION['session_key'].
+                                    '&_id='.$_id.
+                                    '&email_address='.$explode[0].
+                                    '&name='.$explode[1];
 
-                             $header_array= array('Cookie:'.$_SESSION['cookie'],'Authorization:'.api_key_is(),'Origin:/senior_administrator/junior_administrators.php');
+                            $header_array= array('Cookie:'.$_SESSION['cookie'],'Authorization:'.api_key_is(),'Origin:/senior_administrator/clients.php');
 
                             $returned_json=send_curl_post($url_is,$myvars,$header_array);//cap output
-
+                            
+                           
+                            
                             $returned_json_decoded= json_decode($returned_json,true);//decode
 
                             $check_is=$returned_json_decoded["check"];//check
 
                             $message_is=$returned_json_decoded["message"];//message
-
+                            
+                            
                             if($check_is==true)//if check is true
                             {
 
@@ -178,15 +128,52 @@ if(isset($_GET['c']) && !empty($_GET['c']) && isset($_GET['l']) && is_numeric($_
 
                                 header('location: '.$full_link.'&message='.$message_is.'&type=2');//
                             } 
-                        }
-                        else
-                        {
-                             header('location: '.$full_link.'&message=Failed anti-spam test, please try again&type=2');//
-
-                        }
+                        
 
                     }
      
+                    
+                    if(isset($_GET['remove_email']) && !empty($_GET['remove_email']) 
+                    )
+                    {  
+                       
+                        $email_address=trim($_GET['remove_email']);
+
+                       
+                        
+                        
+                            $url_is=the_api_authentication_api_url_is()."denkimAPILogic/MainPackages.AdministratorRemoveSharedWithtoClientInsuranceInformation";
+
+                            $myvars='session_key='.$_SESSION['session_key'].
+                                    '&_id='.$_id.
+                                    '&email_address='.$email_address;
+
+                            $header_array= array('Cookie:'.$_SESSION['cookie'],'Authorization:'.api_key_is(),'Origin:/senior_administrator/clients.php');
+
+                            $returned_json=send_curl_post($url_is,$myvars,$header_array);//cap output
+                            
+                           
+                            
+                            $returned_json_decoded= json_decode($returned_json,true);//decode
+
+                            $check_is=$returned_json_decoded["check"];//check
+
+                            $message_is=$returned_json_decoded["message"];//message
+                            
+                            
+                            if($check_is==true)//if check is true
+                            {
+
+                                  header('location: '.$full_link.'&message='.$message_is.'&type=1');//
+                            }
+                            else//else failed
+                            {
+
+                                header('location: '.$full_link.'&message='.$message_is.'&type=2');//
+                            } 
+                        
+
+                    }
                     
 }
 
@@ -198,7 +185,7 @@ if(isset($_GET['c']) && !empty($_GET['c']) && isset($_GET['l']) && is_numeric($_
 <head>
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-        <title>Junior administrators</title>
+        <title>Share clients information</title>
     <!-- Favicon-->
     <link rel="icon" href="../../favicon.ico" type="image/x-icon">
 
@@ -329,7 +316,7 @@ if(isset($_GET['c']) && !empty($_GET['c']) && isset($_GET['l']) && is_numeric($_
                             <span>Clients</span>
                         </a>
                     </li>
-					<li>
+				<li>
 					<a href="upload_html_logo.php" title="Upload logo and html for your policies to the file server">
                            <i class="material-icons">attachment</i>
                             <span>File Server</span>
@@ -401,22 +388,23 @@ if(isset($_GET['c']) && !empty($_GET['c']) && isset($_GET['l']) && is_numeric($_
                         <div class="header">
                             <div class="row clearfix">
                                 <div class="col-xs-12 col-sm-6">
-                                    <h2></h2>
+                                    <h2>Clients information</h2>
                                 </div>
                                </div>
                          </div>
                         <div class="body">
-	   <?php echo $message;?><br>
-          <form action="<?php echo $full_link;?>" method="POST">
-            <input type="email" name="email_address" placeholder="email@domain.com"/>
-            <input type="text" name="full_names" placeholder="Full names"/>
-            <input type="number" name="phone_number"  placeholder="254722333444"/>
-            <input type="number" name="national_id"  placeholder="11223366"/>
-            <img src="../../le_functions/_antispam.php" id="are_you_human" /><a href="" onclick="reload_are_you_human('are_you_human');">Reload</a>
-            <input type="text" id="antispam" name="antispam" placeholder="Are you human?"/>
-             <button type="submit" class="btn btn-primary m-t-15 waves-effect">Sign up</button>
-         </form>
-        
+			     <?php echo $message;?><br>
+         
+              <h4><?php echo $client_name?></h4>
+            <h4><?php echo $item_type?></h4>
+            <h4><?php echo $company?></h4>
+            <h4><?php echo $class_of_insurance?></h4>
+            <h4><?php echo $policy_number?></h4>
+            <h4><?php echo $preimium_charged?></h4>
+            <h4><?php
+             $explode_renewal_date= explode('-', $renewal_date);
+            echo $explode_renewal_date[2].'-'.$explode_renewal_date[1].'-'.$explode_renewal_date[0];
+                    ?></h4>
         
                         </div>
                     </div>
@@ -430,22 +418,100 @@ if(isset($_GET['c']) && !empty($_GET['c']) && isset($_GET['l']) && is_numeric($_
                         <div class="header">
                             <div class="row clearfix">
                                 <div class="col-xs-12 col-sm-6">
-                                    <h2></h2>
+                                    
+                                    <h3>Share</h3>
+                                     <form action="<?php echo $full_link;?>" method="POST">
+                                         <select name="email_address" required="">
+                                             <option value="">Select junior admin to add</option>
+                                            <?php
+                                                        //fetch
+                                                        $url_is=the_api_authentication_api_url_is()."denkimAPILogic/MainPackages.AdministratorFetchJuniorAdministratorsDetails";
+
+                                                        $myvars='session_key='.$_SESSION['session_key'].'&column=2&limit=9999&skip=0&sort_column=full_names&sort_order=dsc';
+
+                                                        $header_array= array('Cookie:'.$_SESSION['cookie'],'Authorization:'.api_key_is(),'Origin:/senior_administrator/junior_administrators.php');
+
+                                                         $returned_json=send_curl_post($url_is,$myvars,$header_array);//cap output
+
+                                                        $returned_json_decoded= json_decode($returned_json,true);//decode
+
+                                                        $check_is=$returned_json_decoded["check"];//check
+                                                        
+                                                        if($check_is==true)//if check is true
+                                                        {
+
+                                                            $message_is=$returned_json_decoded["message"];//message
+
+
+                                                            foreach ($message_is as $value) 
+                                                            {//start of foreach $message_is as $value
+                                                                  $full_names=$value['full_names'];
+                                                                  $email_address=$value['email_address'];
+                                                                  $phone_number=$value['phone_number'];
+                                                                  $national_id=$value['national_id'];
+                                                                  $time_stamp=$value['time_stamp'];
+
+                                                                 
+                                                                  if($shared_with_array[ ltrim((md5($email_address)),0)]=="" )//if is never shared
+                                                                  {
+                                                                       //echo $email_address.'*********'.md5($email_address);
+                                                                      ?>
+                                                                            <option value="<?php echo $email_address.'youwillneverwritethisneverneverhapana'.$full_names?>"><?php echo $full_names;?></option>
+                                                                      <?php
+                                                                  }
+
+                                                            }//end of foreach $message_is as $value
+
+
+                                                        }
+                                            ?>
+                                         </select>
+                                       <button type="submit" class="btn btn-primary m-t-15 waves-effect">Add</button>
+                                    </form>
+                                    
+                                    
+                                    <h3>Shared with</h3>
+                                    <?php 
+                                        if($check_is==true)//if check is true
+                                        {
+                                            $message_is=$returned_json_decoded["message"];//message
+                                            
+                                                foreach ($shared_with_array as $key => $shared_info) 
+                                                {
+                                                    
+                                                            foreach ($message_is as $value) 
+                                                            {//start of foreach $message_is as $value
+                                                                  $full_names=$value['full_names'];
+                                                                  $email_address=$value['email_address'];
+                                                                  $phone_number=$value['phone_number'];
+                                                                  $national_id=$value['national_id'];
+                                                                  $time_stamp=$value['time_stamp'];
+                                                                  
+                                                                  //echo $key.'==============';
+                                                                  if($key== ltrim(md5($email_address),0))//if is never shared
+                                                                  {
+                                                                      ?>    
+                                                                            <form action="<?php echo $full_link;?>&remove_email=<?php echo $email_address;?>" method="POST">
+                                                                            <?php echo $full_names;?>&nbsp;&nbsp;&nbsp;
+                                                                            <button type="submit" class="btn btn-primary m-t-15 waves-effect" title="Remove <?php echo $full_names;?>">Remove</button>
+                                                                            </form>
+                                                                      <?php
+                                                                  }
+
+                                                            }//end of foreach $message_is as $value
+                                                }
+
+
+                                        }
+                                        
+                                    
+                                    ?>
                                 </div>
                                </div>
                          </div>
                         <div class="body">
-		  <form method="POST" action="<?php echo $full_link;?>" id="browse_form">
-                                Start row: <input type="number" name="skip_is" min="0" value="<?php echo $skip;?>" />  Number of rows: <input type="number" name="limit_is" min="1" value="<?php echo $limit;?>" /> Headers every: <input type="number" name="headers_is" min="10" value="<?php echo $rows_every;?>" /> rows <input type="submit" value="GO"/> 
-                            </form><br>
-                           <?php echo $table;?><br>
-                             <form method="POST" action="<?php echo $full_link;?>" id="browse_form">
-                                Start row: <input type="number" name="skip_is" min="0" value="<?php echo $skip;?>" />  Number of rows: <input type="number" name="limit_is" min="1" value="<?php echo $limit;?>" /> Headers every: <input type="number" name="headers_is" min="10" value="<?php echo $rows_every;?>" /> rows <input type="submit" value="GO"/> 
-                            </form>
-
-                           <script type="text/javascript" src="../../javascript/jquery-1.11.1.min.js"></script>
-                           <script type="text/javascript" src="../../javascript/highlight.js"></script>
-                            <script type="text/javascript" src="../../javascript/are_you_huma_reload.js"></script>
+		 
+		
 		 
                         </div>
                     </div>

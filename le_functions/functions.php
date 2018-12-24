@@ -6601,3 +6601,45 @@ function get_aggregate_totals_payments_client_full_json($array)
         'balance'=>$balance);
     
 }
+
+
+
+function fetch_specific_shared_info_from_id($_id,$session_key,$cookie,$source,$limit,$skip,$sort_column,$sort_order)
+{
+        $shared_with=array();
+    
+        
+       
+       $myvars='session_key='.$session_key.'&limit='.$limit.'&skip='.$skip.'&sort_column='.$sort_column.'&sort_order='.$sort_order;
+        $header_array= array('Cookie:'.$cookie,'Authorization:'.api_key_is(),'Origin:'.$source);
+       
+        
+        
+    
+                        $url_is=the_api_authentication_api_url_is()."denkimAPILogic/MainPackages.AdministratorFetchClientInsuranceInformationDetails";
+                        $returned_json=send_curl_post($url_is,$myvars,$header_array);//cap output
+                        $returned_json_decoded= json_decode($returned_json,true);//decode
+                        $check_is=$returned_json_decoded["check"];//check
+                        
+                        //die($returned_json);
+                        if($check_is==true)//if check is true
+                        {  
+                            $message_is=$returned_json_decoded["message"];//message
+                             foreach ($message_is as $value) 
+                            {//start of foreach $message_is as $value
+                                 $_id_is=$value['_id']['$oid'];
+                                 
+                                 if($_id==$_id_is)
+                                 {
+                                   return $value['shared_with'];
+                                  
+                                 }
+                                  
+                                  
+                            }
+                            
+                        }
+           
+    
+    return $shared_with;
+}

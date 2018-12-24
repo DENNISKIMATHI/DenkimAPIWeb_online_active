@@ -31,20 +31,24 @@ if(isset($_GET['message']) && !empty($_GET['message']) && isset($_GET['type']) &
 
 
 
-if(isset($_GET['l']) && is_numeric($_GET['l']) && ( $_GET['s']==0 || is_numeric($_GET['s']) ) && isset($_GET['re']) && !empty($_GET['re']) && isset($_GET['e']) && !empty($_GET['e']) && isset($_GET['f']) && !empty($_GET['f']))
+if( isset($_GET['l']) && is_numeric($_GET['l']) && ( $_GET['s']==0 || is_numeric($_GET['s']) ) &&  isset($_GET['sc']) && !empty($_GET['sc']) && isset($_GET['so']) && !empty($_GET['so']) && isset($_GET['re']) && !empty($_GET['re']))
 {
 	
         $limit=trim($_GET['l']);
         $skip=trim($_GET['s']);
+        $sort_column=trim($_GET['sc']);
+        $sort_order=trim($_GET['so']);
         $rows_every=trim($_GET['re']);
-        $email_address=trim($_GET['e']);
-        $full_names=trim($_GET['f']);
         
-        $full_link="claims.php?l=".$limit."&s=".$skip."&re=".$rows_every."&e=".$email_address."&f=".$full_names;//for form submission
-        $link_without_sort_column_sort_order="claims.php?l=".$limit."&s=".$skip."&re=".$rows_every."&e=".$email_address."&f=".$full_names;//for headers sorting
-        $link_without_limit_skip_rows_every="claims.php?e=".$email_address."&f=".$full_names;//for browsing
-        $delete_link="claims_delete.php?l=".$limit."&s=".$skip."&re=".$rows_every."&e=".$email_address."&f=".$full_names;//for form submission
-        $view_link="claims_view.php?l=".$limit."&s=".$skip."&re=".$rows_every."&e=".$email_address."&f=".$full_names;//for form submission
+        
+        $full_link="clients_information.php?l=".$limit."&s=".$skip."&sc=".$sort_column."&so=".$sort_order."&re=".$rows_every;//for form submission
+        $link_without_sort_column_sort_order="clients_information.php?l=".$limit."&s=".$skip."&re=".$rows_every;//for headers sorting
+        $link_without_limit_skip_rows_every="clients_information.php?sc=".$sort_column."&so=".$sort_order;//for browsing
+        $delete_link="clients_information_delete.php?l=".$limit."&s=".$skip."&sc=".$sort_column."&so=".$sort_order."&re=".$rows_every;//for form submission
+        $edit_link="clients_information_edit.php?l=".$limit."&s=".$skip."&sc=".$sort_column."&so=".$sort_order."&re=".$rows_every;//for form submission
+        $add_remove_link="clients_information_add_remove.php?l=".$limit."&s=".$skip."&sc=".$sort_column."&so=".$sort_order."&re=".$rows_every;//for form submission
+       
+      
         
         //form submission
         if(isset($_POST['headers_is']) && !empty($_POST['headers_is']) &&
@@ -60,12 +64,73 @@ if(isset($_GET['l']) && is_numeric($_GET['l']) && ( $_GET['s']==0 || is_numeric(
              header('location: '.$link_without_limit_skip_rows_every.'&l='.$new_limit.'&s='.$new_skip.'&re='.$new_rows_every.' ');//redirect back to form correctly
         }
         
-        //fetch
-        $url_is=the_api_authentication_api_url_is()."denkimAPILogic/MainPackages.FetchUserClaims";
+       
+        
+        
+                    //submit
+                    if(isset($_POST['client_name']) && !empty($_POST['client_name']) && 
+                    isset($_POST['item_type']) && !empty($_POST['item_type']) &&
+                    isset($_POST['company']) && !empty($_POST['company']) &&
+                    isset($_POST['class_of_insurance']) && !empty($_POST['class_of_insurance']) &&
+                    isset($_POST['policy_number']) && !empty($_POST['policy_number']) &&
+                    isset($_POST['preimium_charged']) && !empty($_POST['preimium_charged']) &&
+                    isset($_POST['renewal_date']) && !empty($_POST['renewal_date']) 
+                    )
+                    {  
+                       
+                        $client_name=trim($_POST['client_name']);
+                        $item_type=trim($_POST['item_type']);
+                        $company=trim($_POST['company']);
+                        $class_of_insurance=trim($_POST['class_of_insurance']);
+                        $policy_number=trim($_POST['policy_number']);
+                        $preimium_charged=trim($_POST['preimium_charged']);
+                        $renewal_date=trim($_POST['renewal_date']);
 
-        $myvars='session_key='.$_SESSION['session_key'].'&limit='.$limit.'&skip='.$skip.'&email_address='.$email_address;
+                        
+                            $url_is=the_api_authentication_api_url_is()."denkimAPILogic/MainPackages.AdministratorCreateClientInsuranceInformation";
 
-        $header_array= array('Cookie:'.$_SESSION['cookie'],'Authorization:'.api_key_is(),'Origin:/senior_administrator/claims.php');
+                            $myvars='session_key='.$_SESSION['session_key'].
+                                    '&client_name='.$client_name.
+                                    '&item_type='.$item_type.
+                                    '&company='.$company.
+                                    '&class_of_insurance='.$class_of_insurance.
+                                    '&policy_number='.$policy_number.
+                                    '&preimium_charged='.$preimium_charged.
+                                    '&renewal_date='.$renewal_date;
+
+                            $header_array= array('Cookie:'.$_SESSION['cookie'],'Authorization:'.api_key_is(),'Origin:/senior_administrator/clients.php');
+
+                            $returned_json=send_curl_post($url_is,$myvars,$header_array);//cap output
+
+                            $returned_json_decoded= json_decode($returned_json,true);//decode
+
+                            $check_is=$returned_json_decoded["check"];//check
+
+                            $message_is=$returned_json_decoded["message"];//message
+                            
+                            
+                            if($check_is==true)//if check is true
+                            {
+
+                                  header('location: '.$full_link.'&message='.$message_is.'&type=1');//
+                            }
+                            else//else failed
+                            {
+
+                                header('location: '.$full_link.'&message='.$message_is.'&type=2');//
+                            } 
+                        
+
+                    }
+     
+                    
+                    
+                    //fetch
+        $url_is=the_api_authentication_api_url_is()."denkimAPILogic/MainPackages.AdministratorFetchClientInsuranceInformationDetails";
+
+        $myvars='session_key='.$_SESSION['session_key'].'&limit='.$limit.'&skip='.$skip.'&sort_column='.$sort_column.'&sort_order='.$sort_order;
+
+        $header_array= array('Cookie:'.$_SESSION['cookie'],'Authorization:'.api_key_is(),'Origin:/senior_administrator/clients.php');
 
         $returned_json=send_curl_post($url_is,$myvars,$header_array);//cap output
         
@@ -73,7 +138,7 @@ if(isset($_GET['l']) && is_numeric($_GET['l']) && ( $_GET['s']==0 || is_numeric(
         
         $check_is=$returned_json_decoded["check"];//check
         
-        
+       
         //draw
         if($check_is==true)//if check is true
         {
@@ -85,41 +150,76 @@ if(isset($_GET['l']) && is_numeric($_GET['l']) && ( $_GET['s']==0 || is_numeric(
             $total_for_table_rows=$skip+$limit;//total for table highlight js function
             $table_head='<tr bgcolor="white">
                          <th>#</th>
-                             <th><a href="#"onmouseover="hover_link(\'type_of_claim_td\',\''.$total_for_table_rows.'\');" onmouseout="out_link(\'type_of_claim_td\',\''.$total_for_table_rows.'\');" >Type of claim</a></th>
-                            <th><a href="#"onmouseover="hover_link(\'claim_number_td\',\''.$total_for_table_rows.'\');" onmouseout="out_link(\'claim_number_td\',\''.$total_for_table_rows.'\');" >Claim number</a></th>
-                            <th><a href="#" onmouseover="hover_link(\'company_name_td\',\''.$total_for_table_rows.'\');" onmouseout="out_link(\'company_name_td\',\''.$total_for_table_rows.'\');" >Company name</a></th>
-                            <th><a href="#" onmouseover="hover_link(\'status_td\',\''.$total_for_table_rows.'\');" onmouseout="out_link(\'status_td\',\''.$total_for_table_rows.'\');" >Status</a></th>
-                             <th><a href="#"onmouseover="hover_link(\'date_reported_td\',\''.$total_for_table_rows.'\');" onmouseout="out_link(\'date_reported_td\',\''.$total_for_table_rows.'\');" >Date reported</a></th>
-                           
-                            <th><a href="#" onmouseover="hover_link(\'view_td\',\''.$total_for_table_rows.'\');" onmouseout="out_link(\'view_td\',\''.$total_for_table_rows.'\');" >View</a></th>
-                            <th><a href="#" onmouseover="hover_link(\'delete_td\',\''.$total_for_table_rows.'\');" onmouseout="out_link(\'delete_td\',\''.$total_for_table_rows.'\');" >Delete</a></th>
+                             <th><a href="'.$link_without_sort_column_sort_order.'&sc=client_name&so='.return_script_order($sort_column,$sort_order,"client_name").'"onmouseover="hover_link(\'client_name_td\',\''.$total_for_table_rows.'\');" onmouseout="out_link(\'client_name_td\',\''.$total_for_table_rows.'\');" >Client name</a></th>
+                            <th><a href="'.$link_without_sort_column_sort_order.'&sc=item_type&so='.return_script_order($sort_column,$sort_order,"item_type").'"onmouseover="hover_link(\'item_type_td\',\''.$total_for_table_rows.'\');" onmouseout="out_link(\'item_type_td\',\''.$total_for_table_rows.'\');" >Item type</a></th>
+                             <th><a href="'.$link_without_sort_column_sort_order.'&sc=company&so='.return_script_order($sort_column,$sort_order,"company").'" onmouseover="hover_link(\'company_td\',\''.$total_for_table_rows.'\');" onmouseout="out_link(\'company_td\',\''.$total_for_table_rows.'\');" >Company</a></th>
+                            <th><a href="'.$link_without_sort_column_sort_order.'&sc=class_of_insurance&so='.return_script_order($sort_column,$sort_order,"class_of_insurance").'" onmouseover="hover_link(\'class_of_insurance_td\',\''.$total_for_table_rows.'\');" onmouseout="out_link(\'class_of_insurance_td\',\''.$total_for_table_rows.'\');" >Insurance class</a></th>
+                            <th><a href="'.$link_without_sort_column_sort_order.'&sc=policy_number&so='.return_script_order($sort_column,$sort_order,"policy_number").'" onmouseover="hover_link(\'policy_number_td\',\''.$total_for_table_rows.'\');" onmouseout="out_link(\'policy_number_td\',\''.$total_for_table_rows.'\');" >Policy number</a></th>
+                            <th><a href="'.$link_without_sort_column_sort_order.'&sc=preimium_charged&so='.return_script_order($sort_column,$sort_order,"preimium_charged").'" onmouseover="hover_link(\'preimium_charged_td\',\''.$total_for_table_rows.'\');" onmouseout="out_link(\'preimium_charged_td\',\''.$total_for_table_rows.'\');" >Premium</a></th>
+                                <th><a href="'.$link_without_sort_column_sort_order.'&sc=renewal_date&so='.return_script_order($sort_column,$sort_order,"renewal_date").'" onmouseover="hover_link(\'renewal_date_td\',\''.$total_for_table_rows.'\');" onmouseout="out_link(\'renewal_date_td\',\''.$total_for_table_rows.'\');" >Renewal date</a></th>
+                            <th><a href="'.$link_without_sort_column_sort_order.'&sc=shared_with&so='.return_script_order($sort_column,$sort_order,"shared_with").'" onmouseover="hover_link(\'shared_with_td\',\''.$total_for_table_rows.'\');" onmouseout="out_link(\'shared_with_td\',\''.$total_for_table_rows.'\');" >Share count</a></th>
+                            <th><a href="'.$link_without_sort_column_sort_order.'&sc=time_stamp&so='.return_script_order($sort_column,$sort_order,"time_stamp").'" onmouseover="hover_link(\'time_stamp_td\',\''.$total_for_table_rows.'\');" onmouseout="out_link(\'time_stamp_td\',\''.$total_for_table_rows.'\');" >Date</a></th>
+                             <th><a href="'.$link_without_sort_column_sort_order.'&sc=time_stamp&so='.return_script_order($sort_column,$sort_order,"time_stamp").'" onmouseover="hover_link(\'add_juniors_td\',\''.$total_for_table_rows.'\');" onmouseout="out_link(\'add_juniors_td\',\''.$total_for_table_rows.'\');" >Share</a></th>
+                             <th><a href="'.$link_without_sort_column_sort_order.'&sc=time_stamp&so='.return_script_order($sort_column,$sort_order,"time_stamp").'" onmouseover="hover_link(\'edit_td\',\''.$total_for_table_rows.'\');" onmouseout="out_link(\'edit_td\',\''.$total_for_table_rows.'\');" >Edit</a></th>
+                             <th><a href="'.$link_without_sort_column_sort_order.'&sc=time_stamp&so='.return_script_order($sort_column,$sort_order,"time_stamp").'" onmouseover="hover_link(\'delete_td\',\''.$total_for_table_rows.'\');" onmouseout="out_link(\'delete_td\',\''.$total_for_table_rows.'\');" >Delete</a></th>
+                            
                             </tr>';
             $from_one_counter=1;//used to know how many rows are printed from one so as to append table head
             foreach ($message_is as $value) 
             {//start of foreach $message_is as $value
-                  $_id=$value['_id']['$oid'];
-                  $type_of_claim=$value['type_of_claim'];
-                  $claim_number=$value['claim_number'];
-                  $date_reported=$value['date_reported'];
-                  $company_name=$value['company_name'];
-                  $status=$value['status'];
-                  $seen_status=$value['seen_status'];
+                 $_id=$value['_id']['$oid'];
+                  $client_name=$value['client_name'];
+                  $item_type=$value['item_type'];
+                  $company=$value['company'];
+                  $class_of_insurance=$value['class_of_insurance'];
+                  $policy_number=$value['policy_number'];
+                  $preimium_charged=$value['preimium_charged'];
+                  $renewal_date=$value['renewal_date'];
+                  $shared_with=$value['shared_with'];
+                  $time_stamp=$value['time_stamp'];
                   
                   
                   $row_color=$count%2;
                   $row_color=$row_color==0?'odd':'even';
-                                                         
+                             
+                  $explode_renewal_date= explode('-', $renewal_date);
+                  
+                  $full_edit_link=$edit_link.'&client_name='.$client_name.
+                                    '&item_type='.$item_type.
+                                    '&company='.$company.
+                                    '&class_of_insurance='.$class_of_insurance.
+                                    '&policy_number='.$policy_number.
+                                    '&preimium_charged='.$preimium_charged.
+                                    '&renewal_date='.$renewal_date.
+                                    '&_id='.$_id;
+                  $full_add_remove_link=$add_remove_link.'&client_name='.$client_name.
+                                    '&item_type='.$item_type.
+                                    '&company='.$company.
+                                    '&class_of_insurance='.$class_of_insurance.
+                                    '&policy_number='.$policy_number.
+                                    '&preimium_charged='.$preimium_charged.
+                                    '&renewal_date='.$renewal_date.
+                                    '&_id='.$_id.
+                                    '&shared_with='.base64_encode(json_encode($shared_with))
+                                    
+                                        ;
+                  
                   $table=$table.'<tr class="'.$row_color.'" id="row_data">
                                                 <td>'.($count+1).'</td>  
-                                                                <td id="type_of_claim_td'.$count.'" >'.$type_of_claim.'</td>
-                                                                <td id="claim_number_td'.$count.'" >'.$claim_number.'</td>
-                                                                <td id="company_name_td'.$count.'" >'.$company_name.'</td>  
-                                                                <td id="status_td'.$count.'" >'.$status.'</td> 
-                                                                    <td id="date_reported_td'.$count.'" >'.$date_reported.'</td> 
-                                                                <td id="view_td'.$count.'" ><a href="'.$view_link.'&_id='.$_id.'" title="View and edit '.$claim_number.'">View/Edit</a></td>   
-                                                                <td id="delete_td'.$count.'" ><span id="red_text_span"><a href="'.$delete_link.'&_id='.$_id.'&cn='.$claim_number.'" title="Remove '.$claim_number.'">Delete</a></span></td>   
-                                                  
-                                                </tr>';
+                                                                <td id="client_name_td'.$count.'" >'.$client_name.'</td>
+                                                                <td id="item_type_td'.$count.'" >'.$item_type.'</td>
+                                                                <td id="company_td'.$count.'" >'.$company.'</td>  
+                                                                <td id="class_of_insurance_td'.$count.'" >'.$class_of_insurance.'</td>   
+                                                                <td id="policy_number_td'.$count.'" >'.$policy_number.'</td>   
+                                                                <td id="preimium_charged_td'.$count.'" >'.number_format($preimium_charged,2).'</td>   
+                                                                <td id="renewal_date_td'.$count.'" >'.$explode_renewal_date[2].'-'.$explode_renewal_date[1].'-'.$explode_renewal_date[0].'</td> 
+                                                                <td id="shared_with_td'.$count.'" >'.count($shared_with).'</td>  
+                                                                <td id="time_stamp_td'.$count.'" >'.return_date_function($time_stamp).'</td> 
+                                                                <td id="add_juniors_td'.$count.'" ><a href="'.$full_add_remove_link.'" title="Share this entry with junior admins">Share</a></td>
+                                                                <td id="edit_td'.$count.'" ><a href="'.$full_edit_link.'" title="Edit this entry">Edit</a></td> 
+                                                                <td id="delete_td'.$count.'" ><span id="red_text_span"><a href="'.$delete_link.'&_id='.$_id.'&cn='.$client_name.'" title="Remove this entry">Delete</a></span></td>   
+                                                                    
+                                                    </tr>';
                   $table=$from_one_counter%$rows_every==0?$table.$table_head:$table;//if rows to add header is reached then add header
                   
                   $count++;
@@ -132,6 +232,8 @@ if(isset($_GET['l']) && is_numeric($_GET['l']) && ( $_GET['s']==0 || is_numeric(
         else//else failed
         {
             $message_is=$returned_json_decoded["message"];//message
+            // $message=$message_is;
+           // header('location: logs_view.php?c='.$_GET['c'].'&l='.$_GET['l'].'&s='.$_GET['s'].'&message='.$message_is.'&type=2');//
             if($message_is=='')
             {
                 header('location: ../logout.php?message=Your session has expired, please log in again!&type=2');
@@ -140,75 +242,7 @@ if(isset($_GET['l']) && is_numeric($_GET['l']) && ( $_GET['s']==0 || is_numeric(
             {
                 $message='<span id="bad_upload_message">'.$message_is.'</span>';
             }
-           // header('location: logs_view.php?c='.$_GET['c'].'&l='.$_GET['l'].'&s='.$_GET['s'].'&message='.$message_is.'&type=2');//
         }
-        
-        
-                    //submit
-                    if(isset($_POST['policy_number']) && !empty($_POST['policy_number']) && 
-                    isset($_POST['type_of_claim']) && !empty($_POST['type_of_claim']) &&
-                    isset($_POST['claim_number']) && !empty($_POST['claim_number']) &&
-                    isset($_POST['date_reported']) && !empty($_POST['date_reported']) &&
-                    isset($_POST['company_name']) && !empty($_POST['company_name']) &&
-                    isset($_POST['date_of_loss']) && !empty($_POST['date_of_loss']) &&
-                    isset($_POST['location_of_loss']) && !empty($_POST['location_of_loss']) &&
-                    isset($_POST['police_date_reported']) && !empty($_POST['police_date_reported']) &&
-                    isset($_POST['status']) && !empty($_POST['status']) &&
-                    isset($_POST['remarks']) && !empty($_POST['remarks']) 
-                    )
-                    {  
-                        $policy_number=trim($_POST['policy_number']);
-                        $type_of_claim=trim($_POST['type_of_claim']);
-                        $claim_number=trim($_POST['claim_number']);
-                        $date_reported=trim($_POST['date_reported']);
-                        $company_name=trim($_POST['company_name']);
-                        $date_of_loss=trim($_POST['date_of_loss']);
-                        $location_of_loss=trim($_POST['location_of_loss']);
-                        $police_date_reported=trim($_POST['police_date_reported']);
-                        $status=trim($_POST['status']);
-                        $remarks=trim($_POST['remarks']);
-
-                       
-                            $url_is=the_api_authentication_api_url_is()."denkimAPILogic/MainPackages.AdministratorCreateClaim";
-
-                            $myvars='session_key='.$_SESSION['session_key'].'&email_address='.$email_address.'&policy_number='.$policy_number.'&type_of_claim='.$type_of_claim.'&claim_number='.$claim_number.'&date_reported='.$date_reported.'&company_name='.$company_name.'&date_of_loss='.$date_of_loss.'&location_of_loss='.$location_of_loss.'&police_date_reported='.$police_date_reported.'&status='.$status.'&remarks='.$remarks;
-
-                             $header_array= array('Cookie:'.$_SESSION['cookie'],'Authorization:'.api_key_is(),'Origin:/senior_administrator/claims.php');
-
-                            $returned_json=send_curl_post($url_is,$myvars,$header_array);//cap output
-
-                            $returned_json_decoded= json_decode($returned_json,true);//decode
-
-                            $check_is=$returned_json_decoded["check"];//check
-
-                            $message_is=$returned_json_decoded["message"];//message
-
-                            if($check_is==true)//if check is true
-                            {
-                                    
-                                    //login and send message
-                                    $message_is_is=login_behalf_of_client($email_address,'/senior_administrator/claims.php');
-                                    //get client phone number
-                                    $client_info=get_specific_client_details($_SESSION['session_key'],$_SESSION['cookie'],$email_address,'/senior_administrator/claims.php');
-                                    //echo json_encode($client_info);
-                                    $message_send="Hello ".$full_names.", claim number ".$claim_number." of type ".$type_of_claim." has been created in your DENKIM account. Please login with the following link to view. ".$message_is_is;
-                                    //send message to notify on claim
-                                    send_sms_message($_SESSION['session_key'],$_SESSION['cookie'],$message_send,$client_info['phone_number'],'/senior_administrator/claims.php');
-                                    //send email
-                                    $header_email_is="New claim number ". strtoupper($claim_number);
-                                    send_email_message($_SESSION['session_key'],$_SESSION['cookie'],$client_info['email_address'],$header_email_is,$message_send,'/senior_administrator/claims.php'); 
-                                  
-                                    header('location: '.$full_link.'&message='.$message_is.'&type=1');//
-                            }
-                            else//else failed
-                            {
-
-                                header('location: '.$full_link.'&message='.$message_is.'&type=2');//
-                            } 
-                       
-
-                    }
-     
                     
 }
 
@@ -220,7 +254,7 @@ if(isset($_GET['l']) && is_numeric($_GET['l']) && ( $_GET['s']==0 || is_numeric(
 <head>
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-  <title>Claims</title>
+        <title>Clients information</title>
     <!-- Favicon-->
     <link rel="icon" href="../../favicon.ico" type="image/x-icon">
 
@@ -351,7 +385,7 @@ if(isset($_GET['l']) && is_numeric($_GET['l']) && ( $_GET['s']==0 || is_numeric(
                             <span>Clients</span>
                         </a>
                     </li>
-					<<li>
+				<li>
 					<a href="upload_html_logo.php" title="Upload logo and html for your policies to the file server">
                            <i class="material-icons">attachment</i>
                             <span>File Server</span>
@@ -423,47 +457,41 @@ if(isset($_GET['l']) && is_numeric($_GET['l']) && ( $_GET['s']==0 || is_numeric(
                         <div class="header">
                             <div class="row clearfix">
                                 <div class="col-xs-12 col-sm-6">
-                                    <h2><?php echo $full_names;?></h2>
+                                    <h2>Clients</h2>
                                 </div>
                                </div>
                          </div>
                         <div class="body">
-						
-		       <?php echo $message;?><br>
+			     <?php echo $message;?><br>
           <form action="<?php echo $full_link;?>" method="POST">
-            <input type="text" name="policy_number" placeholder="Policy number"/>
-            <input type="text" name="type_of_claim" placeholder="Type of claim"/>
-            <input type="text" name="claim_number"  placeholder="Claim number"/>
-            <input type="date" name="date_reported" title="Date reported" />
-            <input type="text" name="company_name"  placeholder="Company name"/>
-            <input type="date" name="date_of_loss" title="Date of loss" />
-            <input type="text" name="location_of_loss"  placeholder="Location of loss"/>
-            <input type="date" name="police_date_reported" title="Police date reported" />
-            <input type="text" name="status" placeholder="Status" />
-            <textarea name="remarks" cols="20" rows="10" placeholder="Remarks..."></textarea>
-             <button type="submit" class="btn btn-primary m-t-15 waves-effect">Save</button>
+            <input type="text" name="client_name" required placeholder="Client name"/>
+            <input type="text" name="item_type" required placeholder="Item type"/>
+            <input type="text" name="company" required placeholder="Company name"/>
+            <input type="text" name="class_of_insurance" required  placeholder="Class of insurance"/>
+            <input type="text" name="policy_number" required placeholder="Policy number"/>
+            <input type="number" name="preimium_charged" required placeholder="Premium charged"/>
+            <input type="date" name="renewal_date" required placeholder="Renewal date"/><br>
+              <button type="submit" class="btn btn-primary m-t-15 waves-effect">Save</button>
          </form>
-         
+        
                         </div>
                     </div>
                 </div>
             </div>
             <!-- #END# -->
-			  <!-- innerbody -->
+			    <!-- innerbody -->
             <div class="row clearfix">
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                     <div class="card">
                         <div class="header">
                             <div class="row clearfix">
                                 <div class="col-xs-12 col-sm-6">
-                                    <h2> </h2>
+                                    <h2>Edit client information</h2>
                                 </div>
                                </div>
                          </div>
                         <div class="body">
-						
-		 
-                            <form method="POST" action="<?php echo $full_link;?>" id="browse_form">
+		 <form method="POST" action="<?php echo $full_link;?>" id="browse_form">
                                 Start row: <input type="number" name="skip_is" min="0" value="<?php echo $skip;?>" />  Number of rows: <input type="number" name="limit_is" min="1" value="<?php echo $limit;?>" /> Headers every: <input type="number" name="headers_is" min="10" value="<?php echo $rows_every;?>" /> rows <input type="submit" value="GO"/> 
                             </form><br>
                            <?php echo $table;?><br>
@@ -473,8 +501,10 @@ if(isset($_GET['l']) && is_numeric($_GET['l']) && ( $_GET['s']==0 || is_numeric(
 
                            <script type="text/javascript" src="../../javascript/jquery-1.11.1.min.js"></script>
                            <script type="text/javascript" src="../../javascript/highlight.js"></script>
-						   
-                       
+                            <script type="text/javascript" src="../../javascript/are_you_huma_reload.js"></script>
+		
+		 
+                        </div>
                     </div>
                 </div>
             </div>

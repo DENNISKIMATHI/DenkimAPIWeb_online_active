@@ -295,6 +295,13 @@ if(isset($_GET['e']) && !empty($_GET['e']) && isset($_GET['f']) && !empty($_GET[
                         </a>
                     </li>
                     
+                    <li>
+                        <a href="clients_information.php?l=10&s=0&sc=time_stamp&so=dsc&re=100" title="Add and share clients information">
+                            <i class="material-icons">share</i>
+                            <span>Clients information</span>
+                        </a>
+                    </li>
+                    
                  <li>
                         <a href="insurance_policies.php" title="Add and delete insurance policies">
                             <i class="material-icons">accessible</i>

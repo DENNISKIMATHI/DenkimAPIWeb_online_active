@@ -1,6 +1,7 @@
 ﻿<?php
-require '../../le_functions/functions.php';
 require '../../le_functions/sessions.php';
+require '../../le_functions/functions.php';
+
 
 if(loggedin() && !empty($_SESSION['session_key']) && !empty($_SESSION['cookie']))//if logged in and user_id session is not empty
 {
@@ -12,102 +13,88 @@ session_destroy();
 header('location: ../ ');	
 }
 
-
 //setting edit message
 if(isset($_GET['message']) && !empty($_GET['message']) && isset($_GET['type']) && !empty($_GET['type']))
 {
 	$message=$_GET['message'];
         $type=$_GET['type'];
         $good_bad_id=$type==1? 'good_upload_message': 'bad_upload_message';
-	 $message='<span id="'.$good_bad_id.'">'.$message.'</span>';
+	$message='<span id="'.$good_bad_id.'">'.$message.'</span>';
 }
 
 
 
-if(isset($_GET['e']) && !empty($_GET['e']) && isset($_GET['f']) && !empty($_GET['f']))
+
+
+
+
+
+
+
+if(  isset($_GET['l']) && is_numeric($_GET['l']) && ( $_GET['s']==0 || is_numeric($_GET['s']) ) &&  isset($_GET['sc']) && !empty($_GET['sc']) && isset($_GET['so']) && !empty($_GET['so']) && isset($_GET['re']) && !empty($_GET['re']) && isset($_GET['_id']) && !empty($_GET['_id']) && isset($_GET['cn']) && !empty($_GET['cn']))
 {
-                $email_address=trim($_GET['e']);
-                $full_names=trim($_GET['f']);
-                $type=2;
-                //fetch
-            $returned_json_decoded= fetch_policy_user_type($type,$email_address,$_SESSION['session_key'],$_SESSION['cookie'],'/junior_administrator/view_user_in_patient_medical_insurance.php');
-
-            $check_is=$returned_json_decoded["check"];//check
-
-            $message_is=$returned_json_decoded["message"];//message
-
-
-            if($check_is==true)//if check is true
-            {
-
-                foreach ($message_is as $value) 
-                {
-                    //echo json_encode($value).'<hr>';
-                    
-                    $policy_number=$value['policy_number'];
-                    
-                    $policy_info= fetch_policy_type_specific($type,$policy_number,'/junior_administrator/view_user_in_patient_medical_insurance.php');
-                    $policy_infocheck_is=$policy_info["check"];//check
-                    $policy_infomessage_is=$policy_info["message"];//message
-                    
-                     $array_to_print=array();
-                    //handle if policy check s true
-                    if($policy_infocheck_is==true)
-                    {
-                         //echo json_encode($policy_infomessage_is).'<hr>';
-                            $policy_id=$value['_id']['$oid'];
-                           
-                            $array_to_print['policy_id']=$policy_id;
-                            $array_to_print['policy_number']=$policy_number;
-                            $array_to_print['fathers_array']=$value['selected_father_insurance'];
-                            $array_to_print['mothers_array']=$value['selected_mother_insurance'];
-                            $array_to_print['childrens_array']=$value['selected_children_insurance'];
-                            $array_to_print['active_status']=$value['active_status'];
-                            $array_to_print['selected_policy_time_stamp']=$value['time_stamp'];
-                            $array_to_print['company_name']=$policy_infomessage_is['company_name'];
-                            $array_to_print['father_insurance']=$policy_infomessage_is['father_insurance'];
-                            $array_to_print['mother_insurance']=$policy_infomessage_is['mother_insurance'];
-                            $array_to_print['children_insurance']=$policy_infomessage_is['children_insurance '];
-                            $array_to_print['expiry_duration_days']=$policy_infomessage_is['expiry_duration_days'];
-                            $array_to_print['logo_url']=$policy_infomessage_is['logo_url'];
-                            $array_to_print['html_url']=$policy_infomessage_is['html_url'];
-                            $array_to_print['company_time_stamp']=$policy_infomessage_is['time_stamp'];
-                            
-                            
-                
-                            $returned_array=make_in_patient_medical_view($array_to_print);
-                            $list.=$returned_array['html'].'<br>';
-                    }
-                        
-                }
-                         
-
-
-            }
-            else//else failed
-            {
-
-                    if($message_is=='')
-                    {
-                        header('location: ../logout.php?message=Your session has expired, please log in again!&type=2');
-                    }
-                    else
-                    {
-                         $message='<span id="bad_upload_message">'.$message_is.'</span>';
-                    }
-
-            } 
+	$limit=trim($_GET['l']);
+        $skip=trim($_GET['s']);
+        $sort_column=trim($_GET['sc']);
+        $sort_order=trim($_GET['so']);
+        $rows_every=trim($_GET['re']);
+        $_id=trim($_GET['_id']);
+        $cn=trim($_GET['cn']);
         
+        
+        $full_link="clients_information_delete.php?l=".$limit."&s=".$skip."&sc=".$sort_column."&so=".$sort_order."&re=".$rows_every."&_id=".$_id."&cn=".$cn;//for form submission
+        $return_link="clients_information.php?l=".$limit."&s=".$skip."&sc=".$sort_column."&so=".$sort_order."&re=".$rows_every;//for form submission
+        
+        $statement='Are you sure you want to delete insurance information for '.strtoupper($cn).'  ? <span id="red_text_span"><a href="'.$full_link.'&a=yes">[YES]</a></span>  &nbsp;&nbsp;&nbsp;&nbsp;  <span id="green_text_span"><a href="'.$return_link.'">[NO]</a></span> ';
+     
+        if(isset($_GET['a']) && !empty($_GET['a']) )
+        {
+            $answer=  strtolower(trim($_GET['a']));
+            if($answer=="yes")
+            {
+                //delete
+                            $url_is=the_api_authentication_api_url_is()."denkimAPILogic/MainPackages.AdministratorRemoveClientInsuranceInformation";
+
+                            $myvars='session_key='.$_SESSION['session_key'].'&_id='.$_id;
+
+                             $header_array= array('Cookie:'.$_SESSION['cookie'],'Authorization:'.api_key_is(),'Origin:/senior_administrator/clients_delete.php');
+
+                            $returned_json=send_curl_post($url_is,$myvars,$header_array);//cap output
+                            
+                            
+                            $returned_json_decoded= json_decode($returned_json,true);//decode
+
+                            $check_is=$returned_json_decoded["check"];//check
+
+                            $message_is=$returned_json_decoded["message"];//message
+
+                            if($check_is==true)//if check is true
+                            {
+
+                                  header('location: '.$return_link.'&message='.$message_is.'&type=1');//
+                            }
+                            else//else failed
+                            {
+
+                                header('location: '.$return_link.'&message='.$message_is.'&type=2');//
+                            } 
+            }
+            else
+            {
+                 header('location: '.$return_link);//
+            }
+        }
 }
 
-
+    
+//check login
 ?>
 <html>
 
 <head>
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-  <title>View in patient medical insurance</title>
+         <title>Delete client</title>
     <!-- Favicon-->
     <link rel="icon" href="../../favicon.ico" type="image/x-icon">
 
@@ -161,7 +148,7 @@ if(isset($_GET['e']) && !empty($_GET['e']) && isset($_GET['f']) && !empty($_GET[
             <div class="navbar-header">
                
                 <a href="javascript:void(0);" class="bars"></a>
-                <a class="navbar-brand" href="../junior_administrator/" title="Go to the main page"><img src="../../images/logo.png" alt="Denkim insurance" height="50" width="200"></a>
+                <a class="navbar-brand" href="../senior_administrator/" title="Go to the main page"><img src="../../images/logo.png" alt="Denkim insurance" height="50" width="200"></a>
              </div>
             
         </div>
@@ -176,7 +163,7 @@ if(isset($_GET['e']) && !empty($_GET['e']) && isset($_GET['f']) && !empty($_GET[
                     <img src="../../images/user.png" width="48" height="48" alt="User" />
                 </div>
                 <div class="info-container">
-                    <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Junior</div>
+                    <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Senior</div>
                     <div class="email">Administrator</div>
                     <div class="btn-group user-helper-dropdown">
                         <i class="material-icons" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">keyboard_arrow_down</i>
@@ -197,22 +184,45 @@ if(isset($_GET['e']) && !empty($_GET['e']) && isset($_GET['f']) && !empty($_GET[
                 <ul class="list">
                     <li class="header">MAIN NAVIGATION</li>
                     <li class="active">
-                       <a href="../junior_administrator/" title="Go to the main page">
+                       <a href="../senior_administrator/" title="Go to the main page">
                             <i class="material-icons">home</i>
                             <span>Home</span>
                         </a>
                     </li>
-                
+                    <li>
+                       <a href="junior_administrators.php?c=2&l=10&s=0&sc=time_stamp&so=dsc&re=100" title="Add or delete junior admins">
+                            <i class="material-icons">person</i>
+                            <span>Junior Administrators</span>
+                        </a>
+                    </li> 
+                    <li>
+                       <a href="claim_handlers.php?c=3&l=10&s=0&sc=time_stamp&so=dsc&re=100" title="Add or delete claim handlers">
+                            <i class="material-icons">person</i>
+                            <span>Claim handlers</span>
+                        </a>
+                    </li>
+                    <li>
+                       <a href="assessor_loss_adjsuter.php?c=4&l=10&s=0&sc=time_stamp&so=dsc&re=100" title="Add or delete Assessors/Loss adjusters">
+                            <i class="material-icons">person</i>
+                            <span>Assessors/Loss adjusters</span>
+                        </a>
+                    </li> 
+                    <li>
+                       <a href="repair_garage.php?c=5&l=10&s=0&sc=time_stamp&so=dsc&re=100" title="Add or delete repair garages">
+                            <i class="material-icons">person</i>
+                            <span>Repair garages</span>
+                        </a>
+                    </li> 
+                    <li>
+                       <a href="towing_rescue.php?c=6&l=10&s=0&sc=time_stamp&so=dsc&re=100" title="Add or delete towing and rescue">
+                            <i class="material-icons">person</i>
+                            <span>Towing and rescue</span>
+                        </a> 
+                    </li>
                     <li>
                         <a href="clients.php?l=10&s=0&sc=time_stamp&so=dsc&re=100" title="Add or delete clients, view their policies, select, delete and edit policies for them, create and delete claims, also make, veiw, edit and delete payments">
                             <i class="material-icons">contacts</i>
                             <span>Clients</span>
-                        </a>
-                    </li>
-					 <li>
-                        <a href="insurance_policies.php" title="Add and delete insurance policies">
-                            <i class="material-icons">accessible</i>
-                            <span>Insurance Policies</span>
                         </a>
                     </li>
 					<li>
@@ -238,7 +248,21 @@ if(isset($_GET['e']) && !empty($_GET['e']) && isset($_GET['f']) && !empty($_GET[
                         </a>
                     </li>
                     
-                   <li>
+                 <li>
+                        <a href="insurance_policies.php" title="Add and delete insurance policies">
+                            <i class="material-icons">accessible</i>
+                            <span>Insurance Policies</span>
+                        </a>
+                    </li>
+                  <li>
+                       <a href="mobile_payments.php?l=10&s=0&sc=seen_status&so=asc&re=100" title="View made mobile payments and assign them to correct client policies">
+                            <i class="material-icons">account_balance_wallet</i>
+                            <span>Mobile Payments</span>
+                         <?php echo get_mobile_payments_count_function($_SESSION['session_key'],$_SESSION['cookie'],'/senior_administrator/*');?></a>
+                    </li>
+                               
+                
+                    <li>
                        <a href="messages.php" title="Send and get messages">
                             <i class="material-icons">message</i>
                             <span>Messages </span>
@@ -266,28 +290,27 @@ if(isset($_GET['e']) && !empty($_GET['e']) && isset($_GET['f']) && !empty($_GET[
     <section class="content">
         <div class="container-fluid">
             <div class="block-header">
-              <!-- innerbody -->
+               <!-- innerbody -->
             <div class="row clearfix">
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                     <div class="card">
                         <div class="header">
                             <div class="row clearfix">
                                 <div class="col-xs-12 col-sm-6">
-                                     <h2><?php echo $full_names;?></h2>
+                                    <h2>delete Client</h2>
                                 </div>
                                </div>
                          </div>
                         <div class="body">
 			 <?php echo $message;?><br>
-        <?php echo $list;?><br>
-			</div>
+          <?php echo $statement;?>
+        
+                        </div>
                     </div>
                 </div>
             </div>
             <!-- #END# -->
-		
- <a href="../junior_administrator/" title="Go to the main page" class="btn btn-primary m-t-15 waves-effect"> <i class="material-icons">arrow_back</i>Back </a><br><br> 			  
-			  
+		 <a href="../senior_administrator/" title="Go to the main page" class="btn btn-primary m-t-15 waves-effect"> <i class="material-icons">arrow_back</i>Back </a><br><br> 	   
             </div>
         </div>
     </section>

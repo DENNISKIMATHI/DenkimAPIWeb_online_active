@@ -144,6 +144,13 @@ header('location: ../ ');
                         </a>
                     </li>
                     
+                    <li>
+                        <a href="clients_information.php?l=10&s=0&sc=time_stamp&so=dsc&re=100" title="Add and share clients information">
+                            <i class="material-icons">share</i>
+                            <span>Clients information</span>
+                        </a>
+                    </li>
+                    
                    <li>
                        <a href="messages.php" title="Send and get messages">
                             <i class="material-icons">message</i>
