@@ -228,6 +228,24 @@ function fetch_policy_privacy($type,$origin)
     return $returned_json_decoded;
 }
 
+
+//function to fetch currency type
+function fetch_policy_currency($type,$origin)
+{
+    //fetch
+    $url_is=the_api_authentication_api_url_is()."denkimAPILogic/MainPackages.PolicyFetchCurrency";
+
+    $myvars='type='.$type;
+
+    $header_array= array('Authorization:'.api_key_is(),'Origin:'.$origin);
+
+    $returned_json=send_curl_post($url_is,$myvars,$header_array);//cap output
+
+    $returned_json_decoded= json_decode($returned_json,true);//decode
+    
+    return $returned_json_decoded;
+}
+
 function check_if_is_private($array,$policy_number)
 {
     if(count($array)>0)
@@ -243,6 +261,84 @@ function check_if_is_private($array,$policy_number)
     
     return false;
 }
+
+
+function get_select_list_of_currency($policy_currency_array,$policy_number,$currency_lists)
+{
+    $options='';
+    
+    $currency_code='';
+    
+   
+    if(count($policy_currency_array)>0)
+    {
+        foreach ($policy_currency_array as $value) 
+        {
+            if($value['policy_number']==$policy_number)
+            {
+                $currency_code=$value['currency'];
+                
+                //echo $currency_code.'$$$$<br>';
+                if(count($currency_lists[$currency_code])==0 )
+                {
+                    //echo $currency_lists[$currency_code].'----<br>';
+                    
+                    $currency_code='KES';//kenya as default
+                     $options='<option value="'.$currency_lists[$currency_code]['currency_code'].'">'.$currency_lists[$currency_code]['currency_name'].': '.$currency_lists[$currency_code]['currency_code'].'</option>';
+                     
+                }
+                else
+                {
+                   //echo $currency_lists[$currency_code].'***<br>';
+                     $options='<option value="'.$currency_lists[$currency_code]['currency_code'].'">'.$currency_lists[$currency_code]['currency_name'].': '.$currency_lists[$currency_code]['currency_code'].'</option>';
+                }
+               
+            }
+            
+        }
+    }
+    
+    if($currency_code=='')
+    {
+        
+        $currency_code='KES';//kenya as default
+         //echo $currency_code.'***<br>';
+         $options='<option value="'.$currency_lists[$currency_code]['currency_code'].'">'.$currency_lists[$currency_code]['currency_name'].': '.$currency_lists[$currency_code]['currency_code'].'</option>';
+               
+    }
+    
+    
+    
+    foreach ($currency_lists as $key => $currency_item) 
+    {
+        if($key!=$currency_code)
+        {
+            $options=$options.'<option value="'.$currency_item['currency_code'].'">'.$currency_item['currency_name'].': '.$currency_item['currency_code'].'</option>';
+        }
+
+    }
+    return $options;
+}
+
+
+
+//function to fetch currency type
+function fetch_currency_list()
+{
+    //fetch
+    $url_is=the_api_for_php_is_url_is()."fetch_currency";
+
+    $myvars="";
+
+    $header_array= array();
+
+    $returned_json=send_curl_post($url_is,$myvars,$header_array);//cap output
+
+    $returned_json_decoded= json_decode($returned_json,true);//decode
+    
+    return $returned_json_decoded;
+}
+
 
 //function make table out of medical array
 function make_list_out_of_medical_array($array)

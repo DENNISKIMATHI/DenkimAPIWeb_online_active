@@ -74,7 +74,8 @@ if( isset($_GET['l']) && is_numeric($_GET['l']) && ( $_GET['s']==0 || is_numeric
                     isset($_POST['class_of_insurance']) && !empty($_POST['class_of_insurance']) &&
                     isset($_POST['policy_number']) && !empty($_POST['policy_number']) &&
                     isset($_POST['preimium_charged']) && !empty($_POST['preimium_charged']) &&
-                    isset($_POST['renewal_date']) && !empty($_POST['renewal_date']) 
+                    isset($_POST['renewal_date']) && !empty($_POST['renewal_date']) &&
+                    isset($_POST['sum_insured']) && !empty($_POST['sum_insured']) 
                     )
                     {  
                        
@@ -85,6 +86,7 @@ if( isset($_GET['l']) && is_numeric($_GET['l']) && ( $_GET['s']==0 || is_numeric
                         $policy_number=trim($_POST['policy_number']);
                         $preimium_charged=trim($_POST['preimium_charged']);
                         $renewal_date=trim($_POST['renewal_date']);
+                        $sum_insured=trim($_POST['sum_insured']);
 
                         
                             $url_is=the_api_authentication_api_url_is()."denkimAPILogic/MainPackages.AdministratorCreateClientInsuranceInformation";
@@ -96,7 +98,8 @@ if( isset($_GET['l']) && is_numeric($_GET['l']) && ( $_GET['s']==0 || is_numeric
                                     '&class_of_insurance='.$class_of_insurance.
                                     '&policy_number='.$policy_number.
                                     '&preimium_charged='.$preimium_charged.
-                                    '&renewal_date='.$renewal_date;
+                                    '&renewal_date='.$renewal_date.
+                                    '&sum_insured='.$sum_insured;
 
                             $header_array= array('Cookie:'.$_SESSION['cookie'],'Authorization:'.api_key_is(),'Origin:/senior_administrator/clients.php');
 
@@ -156,6 +159,8 @@ if( isset($_GET['l']) && is_numeric($_GET['l']) && ( $_GET['s']==0 || is_numeric
                             <th><a href="'.$link_without_sort_column_sort_order.'&sc=class_of_insurance&so='.return_script_order($sort_column,$sort_order,"class_of_insurance").'" onmouseover="hover_link(\'class_of_insurance_td\',\''.$total_for_table_rows.'\');" onmouseout="out_link(\'class_of_insurance_td\',\''.$total_for_table_rows.'\');" >Insurance class</a></th>
                             <th><a href="'.$link_without_sort_column_sort_order.'&sc=policy_number&so='.return_script_order($sort_column,$sort_order,"policy_number").'" onmouseover="hover_link(\'policy_number_td\',\''.$total_for_table_rows.'\');" onmouseout="out_link(\'policy_number_td\',\''.$total_for_table_rows.'\');" >Policy number</a></th>
                             <th><a href="'.$link_without_sort_column_sort_order.'&sc=preimium_charged&so='.return_script_order($sort_column,$sort_order,"preimium_charged").'" onmouseover="hover_link(\'preimium_charged_td\',\''.$total_for_table_rows.'\');" onmouseout="out_link(\'preimium_charged_td\',\''.$total_for_table_rows.'\');" >Premium</a></th>
+                            <th><a href="'.$link_without_sort_column_sort_order.'&sc=sum_insured&so='.return_script_order($sort_column,$sort_order,"sum_insured").'" onmouseover="hover_link(\'sum_insured_td\',\''.$total_for_table_rows.'\');" onmouseout="out_link(\'sum_insured_td\',\''.$total_for_table_rows.'\');" >Sum insured</a></th>
+                                
                                 <th><a href="'.$link_without_sort_column_sort_order.'&sc=renewal_date&so='.return_script_order($sort_column,$sort_order,"renewal_date").'" onmouseover="hover_link(\'renewal_date_td\',\''.$total_for_table_rows.'\');" onmouseout="out_link(\'renewal_date_td\',\''.$total_for_table_rows.'\');" >Renewal date</a></th>
                             <th><a href="'.$link_without_sort_column_sort_order.'&sc=shared_with&so='.return_script_order($sort_column,$sort_order,"shared_with").'" onmouseover="hover_link(\'shared_with_td\',\''.$total_for_table_rows.'\');" onmouseout="out_link(\'shared_with_td\',\''.$total_for_table_rows.'\');" >Share count</a></th>
                             <th><a href="'.$link_without_sort_column_sort_order.'&sc=time_stamp&so='.return_script_order($sort_column,$sort_order,"time_stamp").'" onmouseover="hover_link(\'time_stamp_td\',\''.$total_for_table_rows.'\');" onmouseout="out_link(\'time_stamp_td\',\''.$total_for_table_rows.'\');" >Date</a></th>
@@ -177,6 +182,7 @@ if( isset($_GET['l']) && is_numeric($_GET['l']) && ( $_GET['s']==0 || is_numeric
                   $renewal_date=$value['renewal_date'];
                   $shared_with=$value['shared_with'];
                   $time_stamp=$value['time_stamp'];
+                  $sum_insured=$value['sum_insured'];
                   
                   
                   $row_color=$count%2;
@@ -191,7 +197,8 @@ if( isset($_GET['l']) && is_numeric($_GET['l']) && ( $_GET['s']==0 || is_numeric
                                     '&policy_number='.$policy_number.
                                     '&preimium_charged='.$preimium_charged.
                                     '&renewal_date='.$renewal_date.
-                                    '&_id='.$_id;
+                                    '&_id='.$_id.'&sum_insured='.$sum_insured;
+                  
                   $full_add_remove_link=$add_remove_link.'&client_name='.$client_name.
                                     '&item_type='.$item_type.
                                     '&company='.$company.
@@ -199,7 +206,7 @@ if( isset($_GET['l']) && is_numeric($_GET['l']) && ( $_GET['s']==0 || is_numeric
                                     '&policy_number='.$policy_number.
                                     '&preimium_charged='.$preimium_charged.
                                     '&renewal_date='.$renewal_date.
-                                    '&_id='.$_id.
+                                    '&_id='.$_id.'&sum_insured='.$sum_insured.
                                     '&shared_with='.base64_encode(json_encode($shared_with))
                                     
                                         ;
@@ -212,6 +219,7 @@ if( isset($_GET['l']) && is_numeric($_GET['l']) && ( $_GET['s']==0 || is_numeric
                                                                 <td id="class_of_insurance_td'.$count.'" >'.$class_of_insurance.'</td>   
                                                                 <td id="policy_number_td'.$count.'" >'.$policy_number.'</td>   
                                                                 <td id="preimium_charged_td'.$count.'" >'.number_format($preimium_charged,2).'</td>   
+                                                                    <td id="sum_insured_td'.$count.'" >'.number_format($sum_insured,2).'</td>  
                                                                 <td id="renewal_date_td'.$count.'" >'.$explode_renewal_date[2].'-'.$explode_renewal_date[1].'-'.$explode_renewal_date[0].'</td> 
                                                                 <td id="shared_with_td'.$count.'" >'.count($shared_with).'</td>  
                                                                 <td id="time_stamp_td'.$count.'" >'.return_date_function($time_stamp).'</td> 
@@ -470,6 +478,7 @@ if( isset($_GET['l']) && is_numeric($_GET['l']) && ( $_GET['s']==0 || is_numeric
             <input type="text" name="class_of_insurance" required  placeholder="Class of insurance"/>
             <input type="text" name="policy_number" required placeholder="Policy number"/>
             <input type="number" name="preimium_charged" required placeholder="Premium charged"/>
+            <input type="number" name="sum_insured" required placeholder="Sum insured"/>
             <input type="date" name="renewal_date" required placeholder="Renewal date"/><br>
               <button type="submit" class="btn btn-primary m-t-15 waves-effect">Save</button>
          </form>

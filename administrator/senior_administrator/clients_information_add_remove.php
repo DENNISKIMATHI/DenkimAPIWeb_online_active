@@ -40,6 +40,8 @@ if( isset($_GET['l']) && is_numeric($_GET['l']) && ( $_GET['s']==0 || is_numeric
         && isset($_GET['preimium_charged']) && !empty($_GET['preimium_charged'])
         && isset($_GET['renewal_date']) && !empty($_GET['renewal_date'])
         && isset($_GET['_id']) && !empty($_GET['_id'])  
+                 
+        && isset($_GET['sum_insured']) && !empty($_GET['sum_insured'])
         && isset($_GET['shared_with']) && !empty($_GET['shared_with'])  
         )
 {
@@ -60,6 +62,8 @@ if( isset($_GET['l']) && is_numeric($_GET['l']) && ( $_GET['s']==0 || is_numeric
         $_id=trim($_GET['_id']);
         $shared_with= trim($_GET['shared_with']);
         
+        $sum_insured= trim($_GET['sum_insured']);
+        
        $shared_with_decoded= base64_decode($shared_with);
        //$shared_with_array= json_decode($shared_with_decoded,true);
        
@@ -78,6 +82,7 @@ if( isset($_GET['l']) && is_numeric($_GET['l']) && ( $_GET['s']==0 || is_numeric
                                     '&preimium_charged='.$preimium_charged.
                                     '&renewal_date='.$renewal_date.
                                     '&_id='.$_id.
+                                    '&sum_insured='.$sum_insured.
                                     '&shared_with='.$shared_with;//for form submission
         
         $return_link="clients_information.php?l=".$limit."&s=".$skip."&sc=".$sort_column."&so=".$sort_order."&re=".$rows_every;//for form submission
@@ -400,7 +405,8 @@ if( isset($_GET['l']) && is_numeric($_GET['l']) && ( $_GET['s']==0 || is_numeric
             <h4><?php echo $company?></h4>
             <h4><?php echo $class_of_insurance?></h4>
             <h4><?php echo $policy_number?></h4>
-            <h4><?php echo $preimium_charged?></h4>
+            <h4><?php echo number_format($preimium_charged,2)?></h4>
+            <h4><?php echo number_format($sum_insured,2)?></h4>
             <h4><?php
              $explode_renewal_date= explode('-', $renewal_date);
             echo $explode_renewal_date[2].'-'.$explode_renewal_date[1].'-'.$explode_renewal_date[0];

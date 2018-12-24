@@ -81,6 +81,43 @@ $message_is=$returned_json_decoded["message"];//message
 
 //get privacy items
 $policy_privacy_array=fetch_policy_privacy('7','/senior_administrator/fire_burglary_theft_insurance.php');
+$policy_currency_array=fetch_policy_currency('7','/senior_administrator/motor_insurance.php');
+$currency_lists=fetch_currency_list();
+
+//submit
+                    if(isset($_GET['currency_code']) && !empty($_GET['currency_code']) && 
+                    isset($_GET['type']) && !empty($_GET['type']) &&
+                    isset($_GET['policy_number']) && !empty($_GET['policy_number']) 
+                    )
+                    {  
+                        
+                             //fetch
+                            $url_is=the_api_authentication_api_url_is()."denkimAPILogic/MainPackages.MakePolicyCurrency";
+
+                            $myvars='session_key='.$_SESSION['session_key'].'&type='.$_GET['type'].'&policy_number='.$_GET['policy_number'].'&currency='.$_GET['currency_code'];
+
+                            $header_array= array('Cookie:'.$_SESSION['cookie'],'Authorization:'.api_key_is(),'Origin:/senior_administrator/junior_administrators.php');
+
+                            $returned_json=send_curl_post($url_is,$myvars,$header_array);//cap output
+
+                            $returned_json_decoded= json_decode($returned_json,true);//decode
+
+                            $check_is=$returned_json_decoded["check"];//check
+                            $message_is=$returned_json_decoded["message"];//message
+
+                            if($check_is==true)//if check is true
+                            {
+
+                                  header('location: ?message='.$message_is.'&type=1');//
+                            }
+                            else//else failed
+                            {
+
+                                header('location: ?message='.$message_is.'&type=2');//
+                            } 
+                        
+
+                    }
 
 if($check_is==true)//if check is true
 {
@@ -123,6 +160,7 @@ if($check_is==true)//if check is true
                                                                           <td id="html_url_td'.$count.'" ><a href="'.$html_url.'" target="_blank">HTML</a></td>
                                                                           <td id="time_stamp_td'.$count.'" >'.return_date_function($time_stamp).'</td>  
                                                                           <td id="privacy_td'.$count.'" >'.$is_private_status.' [<a href="policy_change_privacy.php?s=7&st='.$is_private_status.'&pn='.$policy_number.'&rp=home_insurance.php" >'.$is_private_status_make.'</a>]</td>
+                                                                          <td id="currency_td'.$count.'" ><select id="'.md5($policy_number).'" onchange="submit_me_as_currency(\'7\',\''.$policy_number.'\',\''.md5($policy_number).'\',\'home_insurance.php\');">'.get_select_list_of_currency($policy_currency_array['message'],$policy_number,$currency_lists).'</select></td>
                                                                           <td id="delete_td'.$count.'" ><span id="red_text_span"><a href="policy_delete_type_specific.php?p='.$policy_number.'&t=7&s=home_insurance.php" title="Remove '.$policy_number.'">Delete</a></span></td>   
                                                         </tr>';
                             
@@ -146,6 +184,7 @@ if($check_is==true)//if check is true
                                         <th><a href="#" onmouseover="hover_link(\'time_stamp_td\',\''.$count.'\');" onmouseout="out_link(\'time_stamp_td\',\''.$count.'\');" >Date added</a></th>
                                             
                                         <th><a href="#" onmouseover="hover_link(\'privacy_td\',\''.$count.'\');" onmouseout="out_link(\'privacy_td\',\''.$count.'\');" >Private</a></th>
+                                            <th><a href="#" onmouseover="hover_link(\'currency_td\',\''.$count.'\');" onmouseout="out_link(\'currency_td\',\''.$count.'\');" >Currency</a></th>
                                       <th><a href="#" onmouseover="hover_link(\'delete_td\',\''.$count.'\');" onmouseout="out_link(\'delete_td\',\''.$count.'\');" >Delete</a></th>
                                       </tr>';
                       $table='<table class="table table-bordered table-hover table-responsive">'.$table_head.$table.'

@@ -100,6 +100,8 @@ if( isset($_GET['l']) && is_numeric($_GET['l']) && ( $_GET['s']==0 || is_numeric
                             <th><a href="'.$link_without_sort_column_sort_order.'&sc=class_of_insurance&so='.return_script_order($sort_column,$sort_order,"class_of_insurance").'" onmouseover="hover_link(\'class_of_insurance_td\',\''.$total_for_table_rows.'\');" onmouseout="out_link(\'class_of_insurance_td\',\''.$total_for_table_rows.'\');" >Insurance class</a></th>
                             <th><a href="'.$link_without_sort_column_sort_order.'&sc=policy_number&so='.return_script_order($sort_column,$sort_order,"policy_number").'" onmouseover="hover_link(\'policy_number_td\',\''.$total_for_table_rows.'\');" onmouseout="out_link(\'policy_number_td\',\''.$total_for_table_rows.'\');" >Policy number</a></th>
                             <th><a href="'.$link_without_sort_column_sort_order.'&sc=preimium_charged&so='.return_script_order($sort_column,$sort_order,"preimium_charged").'" onmouseover="hover_link(\'preimium_charged_td\',\''.$total_for_table_rows.'\');" onmouseout="out_link(\'preimium_charged_td\',\''.$total_for_table_rows.'\');" >Premium</a></th>
+                              <th><a href="'.$link_without_sort_column_sort_order.'&sc=sum_insured&so='.return_script_order($sort_column,$sort_order,"sum_insured").'" onmouseover="hover_link(\'sum_insured_td\',\''.$total_for_table_rows.'\');" onmouseout="out_link(\'sum_insured_td\',\''.$total_for_table_rows.'\');" >Sum insured</a></th>
+                                        
                                 <th><a href="'.$link_without_sort_column_sort_order.'&sc=renewal_date&so='.return_script_order($sort_column,$sort_order,"renewal_date").'" onmouseover="hover_link(\'renewal_date_td\',\''.$total_for_table_rows.'\');" onmouseout="out_link(\'renewal_date_td\',\''.$total_for_table_rows.'\');" >Renewal date</a></th>
                             <th><a href="'.$link_without_sort_column_sort_order.'&sc=time_stamp&so='.return_script_order($sort_column,$sort_order,"time_stamp").'" onmouseover="hover_link(\'time_stamp_td\',\''.$total_for_table_rows.'\');" onmouseout="out_link(\'time_stamp_td\',\''.$total_for_table_rows.'\');" >Date</a></th>
                             
@@ -117,6 +119,7 @@ if( isset($_GET['l']) && is_numeric($_GET['l']) && ( $_GET['s']==0 || is_numeric
                   $renewal_date=$value['renewal_date'];
                   $shared_with=$value['shared_with'];
                   $time_stamp=$value['time_stamp'];
+                  $sum_insured=$value['sum_insured'];
                   
                   if(count($shared_with)>0 && $shared_with[ltrim(md5($personal_details_array['email_address']),0)]!='')
                   {
@@ -134,7 +137,8 @@ if( isset($_GET['l']) && is_numeric($_GET['l']) && ( $_GET['s']==0 || is_numeric
                                                                               <td id="company_td'.$count.'" >'.$company.'</td>  
                                                                               <td id="class_of_insurance_td'.$count.'" >'.$class_of_insurance.'</td>   
                                                                               <td id="policy_number_td'.$count.'" >'.$policy_number.'</td>   
-                                                                              <td id="preimium_charged_td'.$count.'" >'.number_format($preimium_charged,2).'</td>   
+                                                                              <td id="preimium_charged_td'.$count.'" >'.number_format($preimium_charged,2).'</td>
+                                                                                  <td id="sum_insured_td'.$count.'" >'.number_format($sum_insured,2).'</td>  
                                                                               <td id="renewal_date_td'.$count.'" >'.$explode_renewal_date[2].'-'.$explode_renewal_date[1].'-'.$explode_renewal_date[0].'</td> 
                                                                               <td id="time_stamp_td'.$count.'" >'.return_date_function($time_stamp).'</td> 
 

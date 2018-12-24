@@ -55,6 +55,7 @@ if( isset($_GET['l']) && is_numeric($_GET['l']) && ( $_GET['s']==0 || is_numeric
         $class_of_insurance=trim($_GET['class_of_insurance']);
         $policy_number=trim($_GET['policy_number']);
         $preimium_charged=trim($_GET['preimium_charged']);
+        $sum_insured=trim($_GET['sum_insured']);
         $renewal_date=trim($_GET['renewal_date']);
         $_id=trim($_GET['_id']);
         
@@ -68,7 +69,8 @@ if( isset($_GET['l']) && is_numeric($_GET['l']) && ( $_GET['s']==0 || is_numeric
                                     '&policy_number='.$policy_number.
                                     '&preimium_charged='.$preimium_charged.
                                     '&renewal_date='.$renewal_date.
-                                    '&_id='.$_id;//for form submission
+                                    '&_id='.$_id.
+                                    '&sum_insured='.$sum_insured;//for form submission
         
         $return_link="clients_information.php?l=".$limit."&s=".$skip."&sc=".$sort_column."&so=".$sort_order."&re=".$rows_every;//for form submission
        
@@ -85,7 +87,8 @@ if( isset($_GET['l']) && is_numeric($_GET['l']) && ( $_GET['s']==0 || is_numeric
                     isset($_POST['class_of_insurance']) && !empty($_POST['class_of_insurance']) &&
                     isset($_POST['policy_number']) && !empty($_POST['policy_number']) &&
                     isset($_POST['preimium_charged']) && !empty($_POST['preimium_charged']) &&
-                    isset($_POST['renewal_date']) && !empty($_POST['renewal_date']) 
+                    isset($_POST['renewal_date']) && !empty($_POST['renewal_date'])  &&
+                    isset($_POST['sum_insured']) && !empty($_POST['sum_insured']) 
                     )
                     {  
                        
@@ -96,6 +99,7 @@ if( isset($_GET['l']) && is_numeric($_GET['l']) && ( $_GET['s']==0 || is_numeric
                         $policy_number=trim($_POST['policy_number']);
                         $preimium_charged=trim($_POST['preimium_charged']);
                         $renewal_date=trim($_POST['renewal_date']);
+                        $sum_insured=trim($_POST['sum_insured']);
 
                         
                             $url_is=the_api_authentication_api_url_is()."denkimAPILogic/MainPackages.AdministratorEditClientInsuranceInformation";
@@ -108,7 +112,8 @@ if( isset($_GET['l']) && is_numeric($_GET['l']) && ( $_GET['s']==0 || is_numeric
                                     '&class_of_insurance='.$class_of_insurance.
                                     '&policy_number='.$policy_number.
                                     '&preimium_charged='.$preimium_charged.
-                                    '&renewal_date='.$renewal_date;
+                                    '&renewal_date='.$renewal_date.
+                                    '&sum_insured='.$sum_insured;
 
                             $header_array= array('Cookie:'.$_SESSION['cookie'],'Authorization:'.api_key_is(),'Origin:/senior_administrator/clients.php');
 
@@ -366,6 +371,7 @@ if( isset($_GET['l']) && is_numeric($_GET['l']) && ( $_GET['s']==0 || is_numeric
             <input type="text" name="class_of_insurance" required  placeholder="Class of insurance" value="<?php echo $class_of_insurance?>"/>
             <input type="text" name="policy_number" required placeholder="Policy number" value="<?php echo $policy_number?>"/>
             <input type="number" name="preimium_charged" required placeholder="Premium charged" value="<?php echo $preimium_charged?>"/>
+             <input type="number" name="sum_insured" required placeholder="Sum insured" value="<?php echo $sum_insured?>"/>
             <input type="date" name="renewal_date" required placeholder="Renewal date" value="<?php echo $renewal_date?>"/><br>
               <button type="submit" class="btn btn-primary m-t-15 waves-effect">Update</button>
         </form>
